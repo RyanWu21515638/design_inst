@@ -1,0 +1,188 @@
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .loginBox {
+        /*width: 40%;
+        height: 40%;
+        padding: 0 40px;
+        border: 1px solid #fff;
+        color: #000;*/
+        margin-top: 15%;
+        margin-bottom: 15%;
+        border-radius: 8px;
+        background: white;
+        box-shadow: 0 0 88px #222;
+        background: -moz-linear-gradient(top, #fff, #efefef 8%);
+        background: -webkit-gradient(linear, 0 0, 0 100%, from(#f6f6f6), to(#f4f4f4));
+        font: 15px/1.5em 'Microsoft YaHei';
+        position: relative;
+        /*left: 70%;*/
+    }
+
+    .loginBox h2 {
+        height: 45px;
+        font-size: 20px;
+        font-weight: normal;
+    }
+
+    .loginBox .left {
+        border-right: 1px solid #ccc;
+        height: 100%;
+        padding-right: 20px;
+    }
+</style>
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+</head>
+
+<html>
+<div class="main-container" ng-controller="loginCtrl">
+    <div class="main-container-inner">
+        <div class="container">
+            <br>
+            <a class="smoothScroll col-md-2" ui-sref="index" href=""><img src="app/build/image/logo.jpg"></a>
+            <h3 class="col-md-3">欢迎登录</h3>
+
+        </div>
+        <div class="col-md-12">
+            <br>
+            <div style="background-image: url('app/build/image/login.png');">
+                <div class="container">
+                    <div class="loginBox row-fluid col-md-4 col-md-offset-8" style="opacity:20;">
+                        <div class="col-md-12" id="tabs-634549">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="" data-target="#panel-549981" data-toggle="tab">个人帐号</a>
+                                </li>
+
+                                <li>
+                                    <a href="" data-target="#panel-60560" data-toggle="tab">企业ERP账号</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane" id="panel-60560">
+                                    <div class="modal-body overflow-visible">
+                                        <div class="row">
+                                            <label class="col-md-4 col-md-offset-1">用户名：</label>
+                                            <div>
+                                                <input type="text" name="username"
+                                                       placeholder="请输入用户名" ng-model="user_login_info.username"/>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <label class="col-md-4 col-md-offset-1">密码：</label>
+                                            <input type="password" name="password"
+                                                   placeholder="请输入密码" ng-model="user_login_info.password"/>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <label class="col-md-4 col-md-offset-1">企业秘钥：</label>
+                                            <input type="password" name="password"
+                                                   placeholder="请输入秘钥" ng-model="user_login_info.signature"
+                                                   ng-keypress="todoSomething2($event)"/>
+                                        </div>
+                                        <label id="pwerror2" style="color: red;"></label>
+
+                                        <div class="row" style="padding-top: 2%;"><input
+                                                value=" 登录 "
+                                                class="btn btn-primary col-md-10 col-md-offset-1" ng-click="loginCompany()">
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-md-3 col-md-offset-9 "><a ui-sref="rstpw">忘记密码</a></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane active" id="panel-549981">
+                                        <div class="modal-body overflow-visible">
+                                            <div class="row">
+                                                <label class="col-md-4 col-md-offset-1">用户名：</label>
+                                                <div>
+                                                    <input type="text" name="username"
+                                                           placeholder="用户名/手机号" ng-model="user_login_info.username"/>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <label class="col-md-4 col-md-offset-1">密码：</label>
+                                                <input type="password" name="password"
+                                                       placeholder="请输入密码" ng-model="user_login_info.password"
+                                                       ng-keypress="todoSomething($event)"/>
+                                            </div>
+                                            <br>
+                                            <label id="pwerror" style="color: red;"></label>
+
+                                            <div class="row" style="padding-top: 10%;"><input
+                                                    value=" 登录 "
+                                                    class="btn btn-primary col-md-10 col-md-offset-1" ng-click="login()">
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-md-4 col-md-offset-1"><a ui-sref="register" ng-click="register()">立即注册</a></label>
+                                                <label class="col-md-3 col-md-offset-4 "><a ui-sref="rstpw">忘记密码</a></label>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /loginBox -->
+                </div> <!-- /container -->
+            </div>
+            <br>
+            <div class="col-md-8 col-md-offset-3">
+                <div class="links">
+                    <a rel="nofollow" target="_blank" href="http://www.rili.tech/">
+                        关于我们
+                    </a>
+                    &nbsp;|&nbsp;
+                    <a rel="nofollow" target="_blank" href="">
+                        联系我们
+                    </a>
+                    &nbsp;|&nbsp;
+                    <a rel="nofollow" target="_blank" href="">
+                        人才招聘
+                    </a>
+                    &nbsp;|&nbsp;
+                    <a rel="nofollow" target="_blank" href="">
+                        商家入驻
+                    </a>
+                    &nbsp;|&nbsp;
+                    <a rel="nofollow" target="_blank" href="">
+                        广告服务
+                    </a>
+                    &nbsp;|&nbsp;
+                    <a target="_blank" href="">
+                        友情链接
+                    </a>
+                    &nbsp;|&nbsp;
+                    <a target="_blank" href="">
+                        销售联盟
+                    </a>
+                    &nbsp;|&nbsp;
+                    <a target="_blank" href="" clstag="pageclick|keycount|20150112ABD|9">English Site</a>
+
+                </div>
+                <div class="copyright">
+                    Copyright&nbsp;&copy;&nbsp;2015-2017&nbsp;&nbsp;深圳市鈤励科技有限公司rili.tech&nbsp;版权所有
+                    <!--<label class="control-label" style="padding-left: 4%">在线支持  </label>
+
+                    <img border="0" src="http://wpa.qq.com/pa?p=2:1375457618:41" alt="在线支持" title="在线支持" style="cursor:pointer" id="QQsupport"/>
+-->
+                </div>
+
+                <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=501705594&site=qq&menu=yes"><img border="0"
+                                                                                                          src="http://wpa.qq.com/pa?p=2:501705594:41"
+                                                                                                          alt="点击这里给我发消息"
+                                                                                                          title="点击这里给我发消息"/></a>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+</html>
+
+
+

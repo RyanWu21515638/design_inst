@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+</head>
+<body >
+
+<div class="container">
+    <div class="col-md-2" style="border-right: 1px solid lightgrey; height: 500px;">
+
+        <label>项目管理</label>
+        <ul class="nav nav-tabs nav-stacked">
+            <li><a href="" ui-sref="index.project.configuration" style="outline:none;">软件配置</a></li>
+            <li><a href="" ui-sref="index.project.project_info" style="outline:none;">所有项目</a></li>
+        </ul>
+    </div>
+    <div class="col-md-10">
+        <div ui-view=""></div>
+    </div>
+</div>
+</body>
+</html>
