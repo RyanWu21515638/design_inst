@@ -41,9 +41,9 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval, 
     configurationlist();
     grouplist();
 
-    $scope.dbclick = function (no) {
-        $scope.oldtb = !$scope.oldtb;
-        $scope.no = no;
+    $scope.prj_dt = function (index) {
+        $scope.index =index;
+        console.log(index);
     }
     $scope.newprj = function () {
         $scope.prjinfo.company_id = $cookies.get('company_id');

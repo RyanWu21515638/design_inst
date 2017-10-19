@@ -7,20 +7,22 @@
 </head>
 <body >
 
-<div class="container">
-    <div class="col-md-2" style="border-right: 1px solid lightgrey; height: 500px;">
+<div class="col-md-offset-2 col-md-8" style="border: 1px solid lightgrey;padding-top: 1%;"
+            ng-controller="forumCtrl">
+    <div class="col-md-2" style="border-right: 1px solid lightgrey;padding-left: 1%;">
 
-        <label>论坛交流</label>
+        <label class="col-md-12" style="background-color: #428bca;font-size: 16px;">论坛交流</label>
         <ul class="nav nav-tabs nav-stacked">
-            <li><img style="width: 120px;height: 120px;" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEKJy9UIIqpbNpiaqicZ1r1sIH89r5iaEtibgjBbKuxeBHxqbDiaC1ibhA55j4g6UmBlxj4toL9NaQwfVs9w/0"></li>
-            <li><label>吴亚楠 </label>
+            <li><img class="visible-lg" style="width: 70%;height: 70%;border-radius: 10%;" src="{{userinfo.headimgurl}}"></li>
+            <li><label>{{userinfo.nickname}} </label>
                 <br>
-             <label> 南昌</label></li>
+             <label> {{userinfo.company_name}}</label></li>
 
         </ul>
-        <ul class="nav nav-tabs nav-stacked">
-            <li><button class="btn btn-primary" ui-sref="index.forum.new_forum">发帖</button></li>
-        </ul>
+        <button class="btn btn-primary" ui-sref="index.forum.new_forum">发帖</button>
+        <!--<ul class="nav nav-tabs ">
+            <li></li>
+        </ul>-->
 
     </div>
     <div class="col-md-10">

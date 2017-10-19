@@ -48,4 +48,4 @@ console.log(typeof(data));
         return $http.get($rootScope.ip + '/designPlatform/home/user/verify_phone?telephone=' + phone_no);
     }
 
-})
+});

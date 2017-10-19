@@ -3,55 +3,60 @@
         <div class="page-content">
 
             <div class="space-24"></div>
-            <div class="page-header animated bounceInLeft">
+            <div class="page-header">
                 <h3>
                     <!--<i class="icon-spinner icon-spin orange bigger-125"></i>-->
-                    <b>主题：自动配模问题</b>
+                    <b>主题：{{prb_list[prb_list_index].title}}</b>
                 </h3>
             </div>
-            <div class="table-responsive animated bounceInRight">
-                <table id="sample-table-2" class="table table-striped table-hover">
+            <label>问题描述：{{prb_list[prb_list_index].description}}</label>
+            <br>
 
-                    <tbody>
-                    <tr ui-sref="index.forum.forum_detail" style="height: 50px;">
-                        <td>
-                            <label class="col-md-8">关于自动配模的问题XXXX</label>
-                            <img style="height: 32px;width: 32px;border-radius: 50%;" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEKJy9UIIqpbNpiaqicZ1r1sIH89r5iaEtibgjBbKuxeBHxqbDiaC1ibhA55j4g6UmBlxj4toL9NaQwfVs9w/0">
-                            <label>阿瑶 </label>
-                            <br>
-                            <label class="col-md-offset-8">回复时间：2017-10-15 20:08</label>
-                        </td>
-                    </tr>
-                    <tr ui-sref="index.forum.forum_detail" style="height: 50px;">
-                        <td>
-                            <label class="col-md-8">这个问题我讲两点xxxx</label>
-                            <img style="height: 32px;width: 32px;border-radius: 50%;" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEKJy9UIIqpbNpiaqicZ1r1sIH89r5iaEtibgjBbKuxeBHxqbDiaC1ibhA55j4g6UmBlxj4toL9NaQwfVs9w/0">
-                            <label>阿霞 </label>
-                            <br>
-                            <label class="col-md-offset-8">回复时间：2017-10-16 10:08</label>
-                        </td>
-                    </tr>
-                    <tr ui-sref="index.forum.forum_detail" style="height: 50px;">
-                        <td>
-                            <label class="col-md-8">这个问题我讲两点xxx</label>
-                            <img style="height: 32px;width: 32px;border-radius: 50%;" src="http://wx.qlogo.cn/mmopen/PiajxSqBRaEKJy9UIIqpbNpiaqicZ1r1sIH89r5iaEtibgjBbKuxeBHxqbDiaC1ibhA55j4g6UmBlxj4toL9NaQwfVs9w/0">
-                            <label>吴君 </label>
-                            <br>
-                            <label class="col-md-offset-8">回复时间：2017-10-17 09:08</label>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+            <label>提问者：{{prb_list[prb_list_index].creator_id}}</label>
+            <br>
+            <label>提问时间：{{prb_list[prb_list_index].create_time}}</label>
+            <br>
+            <a href="{{prb_list[prb_list_index].attachment}}"><img
+                    style="height: 200px;width: 200px;"
+                    src="{{prb_list[prb_list_index].attachment}}"></a>
+
+
+            <div class="page-header">
+                <h3>
+                    <!--<i class="icon-spinner icon-spin orange bigger-125"></i>-->
+                    <b>回复--{{prb_list[prb_list_index].solve_result}}</b>
+                </h3>
             </div>
-            <div>
-                <input style="width: 400px;height: 200px;margin-top: 100px;">
+            <label>回复者：{{prb_list[prb_list_index].changer_id}}</label>
+            <br>
+            <label>回复时间：{{prb_list[prb_list_index].update_time}}</label>
+            <br>
+            <a href="{{prb_list[prb_list_index].attachpic}}"><img
+                    style="height: 200px;width: 200px;"
+                    src="{{prb_list[prb_list_index].attachpic}}"></a>
+
+
+
+            <div class="row">
+                    <textarea placeholder="请添加对问题的回复"
+                              style="height: 200px;width: 70%;margin-top: 10px;margin-bottom: 10px;margin-left: 16px;"
+                              ng-model="prb_sovle_desc"></textarea>
             </div>
-            <div>
-                <button class="btn-primary">发表回复</button>
-            </div>
-
-
-
+            <form id="import" enctype="multipart/form-data" method="post"
+                  action="http://192.168.3.158/design_institute/public/admin/Problem/problem_return">
+                <div class="row" style="margin-left: 0px;margin-bottom: 100px;">
+                    <label>上传图片</label>
+                    <input type="file" name="file">
+                    <input type="hidden" name="company_id" value="{{userinfo.company_id}}">
+                    <input type="hidden" name="project_id" value="{{probleminfo.project_id}}">
+                    <input type="hidden" name="subproject_id" value="{{probleminfo.subproject_id}}">
+                    <input type="hidden" name="id" value="{{prb_list[prb_list_index].id}}">
+                    <input type="hidden" name="solve_result" value="{{prb_sovle_desc}}">
+                    <input type="hidden" name="changer_id" value="{{userinfo.openid}}">
+                    <input type="hidden" name="no" value="{{prb_list_index}}">
+                    <input class="btn-primary" type="submit" value="发表回复"></input>
+                </div>
+            </form>
 
 
         </div><!--pagecontent-->

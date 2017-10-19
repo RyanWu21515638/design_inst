@@ -1,4 +1,4 @@
-﻿var routerApp = angular.module('routerApp', ['ui.router', 'index', 'login','project','forum']);
+﻿var routerApp = angular.module('routerApp', ['ui.router', 'index', 'login','project','forum','user','newforum']);
 
 
 /**
@@ -22,7 +22,7 @@ routerApp
                         templateUrl: 'app/build/tpls/index/topbar.html'
                     },
                     'content@index': {
-                        templateUrl: 'app/build/tpls/project/project.html'
+                        templateUrl: 'app/build/tpls/index/main.html'
                     }
                 }
             })
@@ -64,11 +64,33 @@ routerApp
 
             })
             .state('index.forum.forum_detail', {
-                url: '/forum_detail',
+                url: '/forum_detail/:index',
                 templateUrl: 'app/build/tpls/forum/forum_detail.html'
 
             })
+            .state('index.workstation', {
+                url: '/workstation',
+                views: {
+                    'content@index': {
+                        templateUrl: 'app/build/tpls/workstation/workstation.html'
+                    }
+                }
+            })
+            .state('index.workstation.project', {
+                url: '/project',
+                templateUrl: 'app/build/tpls/workstation/project.html'
 
+            })
+            .state('index.workstation.newinst', {
+                url: '/newinst',
+                templateUrl: 'app/build/tpls/workstation/newinst.html'
+
+            })
+            .state('index.workstation.userinfo', {
+                url: '/userinfo',
+                templateUrl: 'app/build/tpls/workstation/userinfo.html'
+
+            })
 
 
 

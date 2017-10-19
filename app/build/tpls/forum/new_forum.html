@@ -1,25 +1,72 @@
 <div class="main-container" style="padding-left: 2%" ng-controller="forumCtrl">
-    <div class="main-container-inner">
+    <div class="main-container-inner" ng-controller="newforumCtrl">
         <div class="page-content">
 
             <div class="space-24"></div>
-            <div class="page-header animated bounceInLeft">
+            <div class="page-header">
                 <h3>
                     <!--<i class="icon-spinner icon-spin orange bigger-125"></i>-->
                     <b>发表帖子</b>
                 </h3>
             </div>
-            <div class="row">
-                <label>主题</label><input type="text" placeholder="输入帖子主题">还可以输入80个字符
-            </div>
-            <div class="row">
-
-                <textarea style="height: 400px;width: 800px;"></textarea>
-            </div>
-            <input type="file">上传图片
-            <button class="btn-primary">发表</button>
-
-
+            <form id="import" enctype="multipart/form-data" method="post"
+                  action="http://192.168.3.158/design_institute/public/admin/Problem/add_problem">
+                <div class="row">
+                    <label class="col-lg-1" style="text-align: right;">总项目:</label>
+                    <select class="col-lg-2"
+                            ng-model="newprobleminfo.project_id"
+                            ng-options="dp.project_id as dp.name for dp in prj_list"
+                            ng-change="projectselect(newprobleminfo.project_id)">
+                        <option value="">-- 请选择总项目 --</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <label class="col-lg-1" style="text-align: right;">子项目:</label>
+                    <select class="col-lg-2"
+                            ng-model="newprobleminfo.subproject_id"
+                            ng-options="dp.subproject_id as dp.name for dp in prj_list[index].subproject_list"
+                            ng-change="subprojectselect(newprobleminfo.subproject_id)">
+                        <option value="">-- 请选择子项目 --</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <label class="col-lg-1" style="text-align: right;">主题:</label>
+                    <select class="col-lg-2"
+                            ng-model="newprobleminfo.type_id"
+                            ng-options="dp.id as dp.name for dp in tp_list"
+                            ng-change="typeselect(newprobleminfo.type_id)">
+                        <option value="">-- 请选择主题大类 --</option>
+                    </select>
+                    <select class="col-lg-2"
+                            ng-model="subtype_id"
+                            ng-options="dp.id as dp.name for dp in subtp_list"
+                            ng-change="projectselect(probleminfo.project_id)">
+                        <option value="">-- 请选择主题小类 --</option>
+                    </select>
+                    <br>
+                </div>
+                <div class="row">
+                    <label class="col-lg-1" style="text-align: right;">标题:</label>
+                    <input placeholder="输入标题" style="width: 50%;" ng-model="newprobleminfo.title">还可以输入80个字符
+                </div>
+                <div class="row">
+                    <textarea placeholder="正文：请对问题进行描述" style="height: 200px;width: 70%;margin-top: 10px;margin-bottom: 10px;margin-left: 40px;"
+                              ng-model="newprobleminfo.description"></textarea>
+                </div>
+                <div class="row" style="margin-left: 2%;">
+                    <label>上传图片</label>
+                    <input type="file" name="file">
+                    <input type="hidden" name="creator_id" value="{{userinfo.openid}}">
+                    <input type="hidden" name="company_id" value="{{userinfo.company_id}}">
+                    <input type="hidden" name="project_id" value="{{newprobleminfo.project_id}}">
+                    <input type="hidden" name="subproject_id" value="{{newprobleminfo.subproject_id}}">
+                    <input type="hidden" name="type_id" value="{{newprobleminfo.type_id}}">
+                    <input type="hidden" name="subtype_id" value="{{newprobleminfo.subtype_id}}">
+                    <input type="hidden" name="title" value="{{newprobleminfo.title}}">
+                    <input type="hidden" name="description" value="{{newprobleminfo.description}}">
+                    <input class="btn-primary" type="submit" value="发表" ng-click="showdata()"></input>
+                </div>
+            </form>
 
 
         </div><!--pagecontent-->
