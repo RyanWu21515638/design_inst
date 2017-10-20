@@ -16,10 +16,11 @@
             <br>
             <label>提问时间：{{prb_list[prb_list_index].create_time}}</label>
             <br>
-            <a href="{{prb_list[prb_list_index].attachment}}"><img
-                    style="height: 200px;width: 200px;"
-                    src="{{prb_list[prb_list_index].attachment}}"></a>
-
+            <div style=" width: 600px;">
+                <a href="{{prb_list[prb_list_index].attachment}}"><img
+                        class="img-responsive img-thumbnail"
+                        src="{{prb_list[prb_list_index].attachment}}"></a>
+            </div>
 
             <div class="page-header">
                 <h3>
@@ -31,9 +32,12 @@
             <br>
             <label>回复时间：{{prb_list[prb_list_index].update_time}}</label>
             <br>
-            <a href="{{prb_list[prb_list_index].attachpic}}"><img
-                    style="height: 200px;width: 200px;"
-                    src="{{prb_list[prb_list_index].attachpic}}"></a>
+
+            <div style=" width: 600px;">
+                <a href="{{prb_list[prb_list_index].attachpic}}"><img
+                        class="img-responsive img-thumbnail"
+                        src="{{prb_list[prb_list_index].attachpic}}"></a>
+            </div>
 
 
 

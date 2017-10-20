@@ -20,7 +20,7 @@ forum.controller('forumCtrl', function ($scope, $location, $http,$timeout, $inte
     $scope.prb_sovle_desc = '';
 //keyVal==undefined || keyVal=="" || keyVal==null
     selectUser = function (openid) {
-        $http.get("http://192.168.3.158/design_institute/public/admin/user/selectUser?openid=" + openid).success(
+        $http.get($rootScope.ip+"/design_institute/public/admin/user/selectUser?openid=" + openid).success(
 
             function (res) {
                 if (res.company_id) {

@@ -28,6 +28,7 @@
                             <th width="15%">序号</th>
                             <th width="15%">配置名称</th>
                             <th width="10%">创建者</th>
+                            <th width="10%">操作</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -35,6 +36,9 @@
                             <td>{{$index+1}}</td>
                             <td>{{x.name}}</td>
                             <td>{{x.nickname}}</td>
+                            <td><a style="color: red" ng-click="delConf(x.id)" href="">
+                                <span class="icon-trash bigger-130"></span>
+                            </a></td>
                         </tr>
                         </tbody>
                     </table>

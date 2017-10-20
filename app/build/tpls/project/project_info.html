@@ -13,13 +13,13 @@
                 <div class="form-group" style=" margin-left: 2%;">
                     <label class="col-sm-3" style="text-align: right;"> 总项目查询： </label>
                     <div class="col-sm-6">
-                        <input placeholder="请输入项目名称或者创建者查询" ng-model="query" style="width: 50%;margin-right: 10px;"/>
-                       <!-- 与我有关<input type="checkbox" style="margin-left: 10px;" >-->
+                        <input placeholder="请输入总项目名称或者创建者查询" ng-model="query" style="width: 50%;margin-right: 10px;"/>
+                        <!-- 与我有关<input type="checkbox" style="margin-left: 10px;" >-->
                     </div>
                     <div class="col-sm-3 visible-lg visible-md">
                         <button type="button" class="btn btn-primary btn-sm right" data-toggle="modal"
                                 data-target="#modal-form1" ng-click="reset()">
-                            新建项目
+                            新建总项目
                         </button>
                     </div>
                     <div id="modal-form1" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -27,12 +27,12 @@
                         <div class="modal-dialog" style="width:30%;margin-top: 8%;">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h2 class="blue bigger" style="text-align: center;">新建项目</h2>
+                                    <h2 class="blue bigger" style="text-align: center;">新建总项目</h2>
                                 </div>
 
                                 <div class="modal-body overflow-visible">
                                     <div class="row" style="padding-top: 2%">
-                                        <label class="col-lg-2 col-lg-offset-2">项目名称:</label>
+                                        <label class="col-lg-2 col-lg-offset-2">总项目名称:</label>
                                         <input class="col-lg-4" placeholder="请输入项目名称"
                                                ng-model="prjinfo.prjname"/>
                                         <label class="col-lg-2" style="color: red">*必填</label>
@@ -51,12 +51,12 @@
                                                id="timepicker2">
                                         <label class="col-lg-2" style="color: red">*必填</label>
                                     </div>
-                                    <div class="row" style="padding-top: 2%">
+                                    <!--<div class="row" style="padding-top: 2%">
                                         <label class="col-lg-2 col-lg-offset-2">参与人:</label>
                                         <select class="col-lg-4"
                                                 ng-model="prjinfo.openid"
                                                 ng-options="dp.openid as dp.nickname for dp in usr_list">
-                                            <option value="">-- 请选择参与人 --</option>
+                                            <option value="">&#45;&#45; 请选择参与人 &#45;&#45;</option>
                                         </select>
                                         <label class="col-lg-2" style="color: red">*必填</label>
                                     </div>
@@ -65,10 +65,10 @@
                                         <select class="col-lg-4"
                                                 ng-model="prjinfo.role_id"
                                                 ng-options="dp.id as dp.name for dp in grp_list">
-                                            <option value="">-- 请选择参与者的权限 --</option>
+                                            <option value="">&#45;&#45; 请选择参与者的权限 &#45;&#45;</option>
                                         </select>
                                         <label class="col-lg-2" style="color: red">*必填</label>
-                                    </div>
+                                    </div>-->
                                     <div class="row" style="padding-top: 2%">
                                         <label class="col-lg-2 col-lg-offset-2">选择配置:</label>
                                         <select class="col-lg-4"
@@ -77,6 +77,10 @@
                                             <option value="">-- 请选择项目配置 --</option>
                                         </select>
                                         <label class="col-lg-2" style="color: red">*必填</label>
+                                    </div>
+                                    <div class="row" style="padding-top: 2%">
+                                        <label class="col-lg-2 col-lg-offset-2">创建子项目:</label>
+                                        <input type="checkbox" ng-model="create_sub">
                                     </div>
                                 </div>
                                 <div class="modal-footer" style="text-align: center;">
@@ -88,69 +92,248 @@
                     </div>
                 </div><!--form-group-->
                 <div class="space-6"></div>
-                <div class="table-responsive animated bounceInRight col-sm-4" style="overflow-x: auto; overflow-y: auto; height:600px;">
+                <div class="table-responsive animated bounceInRight"
+                     style="overflow-x: auto; overflow-y: auto; height:300px;">
                     <table class="table table-striped table-bordered table-hover">
                         <thead>
                         <!--colspan="4"用于合并单元格-->
                         <tr>
-                            <th colspan="4">总项目表</th>
+                            <th colspan="6">总项目列表</th>
                         </tr>
                         <tr>
                             <th width="40%">名称</th>
-                            <th width="15%">创建者</th>
+                            <th width="10%">创建者</th>
+                            <th width="12%">计划开始时间</th>
+                            <th width="12%">计划结束时间</th>
                             <th width="10%">状态</th>
                             <th width="18%" style="text-align: center;">操作</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="x in prj_list | filter:query" ng-click="prj_dt($index)" ng-dblclick="prj_dt($index)">
+                        <tr ng-repeat="x in prj_list | filter:query" ng-click="prj_dt($index)"
+                            ng-dblclick="prj_dt($index)">
                             <td>{{ x.name}}</td>
                             <td>{{x.creator_nickname}}</td>
+                            <td>{{x.start_time_plan}}</td>
+                            <td>{{x.end_time_plan}}</td>
                             <td ng-if="x.state == 1">已立项</td>
                             <td ng-if="x.state == 2">已归档</td>
-                            <th><a href="">成果下载</a></th>
+                            <th>
+                                <button href="" data-toggle="modal"
+                                        data-target="#modal-form2" ng-click="chose(x.project_id)">新建子项目
+                                </button>
 
+                                <a style="color: red" ng-click="delete(x.userid)" href="">
+                                    <span class="icon-trash bigger-130"></span>
+                                </a></th>
                         </tr>
                         </tbody>
                     </table>
                 </div>
-                <div class="table-responsive animated bounceInRight col-md-8"
-                     style="overflow-x: auto; overflow-y: auto; height:600px;">
+                <div class="table-responsive animated bounceInRight"
+                     style="overflow-x: auto; overflow-y: auto; height:300px;">
                     <table class="table table-striped table-bordered table-hover">
                         <thead>
                         <!--colspan="4"用于合并单元格-->
                         <tr>
-                            <th colspan="9">子项目表</th>
+                            <th colspan="9">子项目列表</th>
                         </tr>
                         <tr>
-                            <th width="4%" class="center">no</th>
-                            <th width="19%">子项目名称</th>
-                            <th width="8%">创建者</th>
-                            <th width="14%">计划开始时间</th>
-                            <th width="14%">计划结束时间</th>
-                            <th width="14%">实际开始时间</th>
-                            <th width="14%">实际结束时间</th>
-                            <th width="7%">状态</th>
+                            <th width="4%" class="center">序号</th>
+                            <th width="16%">子项目名称</th>
+                            <th width="12%">计划开始时间</th>
+                            <th width="12%">计划结束时间</th>
+                            <th width="12%">实际开始时间</th>
+                            <th width="12%">实际结束时间</th>
+                            <th width="6%">状态</th>
                             <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="x in prj_list[index].subproject_list | filter:query" ng-click="ngtest($index)" ng-dblclick="dbclick($index)">
+                        <tr ng-repeat="x in prj_list[index].subproject_list | filter:query" ng-click="subchose(x.subproject_id)"
+                            ng-dblclick="dbclick($index)">
                             <td style="text-align: center;">{{$index+1}}</td>
-                            <td>{{ x.name}}</td>
-                            <td>{{x.creator_nickname}}</td>
+                            <td>{{x.name}}</td>
                             <td>{{x.start_time_plan}}</td>
                             <td>{{x.end_time_plan}}</td>
                             <td>{{x.start_time_real}}</td>
                             <td>{{x.end_time_real}}</td>
                             <td ng-if="x.state == 1">已立项</td>
                             <td ng-if="x.state == 2">已归档</td>
-                            <th><a href="">下载</a></th>
-
+                            <th><a href="" style="color: red;">成果下载</a>
+                                <a href="" data-toggle="modal"
+                                   data-target="#modal-form3">详情</a>
+                                <a style="color: red" ng-click="delSubproject(x.subproject_id)" href="">
+                                    <span class="icon-trash bigger-130"></span>
+                                </a></th>
                         </tr>
                         </tbody>
                     </table>
                     <!--<label>aaaa</label>-->
+                </div>
+                <div id="modal-form2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"
+                     aria-hidden="false">
+                    <div class="modal-dialog" style="width:30%;margin-top: 8%;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 class="blue bigger" style="text-align: center;">创建子项目</h2>
+                            </div>
+
+                            <div class="modal-body overflow-visible">
+                                <div class="row" style="padding-top: 2%">
+                                    <label class="col-lg-2 col-lg-offset-2">子项目名称:</label>
+                                    <input class="col-lg-4" placeholder="请输入项目名称"
+                                           ng-model="subprjinfo.subprjname"/>
+                                    <label class="col-lg-2" style="color: red">*必填</label>
+                                </div>
+
+                                <div class="row" style="padding-top: 2%">
+                                    <label class="col-lg-2 col-lg-offset-2">计划开始时间:</label>
+                                    <input size="16" value={{t5.year}}-{{t5.month}}-{{t5.day}}
+                                           readonly class="col-md-4"
+                                           id="timepicker5">
+                                    <label class="col-lg-2" style="color: red">*必填</label>
+                                </div>
+                                <div class="row" style="padding-top: 2%">
+                                    <label class="col-lg-2 col-lg-offset-2">计划结束时间:</label>
+                                    <input size="16" value={{t6.year}}-{{t6.month}}-{{t6.day}}
+                                           readonly class="col-md-4"
+                                           id="timepicker6">
+                                    <label class="col-lg-2" style="color: red">*必填</label>
+                                </div>
+                            </div>
+                            <div class="modal-footer" style="text-align: center;">
+                                <button class="btn btn-success col-lg-offset-4" ng-click="newsubprj()">创建子项目</button>
+                                <button class="btn btn-danger">清空</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="modal-form3" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3"
+                     aria-hidden="false">
+                    <div class="modal-dialog" style="width:40%;margin-top: 4%;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2 class="blue bigger" style="text-align: center;">人员和权限分配信息</h2>
+                            </div>
+                            <div class="modal-body overflow-visible">
+                                <div class="table-responsive"
+                                     style="overflow-x: auto; overflow-y: auto; height:200px;">
+                                    <table class="table table-striped table-bordered table-hover">
+                                        <thead>
+                                        <!--colspan="4"用于合并单元格-->
+                                        <tr>
+                                            <th colspan="9">已分配的人员和权限</th>
+                                        </tr>
+                                        <tr>
+                                            <th width="4%" class="center">no</th>
+                                            <th width="15%">姓名</th>
+                                            <th width="18%">分公司经理</th>
+                                            <th width="14%">设计总监</th>
+                                            <th width="10%">检查室</th>
+                                            <th width="10%">配模室</th>
+                                            <th width="10%">底图室</th>
+                                            <th>操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="x in prj_role_list | filter:query" ng-click="ngtest($index)"
+                                            ng-dblclick="dbclick($index)">
+                                            <td style="text-align: center;">{{$index+1}}</td>
+                                            <td>{{x.nickname}}</td>
+                                            <td class="center">
+                                                <i ng-if="x.var_1 != 'false'" class="icon-ok bigger-140 green" style="color: green"></i>
+                                                <i ng-if="x.var_1 == 'false'" class="icon-remove bigger-140 red" style="color: red"></i>
+                                            </td>
+                                            <td class="center">
+                                                <i ng-if="x.var_2 != 'false'" class="icon-ok bigger-140 green" style="color: green"></i>
+                                                <i ng-if="x.var_2 == 'false'" class="icon-remove bigger-140 red" style="color: red"></i>
+
+                                            </td>
+                                            <td class="center">
+                                                <i ng-if="x.var_3 != 'false'" class="icon-ok bigger-140 green" style="color: green"></i>
+                                                <i ng-if="x.var_3 == 'false'" class="icon-remove bigger-140 red" style="color: red"></i>
+
+                                            </td>
+                                            <td class="center">
+                                                <i ng-if="x.var_4 != 'false'" class="icon-ok bigger-140 green" style="color: green"></i>
+                                                <i ng-if="x.var_4 == 'false'" class="icon-remove bigger-140 red" style="color: red"></i>
+
+                                            </td>
+                                            <td class="center">
+                                                <i ng-if="x.var_5 != 'false'" class="icon-ok bigger-140 green" style="color: green"></i>
+                                                <i ng-if="x.var_5 == 'false'" class="icon-remove bigger-140 red" style="color: red"></i>
+                                            </td>
+                                            <th>
+                                                <button ng-click="remove(x.openid)">移除</button>
+                                            </th>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="table-responsive"
+                                     style="overflow-x: auto; overflow-y: auto; height:200px;">
+                                    <table class="table table-striped table-bordered table-hover">
+                                        <thead>
+                                        <!--colspan="4"用于合并单元格-->
+                                        <tr>
+                                            <th colspan="9">剩余可分配的人员列表</th>
+                                        </tr>
+                                        <tr>
+                                            <th width="4%" class="center">no</th>
+                                            <th width="15%">姓名</th>
+                                            <th width="18%">分公司经理</th>
+                                            <th width="14%">设计总监</th>
+                                            <th width="10%">检查室</th>
+                                            <th width="10%">配模室</th>
+                                            <th width="10%">底图室</th>
+                                            <th>操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="x in usr_list | filter:query" ng-click="ngtest($index)"
+                                            ng-dblclick="dbclick($index)"
+                                        ng-if="x.show == true">
+                                            <td style="text-align: center;">{{$index+1}}</td>
+                                            <td>{{ x.nickname}}</td>
+                                            <td><input type="checkbox" ng-model="x.check[0]"></td>
+                                            <td><input type="checkbox" ng-model="x.check[1]"></td>
+                                            <td><input type="checkbox" ng-model="x.check[2]"></td>
+                                            <td><input type="checkbox" ng-model="x.check[3]"></td>
+                                            <td><input type="checkbox" ng-model="x.check[4]"></td>
+                                            <th>
+                                                <button ng-click="hide($index)">添加</button>
+                                            </th>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="modal-header">
+                                <h2 class="blue bigger" style="text-align: center;">其它信息</h2>
+                            </div>
+                            <div class="modal-body overflow-visible">
+                                <div class="row" style="padding-top: 2%">
+                                    <label class="col-lg-2 col-lg-offset-2">计划开始时间:</label>
+                                    <input size="16" value={{t3.year}}-{{t3.month}}-{{t3.day}}
+                                           readonly class="col-md-4"
+                                           id="timepicker3">
+                                </div>
+                                <div class="row" style="padding-top: 2%">
+                                    <label class="col-lg-2 col-lg-offset-2">计划结束时间:</label>
+                                    <input size="16" value={{t4.year}}-{{t4.month}}-{{t4.day}}
+                                           readonly class="col-md-4"
+                                           id="timepicker4">
+                                    <button>保存</button>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer" style="text-align: center;">
+                                <button class="btn btn-primary col-lg-2 col-lg-offset-10">完成</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </form>

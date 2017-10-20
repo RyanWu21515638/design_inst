@@ -29,23 +29,53 @@ project.service('projectService', function ($resource, $http, $rootScope) {
             prjname:data1.prjname,
             role_id:data1.role_id,
             start_time_plan:data1.start_time_plan,
+            create_sub:data1.create_sub,
         };
-console.log(typeof(data));
         return $http.post($rootScope.ip + '/design_institute/public/admin/Project/add_project',data, this.postCfg);
-
     }
-
-
-    //获取手机验证码
-    this.verification_code_post = function (phone_no) {
-        /*var data = {};
-         data.telephone = phoneno;*/
-        return $http.post($rootScope.ip + '/designPlatform/home/user/Sendmessage', phone_no, this.postCfg);
-    };
-
-    //判断手机号是否已被注册
-    this.judgephone_get = function (phone_no) {
-        return $http.get($rootScope.ip + '/designPlatform/home/user/verify_phone?telephone=' + phone_no);
+    this.new_subproject = function (data1) {
+        var data = {
+            company_id:data1.company_id,
+            prj_id:data1.prj_id,
+            creator_id:data1.creator_id,
+            end_time_plan:data1.end_time_plan,
+            openid:data1.openid,
+            prjname:data1.prjname,
+            role_id:data1.role_id,
+            start_time_plan:data1.start_time_plan,
+            subprjname:data1.subprjname,
+        };
+        return $http.post($rootScope.ip + '/design_institute/public/admin/SubProject/add_subproject',data, this.postCfg);
     }
-
+    this.add_role = function (data1) {
+        var data = {
+            creator_id:data1.creator_id,
+            end_time_plan:data1.end_time_plan,
+            start_time_plan:data1.start_time_plan,
+            openid:data1.openid,
+            role_id:data1.roleid,
+            subprj_id:data1.subprj_id,
+        };
+        return $http.post($rootScope.ip + '/design_institute/public/admin/Role/add_role',data, this.postCfg);
+    }
+    this.project_role_list = function (subproject_id) {
+        return $http.get($rootScope.ip + '/design_institute/public/admin/Role/project_role_list?subproject_id='+subproject_id);
+    }
+    this.del_project_role = function (data) {
+        var data = {
+            subproject_id:data.subproject_id,
+            openid:data.openid,
+        };
+        return $http.post($rootScope.ip + '/design_institute/public/admin/Role/del_project_role',data,this.postCfg);
+    }
+    this.del_subproject = function (subproject_id) {
+        var data = {}
+        data.subproject_id = subproject_id;
+        return $http.post($rootScope.ip + '/design_institute/public/admin/Subproject/del_subproject',data,this.postCfg);
+    }
+    this.del_config = function (conf_id) {
+        var data = {}
+        data.config_id = conf_id;
+        return $http.post($rootScope.ip + '/design_institute/public/admin/Config/del_config',data,this.postCfg);
+    }
 });

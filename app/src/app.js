@@ -124,6 +124,7 @@ routerApp
 
 routerApp.run(function ($rootScope,$cookies) {
     $rootScope.ip = 'http://192.168.3.158';
+    //$rootScope.ip = 'http://192.168.3.168';
 	//$rootScope.ip = 'http://192.168.3.7';
     //$rootScope.ip = 'http://120.25.74.178';
     //获取电脑名称
