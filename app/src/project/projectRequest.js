@@ -78,4 +78,8 @@ project.service('projectService', function ($resource, $http, $rootScope) {
         data.config_id = conf_id;
         return $http.post($rootScope.ip + '/design_institute/public/admin/Config/del_config',data,this.postCfg);
     }
+    this.download_list =function (data) {
+        return $http.get($rootScope.ip+'/design_institute/public/admin/Project/Download_list?company_id='+data.company_id+'&project_id='+data.project_id
+            +'&subproject_id='+data.subproject_id);
+    }
 });

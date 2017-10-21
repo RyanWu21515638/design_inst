@@ -52,7 +52,9 @@ forum.controller('forumCtrl', function ($scope, $location, $http,$timeout, $inte
     if($cookies.get('openid') == undefined || $cookies.get('openid') == '' ||$cookies.get('openid') == null)
     {
         console.log($location.search().openid);
+        if($location.search().openid!=undefined &&$location.search().openid!='' &&$location.search().openid!=null)
         selectUser($location.search().openid);
+
     }
 
     //if($location.search().openid !=undefined && $location.search().openid !=undefined!="" &&$location.search().openid !=undefined!=null)

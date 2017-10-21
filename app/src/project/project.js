@@ -6,6 +6,7 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
     $scope.subprjinfo = {};
     $scope.rolesinfo = {};
     $scope.removeinfo = {};
+    $scope.downloadinfo = {};
     $scope.roles = new Array();
 
     $scope.oldtb = true;
@@ -57,8 +58,9 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
     configurationlist();
     grouplist();
 
-    $scope.prj_dt = function (index) {
+    $scope.prj_dt = function (index,prjid) {
         $scope.index = index;
+        $scope.prjinfo.prj_id = prjid;
         console.log(index);
     }
     $scope.newprj = function () {
@@ -80,18 +82,27 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
         console.log($scope.prjinfo.prj_id);
     }
     $scope.subchose = function (prjid) {
+        for (var i = 0; i < $scope.usr_list.length; i++) {
+            $scope.usr_list[i]['show'] = true;
+            $scope.usr_list[i]['check'] = new Array();
+            $scope.usr_list[i]['check'][0] = false;
+            $scope.usr_list[i]['check'][1] = false;
+            $scope.usr_list[i]['check'][2] = false;
+            $scope.usr_list[i]['check'][3] = false;
+            $scope.usr_list[i]['check'][4] = false;
+        }
+
         $scope.rolesinfo.subprj_id = prjid;
         console.log($scope.rolesinfo.subprj_id);
         projectService.project_role_list($scope.rolesinfo.subprj_id).then(
             function (res) {
                 $scope.prj_role_list = res.data;
-                console.log($scope.prj_role_list);
+                console.log('prj_role_list'+$scope.prj_role_list);
                 var ifexist = false;
                 for (var i = 0; i < $scope.usr_list.length; i++) {
                     for (var j = 0; j < $scope.prj_role_list.length; j++) {
                         if ($scope.usr_list[i].openid == $scope.prj_role_list[j].openid) {
                             ifexist = true;
-
                         }
                         console.log(ifexist);
                     }
@@ -104,7 +115,16 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
                 }
             }
         )
-
+    }
+    $scope.downloadList = function (subproject_id) {
+        $scope.downloadinfo.company_id = $cookies.get('company_id');
+        $scope.downloadinfo.project_id = $scope.prjinfo.prj_id;
+        $scope.downloadinfo.subproject_id = subproject_id;
+        projectService.download_list($scope.downloadinfo).then(
+            function (res) {
+                $scope.dl_list = res.data;
+            }
+        )
     }
     $scope.newsubprj = function () {
         $scope.subprjinfo.prj_id = $scope.prjinfo.prj_id;
@@ -115,7 +135,6 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
         console.log($scope.subprjinfo);
         projectService.new_subproject($scope.subprjinfo).then(
             function (res) {
-                console.log(res.data);
                 $window.location.reload();
             }
         )
@@ -144,7 +163,6 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
             $scope.roles.push(5);
         }
         console.log($scope.roles);
-
         $scope.rolesinfo.company_id = $cookies.get('company_id');
         $scope.rolesinfo.creator_id = $cookies.get('openid');
         $scope.rolesinfo.start_time_plan = $scope.t3.year + '-' + $scope.t3.month + '-' + $scope.t3.day;
@@ -153,6 +171,11 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
         $scope.rolesinfo.roleid = $scope.roles;
         projectService.add_role($scope.rolesinfo).then(
             function (res) {
+                if(res.data.success)
+                {
+                    $scope.subchose( $scope.rolesinfo.subprj_id) ;
+                }
+
             }
         )
     }
@@ -162,13 +185,24 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
         $scope.removeinfo.subproject_id = $scope.rolesinfo.subprj_id;
         projectService.del_project_role($scope.removeinfo).then(
             function (res) {
+                console.log(res.data.success);
+                if(res.data.success)
+                {
+                    $scope.subchose( $scope.rolesinfo.subprj_id) ;
+                }
             }
         )
-
     }
     $scope.delSubproject = function (subproject_id) {
         projectService.del_subproject(subproject_id).then(
             function (res) {
+                if(!res.data.success)
+                {
+                    alert("项目进行中，无法删除！");
+                }
+                else {
+                    $window.location.reload();
+                }
             }
         )
     }
@@ -180,10 +214,14 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
                 {
                     alert("此配置正在被使用，无法删除！");
                 }
+                else
+                {
+                    $window.location.reload();
+                }
+
             }
         )
     }
-
     var time = new Date();
     $scope.t1 = {
         year: time.getFullYear(),

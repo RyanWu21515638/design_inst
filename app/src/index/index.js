@@ -77,7 +77,6 @@ index.controller('indexCtrl', function ($scope, $timeout, $interval, $state, $co
 
                     $scope.t1 = $timeout(function(){
                         $('#modal-form').modal('hide');
-
                         $cookies.put('logged', 'true', {'expires': expireDate});
                         $cookies.put('status', res.status, {'expires': expireDate});
                         $cookies.put('company_id', res.company_id, {'expires': expireDate});
@@ -86,6 +85,9 @@ index.controller('indexCtrl', function ($scope, $timeout, $interval, $state, $co
                     },600);
                     $state.go('index.project.project_info');
                 }
+            }
+        ).error(function () {
+            alert("您还不是铝模设计院用户！");
             }
         )
 
