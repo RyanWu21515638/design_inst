@@ -1,0 +1,599 @@
+<div class="main-container" style="padding-left: 2%" ng-controller="subproject_info_detailCtrl">
+    <div class="main-container-inner">
+        <div class="page-content">
+            <div class="page-header visible-lg visible-md">
+                <h3>
+                    <!--<i class="icon-spinner icon-spin orange bigger-125"></i>-->
+                    <b>任务列表</b>
+                </h3>
+            </div>
+            <!--<form class="form-horizontal" role="form">
+                <div class="form-group visible-lg visible-md" style=" margin-left: 2%;">
+                    <label class="col-xs-3" style="text-align: right;"> 总项目查询： </label>
+                    <div class="col-xs-6">
+                        <input placeholder="请输入总项目名称或者创建者查询" ng-model="query" style="width: 50%;margin-right: 10px;"/>
+                        &lt;!&ndash; 与我有关<input type="checkbox" style="margin-left: 10px;" >&ndash;&gt;
+                    </div>
+                    <div class="col-xs-3 visible-lg visible-md">
+                        <button type="button" class="btn btn-primary btn-sm right" data-toggle="modal"
+                                data-target="#modal-form1" ng-click="reset()">
+                            新建总项目
+                        </button>
+                    </div>
+                </div>&lt;!&ndash;form-group&ndash;&gt;
+                <div class="space-6"></div>
+                <div class="visible-xs" style="margin-top: 2%;">
+                    <label class="col-xs-3" style="text-align: right;"> 总项目查询： </label>
+                    <div class="col-xs-12">
+                        <input placeholder="请输入总项目名称查询" ng-model="query" style="width: 50%;margin-right: 10px;"/>
+                        &lt;!&ndash; 与我有关<input type="checkbox" style="margin-left: 10px;" >&ndash;&gt;
+                    </div>
+                    <div class="col-xs-3 visible-lg visible-md">
+                        <button type="button" class="btn btn-primary btn-sm right" data-toggle="modal"
+                                data-target="#modal-form1" ng-click="reset()">
+                            新建总项目
+                        </button>
+                    </div>
+                </div>
+                <div class="visible-xs col-xs-12" style="margin-top: 10px;">
+                    <table class="table-responsive">
+                        <tbody>
+                        <tr ng-repeat="x in prj_list | filter:query" ng-click="prj_dt($index,x.project_id,2)"
+                            style="height: 40px; font-size: 14px;" >
+                            <td style="text-align: center;">{{x.name}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-responsive animated bounceInRight visible-lg visible-md"
+                     style="overflow-x: auto; overflow-y: auto; height:300px;">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                        &lt;!&ndash;colspan="4"用于合并单元格&ndash;&gt;
+                        <tr>
+                            <th colspan="6">总项目列表</th>
+                        </tr>
+                        <tr>
+                            <th width="40%">名称</th>
+                            <th width="10%">创建者</th>
+                            <th width="12%">计划开始时间</th>
+                            <th width="12%">计划结束时间</th>
+                            <th width="10%">状态</th>
+                            <th width="18%" style="text-align: center;">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="x in prj_list | filter:query" ng-click="prj_dt($index,x.project_id,1)">
+                            <td>{{x.name}}</td>
+                            <td>{{x.creator_nickname}}</td>
+                            <td>{{x.start_time_plan}}</td>
+                            <td>{{x.end_time_plan}}</td>
+                            <td ng-if="x.state == 1">已立项</td>
+                            <td ng-if="x.state == 2">已归档</td>
+                            <th>
+                                <button href="" data-toggle="modal"
+                                        data-target="#modal-form2">新建子项目
+                                </button>
+
+                                <a style="color: red" ng-click="delete(x.userid)" href="">
+                                    <span class="icon-trash bigger-130"></span>
+                                </a></th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-responsive animated bounceInRight visible-lg visible-md"
+                     style="overflow-x: auto; overflow-y: auto; height:300px;">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                        &lt;!&ndash;colspan="4"用于合并单元格&ndash;&gt;
+                        <tr>
+                            <th colspan="9">子项目列表</th>
+                        </tr>
+                        <tr>
+                            <th width="4%" class="center">序号</th>
+                            <th width="16%">子项目名称</th>
+                            <th width="12%">计划开始时间</th>
+                            <th width="12%">计划结束时间</th>
+                            <th width="12%">实际开始时间</th>
+                            <th width="12%">实际结束时间</th>
+                            <th width="20%">状态</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="x in prj_list[index].subproject_list | filter:query"
+                            ng-click="subchose(x.subproject_id)"
+                            ng-dblclick="dbclick($index)">
+                            <td style="text-align: center;">{{$index+1}}</td>
+                            <td><a ui-sref="index.project.subproject_info_detail({prj_id:prjinfo.prj_id,subprj_id:rolesinfo.subprj_id})">{{x.name}}</a></td>
+                            <td>{{x.start_time_plan}}</td>
+                            <td>{{x.end_time_plan}}</td>
+                            <td>{{x.start_time_real}}</td>
+                            <td>{{x.end_time_real}}</td>
+                            <td ng-if="x.state == 1">已立项，底图待深化</td>
+                            <td ng-if="x.state == 2">底图已深化。底图深化待审核</td>
+                            <td ng-if="x.state == 3">底图深化已审核，待设计</td>
+                            <td ng-if="x.state == 4">设计已完成，待审核</td>
+                            <td ng-if="x.state == 5">设计审核通过，待下单</td>
+                            <td ng-if="x.state == 6">项目已归档</td>
+                            <th><a href="" ng-click="downloadList(x.subproject_id)"
+                                   data-toggle="modal"
+                                   data-target="#modal-form4">成果下载</a>
+
+                                &lt;!&ndash;<a href="" data-toggle="modal"
+                                   data-target="#modal-form3">详情</a>&ndash;&gt;
+                                <a style="color: red" ng-click="delSubproject(x.subproject_id)" href="">
+                                    <span class="icon-trash bigger-130"></span>
+                                </a></th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </form>-->
+            <div class="row" style="margin-bottom: 40px; ">
+                <div class="col-xs-2" style="background-color: #eeeeee;border-radius: 5px;margin-left:5px;
+                margin-top:10px;width:24%;height: 400px;position:relative;">
+                    <div class="" style="font-size: 16px;padding: 10px;">单项配模·{{6}}
+                        <a><span class="icon-trash bigger-130 pull-right"></span></a></div>
+                    <div class="" data-toggle="modal" data-target="#modal-form4"
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        背楞
+                        <span class="glyphicon glyphicon-check pull-right"></span>
+                    </div>
+                    <div class="" data-toggle="modal" data-target="#modal-form4"
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        墙
+                        <span class="glyphicon glyphicon-unchecked pull-right"></span>
+                    </div>
+                    <div class="" data-toggle="modal" data-target="#modal-form4"
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        吊模
+                        <span class="glyphicon glyphicon-unchecked pull-right"></span>
+                    </div>
+                    <div class="" data-toggle="modal" data-target="#modal-form4"
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        梁
+                        <span class="glyphicon glyphicon-unchecked pull-right"></span>
+                    </div>
+                    <div class="" data-toggle="modal" data-target="#modal-form4"
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        板
+                        <span class="glyphicon glyphicon-check pull-right"></span>
+                    </div>
+                    <div class="" data-toggle="modal" data-target="#modal-form4"
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        楼梯
+                        <span class="glyphicon glyphicon-check pull-right"></span>
+                    </div>
+                    <div style="position:absolute;bottom:10px;margin-left: 30%;"><a href="" data-toggle="modal"
+                                                                                    data-target="#modal-form1"><span
+                            class="glyphicon glyphicon-plus-sign"></span>添加任务</a></div>
+                </div>
+                <div class="col-xs-2" style="background-color: #eeeeee;border-radius: 5px;margin-left:5px;
+                margin-top:10px;width:24%;height: 400px;position:relative;">
+                    <div class="" style="font-size: 16px;padding: 10px;">单项配模部位加工图·{{6}}
+                        <a><span class="icon-trash bigger-130 pull-right"></span></a></div>
+                    <div class=""
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        背楞
+                    </div>
+                    <div class=""
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        墙
+                    </div>
+                    <div class=""
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        吊模
+                    </div>
+                    <div class=""
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        梁
+                    </div>
+                    <div class=""
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        板
+                    </div>
+                    <div class=""
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        楼梯
+                    </div>
+                    <div style="position:absolute;bottom:10px;margin-left: 30%;"><a href=""><span
+                            class="glyphicon glyphicon-plus-sign"></span>添加任务</a></div>
+                </div>
+                <div class="col-xs-2" style="background-color: #eeeeee;border-radius: 5px;margin-left:5px;
+                margin-top:10px;width:24%;height: 400px;position:relative;">
+                    <div class="" style="font-size: 16px;padding: 10px;">交接部位配模·{{6}}
+                        <a><span class="icon-trash bigger-130 pull-right"></span></a></div>
+                    <div class=""
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        背楞
+                    </div>
+                    <div class=""
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        墙
+                    </div>
+                    <div class=""
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        吊模
+                    </div>
+                    <div class=""
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        梁
+                    </div>
+                    <div class=""
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        板
+                    </div>
+                    <div class=""
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        楼梯
+                    </div>
+                    <div style="position:absolute;bottom:10px;margin-left: 30%;"><a href=""><span
+                            class="glyphicon glyphicon-plus-sign"></span>添加任务</a></div>
+                </div>
+                <div class="col-xs-2" style="background-color: #eeeeee;border-radius: 5px;margin-left:5px;
+                margin-top:10px;width:24%;height: 400px;position:relative;">
+                    <div class="" style="font-size: 16px;padding: 10px;">交接部位加工图·{{6}}
+                        <a><span class="icon-trash bigger-130 pull-right"></span></a></div>
+                    <div class=""
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        背楞
+                    </div>
+                    <div class=""
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        墙
+                    </div>
+                    <div class=""
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        吊模
+                    </div>
+                    <div class=""
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        梁
+                    </div>
+                    <div class=""
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        板
+                    </div>
+                    <div class=""
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        楼梯
+                    </div>
+                    <div style="position:absolute;bottom:10px;margin-left: 30%;"><a href=""><span
+                            class="glyphicon glyphicon-plus-sign"></span>添加任务</a></div>
+                </div>
+                <div class="col-xs-2" style="background-color: #eeeeee;border-radius: 5px;margin-left:5px;
+                margin-top:10px;width:24%;height: 400px;position:relative;">
+                    <div class="" style="font-size: 16px;padding: 10px;">单模块全部生产清单·{{6}}
+                        <a><span class="icon-trash bigger-130 pull-right"></span></a></div>
+                    <div class=""
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        背楞
+                    </div>
+                    <div class=""
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        墙
+                    </div>
+                    <div class=""
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        吊模
+                    </div>
+                    <div class=""
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        梁
+                    </div>
+                    <div class=""
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        板
+                    </div>
+                    <div class=""
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        楼梯
+                    </div>
+                    <div style="position:absolute;bottom:10px;margin-left: 30%;"><a href=""><span
+                            class="glyphicon glyphicon-plus-sign"></span>添加任务</a></div>
+                </div>
+                <div class="col-xs-2" style="background-color: #eeeeee;border-radius: 5px;margin-left:5px;
+                margin-top:10px;width:24%;height: 400px;position:relative;">
+                    <div class="" style="font-size: 16px;padding: 10px;">单项配模检查·{{6}}
+                        <a><span class="icon-trash bigger-130 pull-right"></span></a></div>
+                    <div class=""
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        背楞
+                    </div>
+                    <div class=""
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        墙
+                    </div>
+                    <div class=""
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        吊模
+                    </div>
+                    <div class=""
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        梁
+                    </div>
+                    <div class=""
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        板
+                    </div>
+                    <div class=""
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        楼梯
+                    </div>
+                    <div style="position:absolute;bottom:10px;margin-left: 30%;"><a href=""><span
+                            class="glyphicon glyphicon-plus-sign"></span>添加任务</a></div>
+                </div>
+                <div class="col-xs-2" style="background-color: #eeeeee;border-radius: 5px;margin-left:5px;
+                margin-top:10px;width:24%;height: 400px;position:relative;">
+                    <div class="" style="font-size: 16px;padding: 10px;">交接部位配模检查·{{1}}
+                        <a><span class="icon-trash bigger-130 pull-right"></span></a></div>
+                    <div class=""
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                        合模检查
+                    </div>
+
+                    <div style="position:absolute;bottom:10px;margin-left: 30%;"><a href=""><span
+                            class="glyphicon glyphicon-plus-sign"></span>添加任务</a></div>
+                </div>
+                <div class="col-xs-2" style="background-color: #eeeeee;border-radius: 5px;margin-left:5px;
+                margin-top:10px;width:24%;position:relative;" ng-init="p_blur=false">
+                    <div style="font-size: 16px;padding: 10px;">
+                        <a href="" ng-click="p_blur=!p_blur">
+                            <span class="glyphicon glyphicon-plus"></span>新建任务列表
+                        </a>
+                    </div>
+                    <div ng-if="p_blur" style="font-size: 16px;padding: 10px;">
+                        <input style="height: 30px;" placeholder="新建任务列表。。。">
+
+                        <div class="dropdown" style="margin-top: 10px;">
+                            <button type="button" class="btn dropdown-toggle" id="dropdownMenu1"
+                                    data-toggle="dropdown">
+                                选择角色权限
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                <li role="presentation">
+                                    <a role="menuitem" tabindex="-1" href="" ng-click="setRoles(1,'分公司经理')">分公司经理</a>
+                                </li>
+                                <li role="presentation">
+                                    <a role="menuitem" tabindex="-1" href="" ng-click="setRoles(2,'设计总监')">设计总监</a>
+                                </li>
+                                <li role="presentation">
+                                    <a role="menuitem" tabindex="-1" href="" ng-click="setRoles(3,'检查室')">检查室</a>
+                                </li>
+                                <li role="presentation">
+                                    <a role="menuitem" tabindex="-1" href="" ng-click="setRoles(4,'配模室')">配模室</a>
+                                </li>
+                                <li role="presentation">
+                                    <a role="menuitem" tabindex="-1" href="" ng-click="setRoles(5,'底图室')">底图室</a>
+                                </li>
+                            </ul>
+                        </div>
+                        {{role_name}}
+                        <div style="margin-top: 10px;"></div>
+                        <button class="btn btn-default"
+                                style="border-radius: 5px;outline: none; ">取消
+                        </button>
+                        <button class="btn btn-primary"
+                                style="color: white;border-radius: 5px;">确定
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div id="modal-form1" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" style="width:30%;margin-top: 4%;">
+                    <div class="modal-content" style="border-radius: 5px;">
+                        <div class="modal-header">
+                            <label class="blue bigger"
+                                   style="text-align: center;background-color: #eeeeee;margin: 10px;">广西南宁华润置地1号楼项目
+                                ·
+                                设计工作
+                                ·
+                                单项配模</label>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row" style="margin: 10px 0px 10px 50px;">
+                                    <label class="col-xs-3" style="margin-top: 5px;">单项</label>
+                                    <div class="dropdown">
+                                        <button class="btn btn-default" class="dropdown-toggle" id="dropdownMenu2"
+                                                data-toggle="dropdown" style="height: 10%;width: 15%">
+                                            {{subtask_name}}
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+                                            <li role="presentation">
+                                                <a role="menuitem" tabindex="-1" href="" ng-click="setSubtask(1,'背楞')">背楞</a>
+                                            </li>
+                                            <li role="presentation">
+                                                <a role="menuitem" tabindex="-1" href="" ng-click="setSubtask(2,'墙')">墙</a>
+                                            </li>
+                                            <li role="presentation">
+                                                <a role="menuitem" tabindex="-1" href="" ng-click="setSubtask(3,'吊模')">吊模</a>
+                                            </li>
+                                            <li role="presentation">
+                                                <a role="menuitem" tabindex="-1" href="" ng-click="setSubtask(4,'梁')">梁</a>
+                                            </li>
+                                            <li role="presentation">
+                                                <a role="menuitem" tabindex="-1" href="" ng-click="setSubtask(5,'板')">板</a>
+                                            </li>
+                                            <li role="presentation">
+                                                <a role="menuitem" tabindex="-1" href="" ng-click="setSubtask(6,'楼梯')">楼梯</a>
+                                            </li>
+
+                                        </ul>
+                                            <input placeholder="其他选项请在此输入" ng-model="subtask_name">
+                                    </div>
+                            </div>
+                            <div class="row" style="margin: 10px 50px 10px;">
+
+                                    <a class="col-xs-3" href="" data-toggle="modal"
+                                       data-target="#modal-form2">
+                                        <span class="glyphicon glyphicon-plus-sign"></span>负责人
+                                    </a>
+                                    <label>·Eric</label>
+
+                            </div>
+                            <div class="row" style="margin: 10px 50px 10px;">
+
+                                    <a class="col-xs-3" href="" data-toggle="modal"
+                                       data-target="#modal-form2">
+                                        <span class="glyphicon glyphicon-plus-sign"></span>参与者
+                                    </a>
+                                    <label>·Eric</label>
+
+                            </div>
+                            <div class="row" style="margin: 10px 50px 10px;">
+
+                                    <label class="col-xs-3">优先级
+                                    </label>
+                                    <label>·Eric</label>
+
+                            </div>
+
+                            <div class="row" style="margin: 10px 50px 10px;">
+                                    <a class="col-xs-3" href="" data-toggle="modal"
+                                       data-target="#modal-form2">
+                                        <span class="glyphicon glyphicon-plus-sign"></span>设置截止时间
+                                    </a>
+                                    <input size="16" value={{t1.year}}-{{t1.month}}-{{t1.day}}
+                                           readonly class="col-md-4"
+                                           id="timepicker1">
+
+                            </div>
+                            <div class="row" style="margin: 10px 50px 10px;">
+
+                                    <label class="col-xs-3">备注
+                                    </label>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer" style="text-align: center;">
+                            <button class="btn btn-primary"
+                                    style="color: white;border-radius: 5px;">添加
+                            </button>
+                            <button class="btn btn-danger" style="color: white;border-radius: 5px;">返回</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="modal-form2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" style="width:10%;margin-top: 6%;">
+                    <div class="modal-content" style="border-radius: 5px;">
+                        <div class="modal-header">
+                            <label class="blue bigger"
+                                   style="text-align: center;background-color: #eeeeee;margin: 10px;">添加人员</label>
+                        </div>
+                        <div class="modal-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover">
+                                    <tbody>
+                                    <tr>
+                                        <td style="text-align: center;">Eric</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="modal-form3" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" style="width:10%;margin-top: 6%;">
+                    <div class="modal-content" style="border-radius: 5px;">
+                        <div class="modal-header">
+                            <label class="blue bigger"
+                                   style="text-align: center;background-color: #eeeeee;margin: 10px;">选择单项</label>
+                        </div>
+                        <div class="modal-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover">
+                                    <tbody>
+                                    <tr>
+                                        <td style="text-align: center;">背楞</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: center;">墙</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: center;">吊模</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: center;">梁</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: center;">板</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: center;">楼梯</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="modal-form4" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" style="width:30%;margin-top: 4%;">
+                    <div class="modal-content" style="border-radius: 5px;">
+                        <div class="modal-header">
+                            <label class="blue bigger"
+                                   style="text-align: center;background-color: #eeeeee;margin: 10px;">广西南宁华润置地1号楼项目
+                                ·
+                                设计工作
+                                ·
+                                单项配模</label>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <div style="margin: 30px;">
+                                    <a href="" data-toggle="modal"
+                                       data-target="#modal-form2">
+                                        <span class="glyphicon glyphicon-plus-sign"></span>选择单项任务
+                                    </a>
+                                    <label>·背楞</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div style="margin: 30px;">
+                                    <a href="" data-toggle="modal"
+                                       data-target="#modal-form2">
+                                        <span class="glyphicon glyphicon-plus-sign"></span>参与者
+                                    </a>
+                                    <label>·Eric</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div style="margin: 30px;">
+                                    <a href="" data-toggle="modal"
+                                       data-target="#modal-form2">
+                                        <span class="glyphicon glyphicon-plus-sign"></span>设置截止时间
+                                    </a>
+                                    <label>·2017-12-01</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer" style="text-align: center;">
+                            <button class="btn btn-default"
+                                    style="background-color: #3da8f5;color: white;border-radius: 5px;">添加
+                            </button>
+                            <button class="btn btn-danger" style="color: white;border-radius: 5px;">返回</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!--pagecontent-->
+    </div><!-- main-container-inner-->
+</div>
+
+
+

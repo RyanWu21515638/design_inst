@@ -1,0 +1,39 @@
+<div class="main-container" style="padding-left: 2%" ng-controller="subprojectCtrl">
+    <div class="main-container-inner">
+        <div class="page-content">
+            <div class="page-header visible-lg visible-md">
+                <h3>
+                    <!--<i class="icon-spinner icon-spin orange bigger-125"></i>-->
+                    <b>子项目列表</b>
+                </h3>
+            </div>
+            <form class="form-horizontal" role="form">
+
+                <div class="space-6"></div>
+                <div class="visible-xs" style="margin-top: 2%;">
+                    <label class="col-xs-3" style="text-align: right;"> 子项目查询： </label>
+                    <div class="col-xs-12">
+                        <input placeholder="请输入子项目名称查询" ng-model="query" style="width: 50%;margin-right: 10px;"/>
+                        <!-- 与我有关<input type="checkbox" style="margin-left: 10px;" >-->
+                    </div>
+                </div>
+                <div class="visible-xs col-xs-12" style="margin-top: 10px;">
+                    <table class="table-responsive">
+                        <tbody>
+                        <tr ng-repeat="x in prj_list[index].subproject_list | filter:query" ng-click="subprj_dt($index,x.subproject_id)"
+                            style="height: 40px; font-size: 14px;">
+                            <td style="text-align: center;">{{x.name}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </form>
+
+
+        </div><!--pagecontent-->
+    </div><!-- main-container-inner-->
+</div>
+
+
+

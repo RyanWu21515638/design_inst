@@ -1,27 +1,29 @@
 var project = angular.module('project', ['ngResource', 'ngCookies']);
 project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$window, $state, $cookies, $rootScope, projectService) {
 
-    $scope.userinfo = {};
-    $scope.prjinfo = {};
-    $scope.subprjinfo = {};
-    $scope.rolesinfo = {};
-    $scope.removeinfo = {};
-    $scope.downloadinfo = {};
-    $scope.roles = new Array();
+    $scope.userinfo = {};               //用户信息
+    $scope.prjinfo = {};                //创建总项目信息
+    $scope.subprjinfo = {};             //创建子项目信息
+    $scope.rolesinfo = {};              //子项目已分配的人员信息
+    $scope.removeinfo = {};             //移除的已分配的人员信息
+    $scope.downloadinfo = {};           //所有文件下载链接列表
+    $scope.roles = new Array();         //给某个人员分配权限
 
-    $scope.oldtb = true;
-    $scope.create_sub = false;
+    //获取用户微信id，公司id，设计院权限--可设置成全局变量
     $scope.userinfo.openid = $cookies.get('openid');
     $scope.userinfo.company_id = $cookies.get('company_id');
     $scope.userinfo.status = $cookies.get('status');
+    //
+    //获取所有项目列表--包括总项目下面的子项目
     projectList = function () {
         projectService.project_list($scope.userinfo).then(
             function (res) {
                 $scope.prj_list = res.data;
-                console.log($scope.prj_list[0].subproject_list);
+                $rootScope.prj_list = res.data;
             }
         )
     };
+    //获取所有设计院用户
     userList = function () {
         projectService.user_list($scope.userinfo).then(
             function (res) {
@@ -35,10 +37,10 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
                     $scope.usr_list[i]['check'][3] = false;
                     $scope.usr_list[i]['check'][4] = false;
                 }
-                console.log($scope.usr_list);
             }
         )
     };
+    //获取公司配置列表
     configurationlist = function () {
         projectService.configuration_list($scope.userinfo).then(
             function (res) {
@@ -46,6 +48,7 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
             }
         )
     };
+    //获取公司权限列表
     grouplist = function () {
         projectService.group_list().then(
             function (res) {
@@ -53,34 +56,59 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
             }
         )
     }
+    //初始化--可在全局初始化
     projectList();
     userList();
     configurationlist();
     grouplist();
 
-    $scope.prj_dt = function (index,prjid) {
+
+    //选定总项目
+    $scope.prj_dt = function (index,prjid,media) {
+        //选定总项目
         $scope.index = index;
         $scope.prjinfo.prj_id = prjid;
-        console.log(index);
+        if(media == 2)
+        {
+            $state.go("index.project.subproject",{index: index});
+        }
     }
+    //新建总项目
     $scope.newprj = function () {
         $scope.prjinfo.company_id = $cookies.get('company_id');
         $scope.prjinfo.creator_id = $cookies.get('openid');
         $scope.prjinfo.start_time_plan = $scope.t1.year + '-' + $scope.t1.month + '-' + $scope.t1.day;
         $scope.prjinfo.end_time_plan = $scope.t2.year + '-' + $scope.t2.month + '-' + $scope.t2.day;
-        $scope.prjinfo.create_sub = $scope.create_sub;
-        console.log($scope.prjinfo);
+
         projectService.new_project($scope.prjinfo).then(
             function (res) {
-                console.log(res.data);
-                $window.location.reload();
+                if(res.data.success)
+                {
+                    $('#modal-form1').modal('hide');
+                    projectList();
+                }
             }
         )
     };
-    $scope.chose = function (prjid) {
-        $scope.prjinfo.prj_id = prjid;
-        console.log($scope.prjinfo.prj_id);
-    }
+    //新建子项目
+    $scope.newsubprj = function () {
+        $scope.subprjinfo.prj_id = $scope.prjinfo.prj_id;
+        $scope.subprjinfo.company_id = $cookies.get('company_id');
+        $scope.subprjinfo.creator_id = $cookies.get('openid');
+        $scope.subprjinfo.start_time_plan = $scope.t5.year + '-' + $scope.t5.month + '-' + $scope.t5.day;
+        $scope.subprjinfo.end_time_plan = $scope.t6.year + '-' + $scope.t6.month + '-' + $scope.t6.day;
+        console.log($scope.subprjinfo);
+        projectService.new_subproject($scope.subprjinfo).then(
+            function (res) {
+                if(res.data.success)
+                {
+                    $('#modal-form2').modal('hide');
+                    projectList();
+                }
+            }
+        )
+    };
+    //选定子项目
     $scope.subchose = function (prjid) {
         for (var i = 0; i < $scope.usr_list.length; i++) {
             $scope.usr_list[i]['show'] = true;
@@ -91,7 +119,6 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
             $scope.usr_list[i]['check'][3] = false;
             $scope.usr_list[i]['check'][4] = false;
         }
-
         $scope.rolesinfo.subprj_id = prjid;
         console.log($scope.rolesinfo.subprj_id);
         projectService.project_role_list($scope.rolesinfo.subprj_id).then(
@@ -126,27 +153,10 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
             }
         )
     }
-    $scope.newsubprj = function () {
-        $scope.subprjinfo.prj_id = $scope.prjinfo.prj_id;
-        $scope.subprjinfo.company_id = $cookies.get('company_id');
-        $scope.subprjinfo.creator_id = $cookies.get('openid');
-        $scope.subprjinfo.start_time_plan = $scope.t5.year + '-' + $scope.t5.month + '-' + $scope.t5.day;
-        $scope.subprjinfo.end_time_plan = $scope.t6.year + '-' + $scope.t6.month + '-' + $scope.t6.day;
-        console.log($scope.subprjinfo);
-        projectService.new_subproject($scope.subprjinfo).then(
-            function (res) {
-                $window.location.reload();
-            }
-        )
-    };
+    //选定已设置权限的人员添加到项目中
     $scope.hide = function (index) {
         $scope.roles.length = 0;
         $scope.usr_list[index]['show'] = false;
-        //$scope.rolejl = false;
-        //$scope.rolezj = false;
-        //$scope.rolejc = false;
-        //$scope.rolepm = false;
-        //$scope.roledt = false;
         if ($scope.usr_list[index]['check'][0] == true) {
             $scope.roles.push(1);
         }
@@ -162,7 +172,6 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
         if ($scope.usr_list[index]['check'][4] == true) {
             $scope.roles.push(5);
         }
-        console.log($scope.roles);
         $scope.rolesinfo.company_id = $cookies.get('company_id');
         $scope.rolesinfo.creator_id = $cookies.get('openid');
         $scope.rolesinfo.start_time_plan = $scope.t3.year + '-' + $scope.t3.month + '-' + $scope.t3.day;
@@ -175,10 +184,10 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
                 {
                     $scope.subchose( $scope.rolesinfo.subprj_id) ;
                 }
-
             }
         )
     }
+    //从已分配人员中删除
     $scope.remove = function (openid) {
         console.log(openid);
         $scope.removeinfo.openid = openid;
@@ -222,6 +231,7 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
             }
         )
     }
+    //highchars 图表
     var time = new Date();
     $scope.t1 = {
         year: time.getFullYear(),
@@ -325,7 +335,7 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
     }).on("hide", function () {
         $("#timepicker3").blur();
     });
-    //时间选择器2
+    //时间选择器3
     $("#timepicker4").datetimepicker({
         language: 'zh-CN',
         format: "yyyy-mm-dd",
@@ -345,7 +355,7 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
     }).on("hide", function () {
         $("#timepicker4").blur();
     });
-    //时间选择器2
+    //时间选择器4
     $("#timepicker5").datetimepicker({
         language: 'zh-CN',
         format: "yyyy-mm-dd",
@@ -365,7 +375,7 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
     }).on("hide", function () {
         $("#timepicker5").blur();
     });
-    //时间选择器2
+    //时间选择器5
     $("#timepicker6").datetimepicker({
         language: 'zh-CN',
         format: "yyyy-mm-dd",
@@ -384,5 +394,141 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
         }
     }).on("hide", function () {
         $("#timepicker6").blur();
+    });
+
+
+    $('#containertb').highcharts({
+        chart: {
+            type: 'spline'
+        },
+        title: {
+            text: '风速变化趋势图'
+        },
+        subtitle: {
+            text: '2009年10月6日和7日两地风速情况'
+        },
+        xAxis: {
+            type: 'datetime',
+            labels: {
+                overflow: 'justify'
+            }
+        },
+        yAxis: {
+            title: {
+                text: '风 速 (m/s)'
+            },
+            min: 0,
+            minorGridLineWidth: 0,
+            gridLineWidth: 0,
+            alternateGridColor: null,
+            plotBands: [{ // Light air
+                from: 0.3,
+                to: 1.5,
+                color: 'rgba(68, 170, 213, 0.1)',
+                label: {
+                    text: '轻空气',
+                    style: {
+                        color: '#606060'
+                    }
+                }
+            }, { // Light breeze
+                from: 1.5,
+                to: 3.3,
+                color: 'rgba(0, 0, 0, 0)',
+                label: {
+                    text: '微风',
+                    style: {
+                        color: '#606060'
+                    }
+                }
+            }, { // Gentle breeze
+                from: 3.3,
+                to: 5.5,
+                color: 'rgba(68, 170, 213, 0.1)',
+                label: {
+                    text: '柔和风',
+                    style: {
+                        color: '#606060'
+                    }
+                }
+            }, { // Moderate breeze
+                from: 5.5,
+                to: 8,
+                color: 'rgba(0, 0, 0, 0)',
+                label: {
+                    text: '温和风',
+                    style: {
+                        color: '#606060'
+                    }
+                }
+            }, { // Fresh breeze
+                from: 8,
+                to: 11,
+                color: 'rgba(68, 170, 213, 0.1)',
+                label: {
+                    text: '清新风',
+                    style: {
+                        color: '#606060'
+                    }
+                }
+            }, { // Strong breeze
+                from: 11,
+                to: 14,
+                color: 'rgba(0, 0, 0, 0)',
+                label: {
+                    text: '强风',
+                    style: {
+                        color: '#606060'
+                    }
+                }
+            }, { // High wind
+                from: 14,
+                to: 15,
+                color: 'rgba(68, 170, 213, 0.1)',
+                label: {
+                    text: '狂风',
+                    style: {
+                        color: '#606060'
+                    }
+                }
+            }]
+        },
+        tooltip: {
+            valueSuffix: ' m/s'
+        },
+        plotOptions: {
+            spline: {
+                lineWidth: 4,
+                states: {
+                    hover: {
+                        lineWidth: 5
+                    }
+                },
+                marker: {
+                    enabled: false
+                },
+                pointInterval: 3600000, // one hour
+                pointStart: Date.UTC(2009, 9, 6, 0, 0, 0)
+            }
+        },
+        series: [{
+            name: 'Hestavollane',
+            data: [4.3, 5.1, 4.3, 5.2, 5.4, 4.7, 3.5, 4.1, 5.6, 7.4, 6.9, 7.1,
+                7.9, 7.9, 7.5, 6.7, 7.7, 7.7, 7.4, 7.0, 7.1, 5.8, 5.9, 7.4,
+                8.2, 8.5, 9.4, 8.1, 10.9, 10.4, 10.9, 12.4, 12.1, 9.5, 7.5,
+                7.1, 7.5, 8.1, 6.8, 3.4, 2.1, 1.9, 2.8, 2.9, 1.3, 4.4, 4.2,
+                3.0, 3.0]
+        }, {
+            name: 'Voll',
+            data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.0, 0.3, 0.0,
+                0.0, 0.4, 0.0, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                0.0, 0.6, 1.2, 1.7, 0.7, 2.9, 4.1, 2.6, 3.7, 3.9, 1.7, 2.3,
+                3.0, 3.3, 4.8, 5.0, 4.8, 5.0, 3.2, 2.0, 0.9, 0.4, 0.3, 0.5, 0.4]
+        }],
+        navigation: {
+            menuItemStyle: {
+                fontSize: '10px'
+            }
+        }
     });
 })

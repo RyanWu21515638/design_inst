@@ -1,4 +1,5 @@
-﻿var routerApp = angular.module('routerApp', ['ui.router', 'index', 'login','project','forum','user','newforum']);
+﻿var routerApp = angular.module('routerApp', ['ui.router', 'index', 'login','project','forum','user','newforum','subproject',
+                                            'subproject_info_detail']);
 
 
 /**
@@ -44,6 +45,22 @@ routerApp
                 templateUrl: 'app/build/tpls/project/configuration.html'
 
             })
+            .state('index.project.subproject', {
+                url: '/subproject/:index',
+                templateUrl: 'app/build/tpls/project/subproject.html'
+
+            })
+            .state('index.project.subproject_info', {
+                url: '/subproject_info/:index/:subindex',
+                templateUrl: 'app/build/tpls/project/subproject_info.html'
+
+            })
+            .state('index.project.subproject_info_detail', {
+                url: '/subproject_info_detail/:prj_id/:subprj_id',
+                templateUrl: 'app/build/tpls/project/subproject_info_detail.html'
+
+            })
+
 
             .state('index.forum', {
                 url: '/forum',

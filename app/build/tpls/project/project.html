@@ -8,16 +8,17 @@
 </head>
 <body>
 
-<div class="col-md-offset-2 col-md-8" style="border: 1px solid lightgrey;padding-top: 1%;height: 90%;position: absolute; ">
-    <div class="col-md-2" style="border-right: 1px solid lightgrey;padding-left: 1%;">
+<div class="col-md-offset-2 col-md-8" style="border: 1px solid lightgrey;">
+    <div class="col-md-2 visible-lg visible-md" style="border-right: 1px solid lightgrey;padding-left: 1%;">
 
         <label class="col-md-12" style="background-color: #428bca;font-size: 16px;">项目管理</label>
         <ul class="nav nav-tabs nav-stacked">
-            <li class="visible-lg visible-md"><a href="" ui-sref="index.project.configuration" style="outline:none;">软件配置</a></li>
+            <li class="visible-lg visible-md"><a href="" ui-sref="index.project.configuration" style="outline:none;">软件配置</a>
+            </li>
             <li><a href="" ui-sref="index.project.project_info" style="outline:none;">所有项目</a></li>
         </ul>
     </div>
-    <div class="col-md-10">
+    <div class="col-md-10 ">
         <div ui-view=""></div>
     </div>
 </div>

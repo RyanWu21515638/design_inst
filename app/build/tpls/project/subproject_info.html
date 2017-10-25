@@ -1,0 +1,42 @@
+<div class="main-container" style="padding-left: 2%" ng-controller="subprojectCtrl">
+    <div class="main-container-inner">
+        <div class="page-content">
+            <div class="page-header visible-lg visible-md">
+                <h3>
+                    <!--<i class="icon-spinner icon-spin orange bigger-125"></i>-->
+                    <b>子项目列表</b>
+                </h3>
+            </div>
+            <form class="form-horizontal" role="form">
+
+                <div class="space-6"></div>
+                <div class="visible-xs" style="margin-top: 2%;">
+                    <label style="text-align: right;">
+                        {{prj_list[index].subproject_list[subindex].name}}： </label>
+                    <img ng-repeat="x in imglist" src="{{x}}" ng-click="bindquery(x)"
+                         style="height: 30px;width: 30px;border-radius: 50%;">
+                </div>
+                <div class="visible-xs col-xs-12 list-group" style="margin-top: 10px;">
+                    <a class="list-group-item" ng-repeat="x in opt_prj_list | filter:query" style="font-size: 14px;">
+                        <div class="row">
+                            <div class="col-xs-2" style="text-align: center;">
+                                <img src="{{x.headimgurl}}" style="height: 40px;width: 40px;border-radius: 50%;">
+                            </div>
+                            <div class="col-xs-10">
+                                <label>{{x.name}}:{{x.info}}</label>
+                                <label class="pull-right">{{x.time}}</label>
+                                <br>
+                                <div>{{x.content}}</div>
+                            </div>
+
+                        </div>
+
+                    </a>
+                </div>
+
+            </form>
+
+
+        </div><!--pagecontent-->
+    </div><!-- main-container-inner-->
+</div>
