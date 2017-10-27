@@ -74,13 +74,19 @@ index.controller('indexCtrl', function ($scope, $timeout, $interval, $location,$
                         $cookies.put('company_name', res.company_name, {'expires': expireDate});
                         $cookies.put('openid', openid, {'expires': expireDate});
                         $cookies.put('issystem', res.remark, {'expires': expireDate});
-                        $window.location.reload();
+                        $cookies.put('headimgurl', res.headimgurl, {'expires': expireDate});
+                        $cookies.put('nickname', res.nickname, {'expires': expireDate});
+                        //$window.location.reload();
                     },600);
                     $state.go('index.project.project_info');
                 }
+                else
+                {
+                    alert("您还不是铝模设计院用户！");
+                }
             }
         ).error(function () {
-            alert("您还不是铝模设计院用户！");
+            alert("系统错误");
             }
         )
     };

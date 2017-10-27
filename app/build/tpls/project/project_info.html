@@ -240,7 +240,7 @@
                 </div>
                 <div id="modal-form3" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel3"
                      aria-hidden="false">
-                    <div class="modal-dialog" style="width:40%;margin-top: 4%;">
+                    <div class="modal-dialog" style="width:50%;margin-top: 4%;">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h2 class="blue bigger" style="text-align: center;">人员和权限分配信息</h2>
@@ -252,16 +252,18 @@
                                         <thead>
                                         <!--colspan="4"用于合并单元格-->
                                         <tr>
-                                            <th colspan="9">已分配的人员和权限</th>
+                                            <th colspan="10">已分配的人员和权限</th>
                                         </tr>
                                         <tr>
-                                            <th width="4%" class="center">no</th>
-                                            <th width="15%">姓名</th>
-                                            <th width="18%">分公司经理</th>
+                                            <th width="25px;" class="center">no</th>
+                                            <th width="50px">姓名</th>
+                                            <th ng-repeat="x in grp_list">
+                                                {{x.name}}</th>
+                                            <!--<th width="18%">分公司经理</th>
                                             <th width="14%">设计总监</th>
                                             <th width="10%">检查室</th>
                                             <th width="10%">配模室</th>
-                                            <th width="10%">底图室</th>
+                                            <th width="10%">底图室</th>-->
                                             <th>操作</th>
                                         </tr>
                                         </thead>
@@ -270,39 +272,13 @@
                                             ng-dblclick="dbclick($index)">
                                             <td style="text-align: center;">{{$index+1}}</td>
                                             <td>{{x.nickname}}</td>
-                                            <td class="center">
-                                                <i ng-if="x.var_1 != 'false'" class="icon-ok bigger-140 green"
+                                            <td class="center" ng-repeat="y in prj_role_list[$index].roles">
+                                                <i ng-if="y != 'false'" class="icon-ok bigger-140 green"
                                                    style="color: green"></i>
-                                                <i ng-if="x.var_1 == 'false'" class="icon-remove bigger-140 red"
+                                                <i ng-if="y == 'false'" class="icon-remove bigger-140 red"
                                                    style="color: red"></i>
                                             </td>
-                                            <td class="center">
-                                                <i ng-if="x.var_2 != 'false'" class="icon-ok bigger-140 green"
-                                                   style="color: green"></i>
-                                                <i ng-if="x.var_2 == 'false'" class="icon-remove bigger-140 red"
-                                                   style="color: red"></i>
 
-                                            </td>
-                                            <td class="center">
-                                                <i ng-if="x.var_3 != 'false'" class="icon-ok bigger-140 green"
-                                                   style="color: green"></i>
-                                                <i ng-if="x.var_3 == 'false'" class="icon-remove bigger-140 red"
-                                                   style="color: red"></i>
-
-                                            </td>
-                                            <td class="center">
-                                                <i ng-if="x.var_4 != 'false'" class="icon-ok bigger-140 green"
-                                                   style="color: green"></i>
-                                                <i ng-if="x.var_4 == 'false'" class="icon-remove bigger-140 red"
-                                                   style="color: red"></i>
-
-                                            </td>
-                                            <td class="center">
-                                                <i ng-if="x.var_5 != 'false'" class="icon-ok bigger-140 green"
-                                                   style="color: green"></i>
-                                                <i ng-if="x.var_5 == 'false'" class="icon-remove bigger-140 red"
-                                                   style="color: red"></i>
-                                            </td>
                                             <th>
                                                 <button ng-click="remove(x.openid)">移除</button>
                                             </th>
@@ -317,16 +293,13 @@
                                         <thead>
                                         <!--colspan="4"用于合并单元格-->
                                         <tr>
-                                            <th colspan="9">剩余可分配的人员列表</th>
+                                            <th colspan="10">剩余可分配的人员列表</th>
                                         </tr>
                                         <tr>
-                                            <th width="4%" class="center">no</th>
-                                            <th width="15%">姓名</th>
-                                            <th width="18%">分公司经理</th>
-                                            <th width="14%">设计总监</th>
-                                            <th width="10%">检查室</th>
-                                            <th width="10%">配模室</th>
-                                            <th width="10%">底图室</th>
+                                            <th width="25px" class="center">no</th>
+                                            <th width="50px">姓名</th>
+                                            <th ng-repeat="x in grp_list">
+                                                {{x.name}}</th>
                                             <th>操作</th>
                                         </tr>
                                         </thead>
@@ -341,6 +314,8 @@
                                             <td><input type="checkbox" ng-model="x.check[2]"></td>
                                             <td><input type="checkbox" ng-model="x.check[3]"></td>
                                             <td><input type="checkbox" ng-model="x.check[4]"></td>
+                                            <td><input type="checkbox" ng-model="x.check[5]"></td>
+                                            <td><input type="checkbox" ng-model="x.check[6]"></td>
                                             <th>
                                                 <button ng-click="hide($index)">添加</button>
                                             </th>

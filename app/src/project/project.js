@@ -1,5 +1,7 @@
 var project = angular.module('project', ['ngResource', 'ngCookies']);
 project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$window, $state, $cookies, $rootScope, projectService) {
+    var expireDate = new Date();
+    expireDate.setDate(expireDate.getDate() + 1);
 
     $scope.userinfo = {};               //用户信息
     $scope.prjinfo = {};                //创建总项目信息
@@ -36,6 +38,8 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
                     $scope.usr_list[i]['check'][2] = false;
                     $scope.usr_list[i]['check'][3] = false;
                     $scope.usr_list[i]['check'][4] = false;
+                    $scope.usr_list[i]['check'][3] = false;
+                    $scope.usr_list[i]['check'][4] = false;
                 }
             }
         )
@@ -53,6 +57,7 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
         projectService.group_list().then(
             function (res) {
                 $scope.grp_list = res.data;
+                $cookies.put('grp_list', JSON.stringify($scope.grp_list), {'expires': expireDate});
             }
         )
     }
@@ -171,6 +176,12 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
         }
         if ($scope.usr_list[index]['check'][4] == true) {
             $scope.roles.push(5);
+        }
+        if ($scope.usr_list[index]['check'][5] == true) {
+            $scope.roles.push(6);
+        }
+        if ($scope.usr_list[index]['check'][6] == true) {
+            $scope.roles.push(7);
         }
         $scope.rolesinfo.company_id = $cookies.get('company_id');
         $scope.rolesinfo.creator_id = $cookies.get('openid');
