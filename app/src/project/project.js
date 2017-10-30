@@ -129,6 +129,7 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
         projectService.project_role_list($scope.rolesinfo.subprj_id).then(
             function (res) {
                 $scope.prj_role_list = res.data;
+                $cookies.put('prj_role_list', JSON.stringify($scope.prj_role_list), {'expires': expireDate});
                 console.log('prj_role_list'+$scope.prj_role_list);
                 var ifexist = false;
                 for (var i = 0; i < $scope.usr_list.length; i++) {
@@ -542,4 +543,5 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
             }
         }
     });
+
 })

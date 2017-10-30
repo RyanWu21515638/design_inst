@@ -1,0 +1,52 @@
+<div class="main-container" style="padding-left: 2%" ng-controller="userCtrl">
+    <div class="main-container-inner">
+        <div class="page-content">
+
+            <div class="space-24"></div>
+            <div class="page-header">
+                <h3>
+                    <!--<i class="icon-spinner icon-spin orange bigger-125"></i>-->
+                    <b>设计院所有公司列表</b>
+                </h3>
+            </div>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-3" for="form-field-1" style="text-align: right;"> 公司查询： </label>
+                    <div class="col-sm-6">
+                        <input type="text" id="form-field-1" placeholder="请输入用户查询关键字" ng-model="query"
+                               style="width: 50%;margin-right: 10px;"/>
+                    </div>
+                </div><!--form-group-->
+                <div class="space-6"></div>
+                <div class="table-responsive animated bounceInRight">
+                    <table id="sample-table-2" class="table table-striped table-hover">
+                        <thead>
+                        <!--colspan="4"用于合并单元格-->
+                        <tr>
+                            <th width="10%">序号</th>
+                            <th width="30%">用户openid</th>
+                            <th width="20%">用户名字</th>
+                            <th width="20%">所属公司</th>
+                            <th width="20%">身份</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="x in comp_list | filter:query">
+                            <td>{{$index+1}}</td>
+                            <td>{{ x.openid}}</td>
+                            <td>{{x.nickname}}</td>
+                            <td>{{x.company_id}}</td>
+                            <td>{{x.status}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+
+
+        </div><!--pagecontent-->
+    </div><!-- main-container-inner-->
+</div>
+
+
+

@@ -19,9 +19,24 @@ user.controller('userCtrl', function ($scope, $http, $timeout, $interval, $state
             }
         )
     }
+    companyList =function () {
+        userService.company_List().then(
+            function (res) {
+                $scope.comp_list = res.data;
+            }
+        )
+    }
+    ipmList = function () {
+        userService.ipm_user_list($scope.userinfo.company_id).then(
+            function (res) {
+                $scope.ipm_list = res.data;
+            }
+        )
+    }
     userList();
     companyProjectList();
-
+    ipmList();
+    //companyList();
     $scope.prj_dt =function(index)
     {
         $scope.index =index;

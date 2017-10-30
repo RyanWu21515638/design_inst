@@ -3,25 +3,37 @@
         <div class="page-content">
             <div class="page-header visible-lg visible-md">
                 <h3>
+                    <!-- class="col-md-3"-->
                     <!--<i class="icon-spinner icon-spin orange bigger-125"></i>-->
-                    <b>任务面板</b>
+                    <b>任务面板-{{prj_name}}-{{subprj_name}}</b>
+                    <div class="dropdown pull-right">
+                        <button class="btn" type="button" ng-click="showMenu()">
+                            菜单
+                            <span class="glyphicon glyphicon-tasks"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                        </ul>
+                    </div>
+
                 </h3>
+
             </div>
             <div class="row" style="margin-bottom: 40px; ">
                 <div class="col-xs-2" style="background-color: #eeeeee;border-radius: 5px;margin-left:5px;
                 margin-top:10px;width:24%;height: 400px;position:relative;overflow-x: auto; overflow-y: auto;"
-                     ng-repeat="x in task_list">
+                     ng-repeat="x in task_list" ng-init="p_taskIndex=$index">
                     <div class="" style="font-size: 16px;padding: 10px;">{{x.name}}·{{x.length}}
                         <a><span class="icon-trash bigger-130 pull-right"></span></a></div>
-                    <div class="" data-toggle="modal" data-target="#modal-form4"
+                    <div class="" data-toggle="modal" data-target="#modal-form1"
                          ng-repeat="x in task_list[$index].subtask_list"
-                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;">
+                         style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;"
+                         ng-click="subTaskChose(p_taskIndex,$index)">
                         {{x.name}}
                         <span class="glyphicon glyphicon-check pull-right"></span>
                     </div>
 
                     <div style="position:absolute;bottom:10px;margin-left: 30%;">
-                        <a href="" ng-click="taskGroupChose(x.id)" data-toggle="modal"
+                        <a href="" ng-click="taskGroupChose(x.id,$index)" data-toggle="modal"
                            data-target="#modal-form1"><span
                                 class="glyphicon glyphicon-plus-sign"></span>添加任务</a></div>
                 </div>
@@ -34,29 +46,31 @@
                         </a>
                     </div>
                     <div ng-if="p_blur" style="font-size: 16px;padding: 10px;">
-                        <input style="height: 30px;" placeholder="新建任务列表。。。"
-                               ng-model="task_group_info.task_group_name">
+                        <form>
+                            <input style="height: 30px;" placeholder="新建任务列表。。。"
+                                   ng-model="task_group_info.task_group_name" required>
 
-                        <div class="dropdown" style="margin-top: 10px;">
-                            <button type="button" class="btn dropdown-toggle" id="dropdownMenu1"
-                                    data-toggle="dropdown">
-                                选择角色权限
-                                <span class="caret"></span>
+                            <div class="dropdown" style="margin-top: 10px;">
+                                <button type="button" class="btn dropdown-toggle" id="dropdownMenu1"
+                                        data-toggle="dropdown">
+                                    选择角色权限
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                    <li role="presentation" ng-repeat="x in grp_list">
+                                        <a role="menuitem" tabindex="-1" href=""
+                                           ng-click="setRoles(x.id,x.name)">{{x.name}}</a></li>
+                                </ul>
+                            </div>
+                            <input disabled="disabled" value="{{role_name}}" required>
+                            <div style="margin-top: 10px;"></div>
+                            <button class="btn btn-default"
+                                    style="border-radius: 5px;outline: none; ">取消
                             </button>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                                <li role="presentation" ng-repeat="x in grp_list">
-                                    <a role="menuitem" tabindex="-1" href=""
-                                       ng-click="setRoles(x.id,x.name)">{{x.name}}</a></li>
-                            </ul>
-                        </div>
-                        {{role_name}}
-                        <div style="margin-top: 10px;"></div>
-                        <button class="btn btn-default"
-                                style="border-radius: 5px;outline: none; ">取消
-                        </button>
-                        <button class="btn btn-primary"
-                                style="color: white;border-radius: 5px;" ng-click="newTaskGroup()">确定
-                        </button>
+                            <button class="btn btn-primary"
+                                    style="color: white;border-radius: 5px;" ng-click="newTaskGroup()">确定
+                            </button>
+                        </form>
                     </div>
 
                 </div>
@@ -69,10 +83,10 @@
                     <div class="modal-content" style="border-radius: 5px;">
                         <div class="modal-header">
                             <label class="blue bigger"
-                                   style="text-align: center;background-color: #eeeeee;margin: 10px;">广西南宁华润置地1号楼项目
-                                ·
-                                设计工作
-                                ·
+                                   style="text-align: center;background-color: #eeeeee;margin: 10px;">
+                                {{prj_name}}·
+                                {{subprj_name}}·
+                                {{taskgoup_name}}·
                                 单项配模</label>
                         </div>
                         <div class="modal-body">
@@ -106,7 +120,7 @@
                                                ng-click="setSubtask(6,'楼梯')">楼梯</a>
                                         </li>
                                     </ul>
-                                    <input placeholder="其他选项请在此输入" ng-model="subtask_info.subtask_name">
+                                    <input placeholder="其他选项请在此输入" ng-model="subtask_info.subtask_name" required>
                                 </div>
                             </div>
                             <div class="row" style="margin: 10px 0px 10px 50px;">
@@ -114,15 +128,17 @@
                                    data-target="#modal-form2">
                                     <span class="glyphicon glyphicon-plus-sign"></span>负责人
                                 </a>
-                                <label>·Eric</label>
+                                <label>{{subtask_info.chargerNickname}}</label>
                             </div>
                             <div class="row" style="margin: 10px 0px 10px 50px;">
 
                                 <a class="col-xs-3" href="" data-toggle="modal"
-                                   data-target="#modal-form2">
+                                   data-target="#modal-form2_1">
                                     <span class="glyphicon glyphicon-plus-sign"></span>参与者
                                 </a>
-                                <label>·Eric</label>
+                                <label ng-repeat="x in subtask_info.partitionNickname">{{x}}
+                                    <a ng-click="removePartition(x)"><span
+                                            class=" glyphicon glyphicon-remove-circle"></span></a></label>
                             </div>
                             <div class="row" style="margin: 10px 0px 10px 50px;">
                                 <label class="col-xs-3" style="margin-top: 5px;">优先级</label>
@@ -171,14 +187,24 @@
 
                                 <label class="col-xs-3">备注
                                 </label>
-
+                                <input placeholder="输入备注" ng-model="subtask_info.remarks">
                             </div>
+                        </div>
+                        <div class="modal-header">
+                            <label class="blue bigger"
+                                   style="text-align: center;background-color: #eeeeee;margin: 10px;">
+                                任务轨迹</label>
+                        </div>
+                        <div class="modal-body" ng-if="tasktype == 'son'">
+                            <div></div>
                         </div>
                         <div class="modal-footer" style="text-align: center;">
                             <button class="btn btn-primary"
                                     style="color: white;border-radius: 5px;" ng-click="newSubTask()">添加
                             </button>
-                            <button class="btn btn-danger" style="color: white;border-radius: 5px;">返回</button>
+                            <button class="btn btn-danger" style="color: white;border-radius: 5px;"
+                                    data-dismiss="modal">返回
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -189,14 +215,41 @@
                     <div class="modal-content" style="border-radius: 5px;">
                         <div class="modal-header">
                             <label class="blue bigger"
-                                   style="text-align: center;background-color: #eeeeee;margin: 10px;">添加人员</label>
+                                   style="text-align: center;background-color: #eeeeee;margin: 10px;">添加负责人</label>
                         </div>
                         <div class="modal-body">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover">
                                     <tbody>
-                                    <tr>
-                                        <td style="text-align: center;">Eric</td>
+                                    <tr ng-repeat="x in prj_role_list" ng-click="chargerChose(x.nickname,x.openid)"
+                                        data-dismiss="modal">
+                                        <td style="text-align: center;">
+                                            {{x.nickname}}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="modal-form2_1" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" style="width:10%;margin-top: 6%;">
+                    <div class="modal-content" style="border-radius: 5px;">
+                        <div class="modal-header">
+                            <label class="blue bigger"
+                                   style="text-align: center;background-color: #eeeeee;margin: 10px;">添加参与者</label>
+                        </div>
+                        <div class="modal-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover">
+                                    <tbody>
+                                    <tr ng-repeat="x in prj_role_list" ng-click="partitionChose(x.nickname,x.openid)"
+                                        data-dismiss="modal">
+                                        <td style="text-align: center;">
+                                            {{x.nickname}}
+                                        </td>
                                     </tr>
                                 </table>
                             </div>
@@ -256,19 +309,13 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <div style="margin: 30px;">
-                                    <a href="" data-toggle="modal"
-                                       data-target="#modal-form2">
-                                        <span class="glyphicon glyphicon-plus-sign"></span>选择单项任务
-                                    </a>
-                                    <label>·背楞</label>
+                                    子任务
+                                    <label>背楞</label>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div style="margin: 30px;">
-                                    <a href="" data-toggle="modal"
-                                       data-target="#modal-form2">
-                                        <span class="glyphicon glyphicon-plus-sign"></span>参与者
-                                    </a>
+                                    参与者
                                     <label>·Eric</label>
                                 </div>
                             </div>
@@ -286,12 +333,43 @@
                             <button class="btn btn-default"
                                     style="background-color: #3da8f5;color: white;border-radius: 5px;">添加
                             </button>
-                            <button class="btn btn-danger" style="color: white;border-radius: 5px;">返回</button>
+                            <button class="btn btn-danger" style="color: white;border-radius: 5px;"
+                                    data-dismiss="modal">返回
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
 
+
+            <form class="form-horizontal" role="form">
+
+                <div class="space-6"></div>
+                <div class="visible-xs" style="margin-top: 2%;">
+                    <label style="text-align: right;">
+                        {{prj_list[index].subproject_list[subindex].name}}： </label>
+                    <img ng-repeat="x in imglist" src="{{x}}" ng-click="bindquery(x)"
+                         style="height: 30px;width: 30px;border-radius: 50%;">
+                </div>
+                <div class="visible-xs col-xs-12 list-group" style="margin-top: 10px;">
+                    <a class="list-group-item" ng-repeat="x in opt_prj_list | filter:query" style="font-size: 14px;">
+                        <div class="row">
+                            <div class="col-xs-2" style="text-align: center;">
+                                <img src="{{x.headimgurl}}" style="height: 40px;width: 40px;border-radius: 50%;">
+                            </div>
+                            <div class="col-xs-10">
+                                <label>{{x.name}}:{{x.info}}</label>
+                                <label class="pull-right">{{x.time}}</label>
+                                <br>
+                                <div>{{x.content}}</div>
+                            </div>
+
+                        </div>
+
+                    </a>
+                </div>
+
+            </form>
         </div><!--pagecontent-->
     </div><!-- main-container-inner-->
 </div>

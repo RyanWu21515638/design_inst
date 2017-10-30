@@ -59,19 +59,39 @@
 </head>
 <style type="text/css">
     body{
-        text-align: center;
-        background: #FFFFFF;
-        overflow: hidden;
-        background: #fff;
+        /*text-align: center;
+        background: #FFFFFF;*/
+        /*overflow: hidden;*/
+        /*background: #fff;*/
+    }
+    canvas{
+        position:absolute;
+        z-index:-1;
     }
 </style>
 <body>
-
 <div ui-view>
+
 </div>
 
-<canvas id="Mycanvas"></canvas>
-<script>
+<div id="prj_menu" class="animated bounceInDown" style="display: none;margin-left:10px;padding-left: 30px;
+background-color: #eeeeee;width: 15%;height: 800px;" >
+    <div class="row">
+        <h3>项目菜单</h3>
+    </div>
+    <div class="row">
+        <h4 style="border-bottom: 2px solid white;padding-bottom: 10px;"><b>任务统计</b></h4>
+    </div>
+    <div class="row" ng-controller="subproject_info_detailCtrl">
+        <h4 style="border-bottom: 2px solid white;padding-bottom: 10px;"><b>项目进展</b></h4>
+        <div style="width: 255px;height: 200px;" id="container1"></div>
+    </div>
+    <div class="row">
+        <h4 style="border-bottom: 2px solid white;padding-bottom: 10px;"><b>项目动态</b></h4>
+    </div>
+</div>
+<!--<canvas id="Mycanvas"></canvas>-->
+<!--<script>
     //定义画布宽高和生成点的个数
     var WIDTH = window.innerWidth, HEIGHT = window.innerHeight, POINT = 60;
 
@@ -174,8 +194,9 @@
             draw();
         }, 16);
     }
+    document.body.style.background = "url('"+Mycanvas.toDataURL()+"')";
+</script>-->
 
-</script>
 
 <!-- basic scripts -->
 <script src="app/build/libs/jquery-2.0.3.min.js"></script>

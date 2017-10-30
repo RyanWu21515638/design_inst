@@ -48,11 +48,11 @@
             <ul class="nav navbar-nav col-md-10">
                 <!--<li class="col-md-3 col-xs-4"><a ui-sref="index.compare.oldlist" style="outline:none;">所有项目</a></li>
                 <li class="col-md-3 col-xs-4"><a ui-sref="index.compare.oldlist" style="outline:none;">所有项目</a></li>-->
-                <li class="col-md-3 col-xs-4 col-md-offset-3" ng-if="userinfo.status == '2'"><a ui-sref="index.project.project_info" style="outline:none; text-align: center;">项目管理</a></li>
+                <li class="col-md-3 col-xs-4 col-md-offset-5" ng-if="userinfo.status == '2'"><a ui-sref="index.project.project_info" style="outline:none; text-align: center;">项目管理</a></li>
                 <li class="col-md-3 col-xs-4" ng-if="userinfo.issystem == '777'"><a ui-sref="index.workstation.userinfo" href="" style="outline:none;text-align: center;">系统管理</a></li>
-                <li class="col-md-3 col-xs-4 visible-lg visible-md" ng-if="userinfo.status == '2'"><a ui-sref="index.forum.forum_items" href="" style="outline:none;text-align: center;">论坛交流</a></li>
+                <!--<li class="col-md-3 col-xs-4 visible-lg visible-md" ng-if="userinfo.status == '2'"><a ui-sref="index.forum.forum_items" href="" style="outline:none;text-align: center;">论坛交流</a></li>
                 <li class="col-md-3 col-xs-4 col-md-offset-9 visible-lg visible-md" ng-if="userinfo.status != '2'"><a href="" ui-sref="index.forum.forum_items" style="outline:none;text-align: center;">论坛交流</a></li>
-
+-->
             </ul>
             <ul class="nav navbar-nav pull-right col-md-2 visible-lg visible-md">
                 <li ng-if="logged != 'true'"><a  data-toggle="modal"

@@ -13,7 +13,9 @@
                 <div class="form-group">
                     <label class="col-sm-3" for="form-field-1" style="text-align: right;"> 用户查询： </label>
                     <div class="col-sm-6">
-                        <input type="text" id="form-field-1" placeholder="请输入用户查询关键字" ng-model="query"
+                        <input id="form-field-1" placeholder="请输入用户查询关键字" ng-model="query"
+                               style="width: 30%;margin-right: 10px;"/>
+                        <input id="form-field-2" placeholder="请输入其他关键字" ng-model="q1"
                                style="width: 50%;margin-right: 10px;"/>
                     </div>
                 </div><!--form-group-->
@@ -23,20 +25,32 @@
                         <thead>
                         <!--colspan="4"用于合并单元格-->
                         <tr>
-                            <th width="10%">序号</th>
-                            <th width="30%">用户openid</th>
-                            <th width="20%">用户名字</th>
-                            <th width="20%">所属公司</th>
-                            <th width="20%">身份</th>
+                            <th>序号</th>
+                            <th>头像</th>
+                            <th>昵称</th>
+                            <th>国家</th>
+                            <th>省</th>
+                            <th>地区</th>
+                            <th>所属公司</th><!--
+                            <th width="20%">身份</th>-->
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="x in usr_list | filter:query" ng-click="ngtest($index)" ng-dblclick="dbclick($index)">
+                        <tr ng-repeat="x in ipm_list | filter:query |filter:q1" ng-click="ngtest($index)" ng-dblclick="dbclick($index)">
                             <td>{{$index+1}}</td>
-                            <td>{{ x.openid}}</td>
+                            <td>
+                                <img class="nav-user-photo" src="{{x.headimgurl}}"
+                                     alt="{{x.nickname}}" style="width: 24px;height: 24px;border-radius: 50%;"/>
+                            </td>
                             <td>{{x.nickname}}</td>
-                            <td>{{x.company_id}}</td>
-                            <td>{{x.status}}</td>
+                            <td>{{x.country}}</td>
+                            <td>{{x.province}}</td>
+                            <td>{{x.city}}</td>
+                            <td ng-if="x.company_id != '1'"><button>添加到设计院</button></td>
+                            <td ng-if="x.company_id == '1'"><span class="label label-success">设计院用户</span>
+                                <a href=""><span class="label label-danger">从设计院删除</span></a></td>
+                           <!-- <td>{{x.company_id}}</td>
+                            <td>{{x.status}}</td>-->
                         </tr>
                         </tbody>
                     </table>

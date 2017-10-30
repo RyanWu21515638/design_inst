@@ -76,7 +76,7 @@ index.controller('indexCtrl', function ($scope, $timeout, $interval, $location,$
                         $cookies.put('issystem', res.remark, {'expires': expireDate});
                         $cookies.put('headimgurl', res.headimgurl, {'expires': expireDate});
                         $cookies.put('nickname', res.nickname, {'expires': expireDate});
-                        //$window.location.reload();
+                        $window.location.reload();
                     },600);
                     $state.go('index.project.project_info');
                 }

@@ -83,11 +83,11 @@ project.service('projectService', function ($resource, $http, $rootScope) {
             + '&subproject_id=' + data.subproject_id);
     }
 
-    //获取项目任务列表
+    //获取任务任务列表
     this.taskgroup_task_list = function (subprj_id) {
         return $http.get($rootScope.ip + '/design_institute/public/admin/Taskgroup/taskgroup_task_list?subprj_id=' + subprj_id);
     }
-    //新增项目列表
+    //新增任务列表
     this.add_taskgroup = function (data1) {
         var data = {
             subprj_id: data1.subprj_id,
@@ -98,7 +98,7 @@ project.service('projectService', function ($resource, $http, $rootScope) {
         return $http.post($rootScope.ip + '/design_institute/public/admin/Taskgroup/add_taskgroup', data, this.postCfg);
 
     }
-    //新增子项目
+    //新增子任务
     this.add_task = function (data1) {
         var data = {
             creator_id: data1.creator_id,
@@ -111,6 +111,7 @@ project.service('projectService', function ($resource, $http, $rootScope) {
             urgent:data1.urgent,
         }
         return $http.post($rootScope.ip + '/design_institute/public/admin/Task/add_task', data, this.postCfg);
+
     }
 
 });
