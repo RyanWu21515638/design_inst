@@ -1,5 +1,5 @@
-﻿var routerApp = angular.module('routerApp', ['ui.router', 'index', 'login','project','forum','user','newforum','subproject',
-                                            'subproject_info_detail']);
+﻿var routerApp = angular.module('routerApp', ['ui.router', 'index', 'login', 'project', 'forum', 'user', 'newforum', 'subproject',
+    'subproject_info_detail']);
 
 
 /**
@@ -139,10 +139,11 @@ routerApp
  * @return {[type]}
  */
 
-routerApp.run(function ($rootScope,$cookies) {
+routerApp.run(function ($rootScope, $cookies) {
     $rootScope.ip = 'http://192.168.3.158';
+    $rootScope.menu = false;
     //$rootScope.ip = 'http://192.168.3.168';
-	//$rootScope.ip = 'http://192.168.3.7';
+    //$rootScope.ip = 'http://192.168.3.7';
     //$rootScope.ip = 'http://120.25.74.178';
     //获取电脑名称
     /*function getSysInfo(){

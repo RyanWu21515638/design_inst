@@ -1,5 +1,6 @@
 var project = angular.module('project', ['ngResource', 'ngCookies']);
-project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$window, $state, $cookies, $rootScope, projectService) {
+project.controller('projectCtrl', function ($scope, $http, $timeout, $interval, $window, $state, $cookies, $location,
+                                            $rootScope, projectService) {
     var expireDate = new Date();
     expireDate.setDate(expireDate.getDate() + 1);
 
@@ -10,18 +11,53 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
     $scope.removeinfo = {};             //移除的已分配的人员信息
     $scope.downloadinfo = {};           //所有文件下载链接列表
     $scope.roles = new Array();         //给某个人员分配权限
-
+    $rootScope.menu = false;
     //获取用户微信id，公司id，设计院权限--可设置成全局变量
+    //
     $scope.userinfo.openid = $cookies.get('openid');
     $scope.userinfo.company_id = $cookies.get('company_id');
+    $scope.userinfo.headimgurl = $cookies.get('headimgurl');
+    $scope.userinfo.company_name = $cookies.get('company_name');
+    $scope.userinfo.nickname = $cookies.get('nickname');
     $scope.userinfo.status = $cookies.get('status');
-    //
+
+    console.log($location.search().login_id);
+    console.log($location.search().subprj_id);
+    if($location.search().login_id!=undefined &&$location.search().login_id!='' &&$location.search().login_id!=null)
+        $scope.userinfo.openid = $location.search().login_id;
+    else
+        $scope.userinfo.openid = $cookies.get('openid');
+    selectUser = function (openid) {
+        $http.get($rootScope.ip + "/design_institute/public/admin/user/selectUser?openid=" + openid).success(
+            function (res) {
+                if (res.company_id) {
+                    $scope.logged = 'true';
+                    $cookies.put('logged', 'true', {'expires': expireDate});
+                    $cookies.put('status', res.status, {'expires': expireDate});
+                    $cookies.put('company_id', res.company_id, {'expires': expireDate});
+                    $cookies.put('company_name', res.company_name, {'expires': expireDate});
+                    $cookies.put('headimgurl', res.headimgurl, {'expires': expireDate});
+                    $cookies.put('nickname', res.nickname, {'expires': expireDate});
+                    $cookies.put('openid', $scope.userinfo.openid, {'expires': expireDate});
+                    $window.location.reload();
+                }
+            }
+        )
+    };
+
+    if($cookies.get('openid') == undefined || $cookies.get('openid')=='' || $cookies.get('openid')==null ||
+        ($cookies.get('openid')!=$location.search().login_id && $location.search().login_id =='undefined'))
+    {
+        console.log($location.search().login_id);
+        selectUser($location.search().login_id);
+    }
+
     //获取所有项目列表--包括总项目下面的子项目
     projectList = function () {
         projectService.project_list($scope.userinfo).then(
             function (res) {
                 $scope.prj_list = res.data;
-                $rootScope.prj_list = res.data;
+                $cookies.put('prj_list', JSON.stringify($scope.prj_list), {'expires': expireDate});
             }
         )
     };
@@ -41,6 +77,7 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
                     $scope.usr_list[i]['check'][3] = false;
                     $scope.usr_list[i]['check'][4] = false;
                 }
+
             }
         )
     };
@@ -67,15 +104,19 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
     configurationlist();
     grouplist();
 
+    if($location.search().subprj_id)
+    {
+        $state.go("index.project.subproject_info_detail",{prj_id:0,subprj_id:$location.search().subprj_id});
+
+    }
 
     //选定总项目
-    $scope.prj_dt = function (index,prjid,media) {
+    $scope.prj_dt = function (index, prjid, media) {
         //选定总项目
         $scope.index = index;
         $scope.prjinfo.prj_id = prjid;
-        if(media == 2)
-        {
-            $state.go("index.project.subproject",{index: index});
+        if (media == 2) {
+            $state.go("index.project.subproject", {index: index});
         }
     }
     //新建总项目
@@ -87,8 +128,7 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
 
         projectService.new_project($scope.prjinfo).then(
             function (res) {
-                if(res.data.success)
-                {
+                if (res.data.success) {
                     $('#modal-form1').modal('hide');
                     projectList();
                 }
@@ -105,8 +145,7 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
         console.log($scope.subprjinfo);
         projectService.new_subproject($scope.subprjinfo).then(
             function (res) {
-                if(res.data.success)
-                {
+                if (res.data.success) {
                     $('#modal-form2').modal('hide');
                     projectList();
                 }
@@ -129,26 +168,29 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
         projectService.project_role_list($scope.rolesinfo.subprj_id).then(
             function (res) {
                 $scope.prj_role_list = res.data;
-                $cookies.put('prj_role_list', JSON.stringify($scope.prj_role_list), {'expires': expireDate});
-                console.log('prj_role_list'+$scope.prj_role_list);
-                var ifexist = false;
-                for (var i = 0; i < $scope.usr_list.length; i++) {
-                    for (var j = 0; j < $scope.prj_role_list.length; j++) {
-                        if ($scope.usr_list[i].openid == $scope.prj_role_list[j].openid) {
-                            ifexist = true;
+
+                    $cookies.put('prj_role_list', JSON.stringify($scope.prj_role_list), {'expires': expireDate});
+                    console.log('prj_role_list' + $scope.prj_role_list);
+                    var ifexist = false;
+                    for (var i = 0; i < $scope.usr_list.length; i++) {
+                        for (var j = 0; j < $scope.prj_role_list.length; j++) {
+                            if ($scope.usr_list[i].openid == $scope.prj_role_list[j].openid) {
+                                ifexist = true;
+                            }
+                            console.log(ifexist);
                         }
-                        console.log(ifexist);
+                        if (ifexist) {
+                            $scope.usr_list[i]['show'] = false;
+                            ifexist = false;
+                            console.log($scope.usr_list);
+                        }
                     }
-                    if(ifexist)
-                    {
-                        $scope.usr_list[i]['show'] = false;
-                        ifexist = false;
-                        console.log($scope.usr_list);
-                    }
-                }
+
+
             }
         )
     }
+
     $scope.downloadList = function (subproject_id) {
         $scope.downloadinfo.company_id = $cookies.get('company_id');
         $scope.downloadinfo.project_id = $scope.prjinfo.prj_id;
@@ -192,9 +234,8 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
         $scope.rolesinfo.roleid = $scope.roles;
         projectService.add_role($scope.rolesinfo).then(
             function (res) {
-                if(res.data.success)
-                {
-                    $scope.subchose( $scope.rolesinfo.subprj_id) ;
+                if (res.data.success) {
+                    $scope.subchose($scope.rolesinfo.subprj_id);
                 }
             }
         )
@@ -207,9 +248,8 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
         projectService.del_project_role($scope.removeinfo).then(
             function (res) {
                 console.log(res.data.success);
-                if(res.data.success)
-                {
-                    $scope.subchose( $scope.rolesinfo.subprj_id) ;
+                if (res.data.success) {
+                    $scope.subchose($scope.rolesinfo.subprj_id);
                 }
             }
         )
@@ -217,8 +257,7 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
     $scope.delSubproject = function (subproject_id) {
         projectService.del_subproject(subproject_id).then(
             function (res) {
-                if(!res.data.success)
-                {
+                if (!res.data.success) {
                     alert("项目进行中，无法删除！");
                 }
                 else {
@@ -231,12 +270,10 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval,$
         projectService.del_config(conf_id).then(
             function (res) {
                 console.log(res.data);
-                if(!res.data.success)
-                {
+                if (!res.data.success) {
                     alert("此配置正在被使用，无法删除！");
                 }
-                else
-                {
+                else {
                     $window.location.reload();
                 }
 

@@ -6,19 +6,10 @@
                     <!-- class="col-md-3"-->
                     <!--<i class="icon-spinner icon-spin orange bigger-125"></i>-->
                     <b>任务面板-{{prj_name}}-{{subprj_name}}</b>
-                    <div class="dropdown pull-right">
-                        <button class="btn" type="button" ng-click="showMenu()">
-                            菜单
-                            <span class="glyphicon glyphicon-tasks"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                        </ul>
-                    </div>
 
                 </h3>
-
             </div>
-            <div class="row" style="margin-bottom: 40px; ">
+            <div class="row visible-lg visible-md" style="margin-bottom: 40px; ">
                 <div class="col-xs-2" style="background-color: #eeeeee;border-radius: 5px;margin-left:5px;
                 margin-top:10px;width:24%;height: 400px;position:relative;overflow-x: auto; overflow-y: auto;"
                      ng-repeat="x in task_list" ng-init="p_taskIndex=$index">
@@ -341,38 +332,11 @@
                 </div>
             </div>
 
-
-            <form class="form-horizontal" role="form">
-
-                <div class="space-6"></div>
-                <div class="visible-xs" style="margin-top: 2%;">
-                    <label style="text-align: right;">
-                        {{prj_list[index].subproject_list[subindex].name}}： </label>
-                    <img ng-repeat="x in imglist" src="{{x}}" ng-click="bindquery(x)"
-                         style="height: 30px;width: 30px;border-radius: 50%;">
-                </div>
-                <div class="visible-xs col-xs-12 list-group" style="margin-top: 10px;">
-                    <a class="list-group-item" ng-repeat="x in opt_prj_list | filter:query" style="font-size: 14px;">
-                        <div class="row">
-                            <div class="col-xs-2" style="text-align: center;">
-                                <img src="{{x.headimgurl}}" style="height: 40px;width: 40px;border-radius: 50%;">
-                            </div>
-                            <div class="col-xs-10">
-                                <label>{{x.name}}:{{x.info}}</label>
-                                <label class="pull-right">{{x.time}}</label>
-                                <br>
-                                <div>{{x.content}}</div>
-                            </div>
-
-                        </div>
-
-                    </a>
-                </div>
-
-            </form>
         </div><!--pagecontent-->
     </div><!-- main-container-inner-->
 </div>
+
+
 
 
 

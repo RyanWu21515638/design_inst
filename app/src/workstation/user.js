@@ -41,4 +41,18 @@ user.controller('userCtrl', function ($scope, $http, $timeout, $interval, $state
     {
         $scope.index =index;
     }
+    $scope.addIpminstUser =function (openid,companyid) {
+        userService.add_ipminst_user(openid,companyid).then(
+            function (res) {
+                ipmList();
+            }
+        )
+    }
+    $scope.delIpminstUser =function (openid) {
+        userService.del_ipminst_user(openid).then(
+            function (res) {
+                ipmList();
+            }
+        )
+    }
 })

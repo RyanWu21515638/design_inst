@@ -5,7 +5,8 @@
     <title>铝模设计院管理平台</title>
     <base href="/design_inst/"/>
     <link rel="shortcut icon" href="app/build/image/favicon.ico" type="image/x-icon" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0"/>-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
     <!-- basic styles -->
     <link rel="stylesheet" href="app/build/libs/bootstrap-3.0.0/css/bootstrap.min.css">
@@ -36,7 +37,7 @@
     <script src="app/build/libs/angular-ui-router.js"></script>
     <script src="app/build/libs/tm.pagination.js"></script>
     <script src="app/build/libs/qrcode.js"></script>
-    <script src="app/build/libs/LodopFuncs.js"></script>
+    <!--<script src="app/build/libs/LodopFuncs.js"></script>-->
     <script src="app/build/libs/jquery-barcode.js"></script>
     <script src="app/build/libs/angular.treeview.js"></script>
 
@@ -70,26 +71,28 @@
     }
 </style>
 <body>
-<div ui-view>
+    <div ui-view>
 
-</div>
+    </div>
 
-<div id="prj_menu" class="animated bounceInDown" style="display: none;margin-left:10px;padding-left: 30px;
-background-color: #eeeeee;width: 15%;height: 800px;" >
-    <div class="row">
-        <h3>项目菜单</h3>
-    </div>
-    <div class="row">
-        <h4 style="border-bottom: 2px solid white;padding-bottom: 10px;"><b>任务统计</b></h4>
-    </div>
-    <div class="row" ng-controller="subproject_info_detailCtrl">
-        <h4 style="border-bottom: 2px solid white;padding-bottom: 10px;"><b>项目进展</b></h4>
-        <div style="width: 255px;height: 200px;" id="container1"></div>
-    </div>
-    <div class="row">
-        <h4 style="border-bottom: 2px solid white;padding-bottom: 10px;"><b>项目动态</b></h4>
-    </div>
-</div>
+    <!--<div id="prj_menu" class="animated bounceInDown col-md-2" style="display: none;padding-left: 30px;
+background-color: #eeeeee;height: 800px;" >
+        <div class="row">
+            <h3>项目菜单</h3>
+        </div>
+        <div class="row">
+            <h4 style="border-bottom: 2px solid white;padding-bottom: 10px;"><b>任务统计</b></h4>
+        </div>
+        <div class="row" ng-controller="subproject_info_detailCtrl">
+            <h4 style="border-bottom: 2px solid white;padding-bottom: 10px;"><b>项目进展</b></h4>
+            <div style="width: 255px;height: 200px;" id="container1"></div>
+        </div>
+        <div class="row">
+            <h4 style="border-bottom: 2px solid white;padding-bottom: 10px;"><b>项目动态</b></h4>
+        </div>
+    </div>-->
+
+
 <!--<canvas id="Mycanvas"></canvas>-->
 <!--<script>
     //定义画布宽高和生成点的个数

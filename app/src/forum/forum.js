@@ -6,10 +6,10 @@ forum.controller('forumCtrl', function ($scope, $location, $http,$timeout, $inte
     var expireDate = new Date();
     expireDate.setDate(expireDate.getDate() + 1);
 
-    console.log($location.search().openid);
+    console.log($location.search().login_id);
     console.log($location.search().company_id);
     console.log($location.search().project_id);
-    console.log($location.search().subproject_id);
+    console.log($location.search().subprj_id);
 
     $scope.detail=function(index)
     {
@@ -44,18 +44,16 @@ forum.controller('forumCtrl', function ($scope, $location, $http,$timeout, $inte
                     typeList();
                     problemList();
                     $window.location.reload();
+                    if($cookies.get('openid') == undefined || $cookies.get('openid') == '' ||$cookies.get('openid') == null)
+                    {
+                        console.log($location.search().openid);
+                    }
                 }
             }
         )
     };
-    console.log($cookies.get('openid'));
-    if($cookies.get('openid') == undefined || $cookies.get('openid') == '' ||$cookies.get('openid') == null)
-    {
-        console.log($location.search().openid);
-        if($location.search().openid!=undefined &&$location.search().openid!='' &&$location.search().openid!=null)
+    if($location.search().openid!=undefined &&$location.search().openid!='' &&$location.search().openid!=null)
         selectUser($location.search().openid);
-
-    }
 
     //if($location.search().openid !=undefined && $location.search().openid !=undefined!="" &&$location.search().openid !=undefined!=null)
     /*if($location.search().openid !='')
@@ -80,6 +78,8 @@ forum.controller('forumCtrl', function ($scope, $location, $http,$timeout, $inte
     $scope.probleminfo.project_id = $cookies.get('project_id');
     $scope.probleminfo.subproject_id = $cookies.get('subproject_id');
     $scope.newprobleminfo = {};
+
+
     projectList = function () {
         projectService.project_list($scope.userinfo).then(
             function (res) {

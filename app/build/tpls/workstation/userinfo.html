@@ -46,9 +46,9 @@
                             <td>{{x.country}}</td>
                             <td>{{x.province}}</td>
                             <td>{{x.city}}</td>
-                            <td ng-if="x.company_id != '1'"><button>添加到设计院</button></td>
+                            <td ng-if="x.company_id != '1'"><button ng-click="addIpminstUser(x.openid,x.company_id)">添加到设计院</button></td>
                             <td ng-if="x.company_id == '1'"><span class="label label-success">设计院用户</span>
-                                <a href=""><span class="label label-danger">从设计院删除</span></a></td>
+                                <a href="" ng-click="delIpminstUser(x.openid)"><span class="label label-danger">从设计院删除</span></a></td>
                            <!-- <td>{{x.company_id}}</td>
                             <td>{{x.status}}</td>-->
                         </tr>

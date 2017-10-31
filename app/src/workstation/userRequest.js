@@ -18,4 +18,10 @@ user.service('userService', function ($resource, $http, $rootScope) {
     this.ipm_user_list = function (company_id) {
         return $http.get($rootScope.ip+ '/design_institute/public/admin/User/ipm_user_list?company_id='+company_id);
     }
+    this.add_ipminst_user = function (openid,company_id) {
+        return $http.get($rootScope.ip+'/design_institute/public/admin/User/add_ipminst_user?openid='+openid+'&company_id='+company_id);
+    }
+    this.del_ipminst_user = function (openid) {
+        return $http.get($rootScope.ip+'/design_institute/public/admin/User/del_ipminst_user?openid='+openid);
+    }
 });

@@ -1,10 +1,23 @@
 var subproject_info_detail = angular.module('subproject_info_detail', ['ngResource', 'ngCookies']);
-subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope, $http, $timeout, $interval, $window, $stateParams, $state, $cookies,
+subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope, $http, $timeout, $interval, $window,
+                                                                          $stateParams, $state, $cookies, $location,
                                                                           $rootScope, projectService) {
+
+    var expireDate = new Date();
+    expireDate.setDate(expireDate.getDate() + 1);
+
+
     $scope.prj_id = $stateParams.prj_id;
     $scope.subprj_id = $stateParams.subprj_id;
     console.log($scope.prj_id);
     console.log($scope.subprj_id);
+    if ($scope.subprj_id) {
+        $rootScope.menu = true;
+        //document.getElementById('container1').style.display = 'inline-block';
+    }
+    else {
+        $rootScope.menu = false;
+    }
     $scope.task_group_info = {};
     $scope.subtask_info = {};
     $scope.subtask_info.subtask_name = "选择类型";
@@ -20,8 +33,6 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
 
 
     $scope.grp_list = JSON.parse($cookies.get('grp_list'));
-    $scope.prj_role_list = JSON.parse($cookies.get('prj_role_list'));
-    console.log($scope.prj_role_list);
     projectService.project_list($scope.userinfo).then(
         function (res) {
             $scope.prj_list = res.data;
@@ -35,23 +46,154 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
                     }
                 }
             }
-
-
-            $http.get('http://192.168.3.168/design_institute/public/home/Projecttrailinfo/getProjecttrailinfos?' +
+            $http.get($rootScope.ip + '/design_institute/public/home/Projecttrailinfo/getProjecttrailinfos?' +
                 'prj_id=' + $scope.prj_id + '&subproject_id=' + $scope.subprj_id).success(
                 function (res) {
-                    $scope.opt_prj_list = res;
-                    $scope.imglist = new Array();
+                    $rootScope.opt_prj_list = res;
+                    $rootScope.imglist = new Array();
                     for (var i = 0; i < $scope.opt_prj_list.length; i++) {
-                        $scope.imglist[i] = $scope.opt_prj_list[i].headimgurl;
+                        $rootScope.imglist[i] = $scope.opt_prj_list[i].headimgurl;
                     }
-                    $scope.imglist = DropRepeat($scope.imglist);
-                    console.log($scope.imglist);
+                    $rootScope.imglist = DropRepeat($rootScope.imglist);
+
+
+
+
                 }).error(function () {
                 alert("an unexpected error ocurred!");
             })
         }
     )
+    projectService.project_role_list($scope.subprj_id).then(
+        function (res) {
+            $scope.prj_role_list = res.data;
+            $cookies.put('prj_role_list', JSON.stringify($scope.prj_role_list), {'expires': expireDate});
+        }
+    )
+
+    projectService.month_task_list($scope.subprj_id).then(
+        function (res) {
+            $rootScope.time_x = [];
+            $rootScope.done = [];
+            $rootScope.sum_1 = [];
+            for (var i = 1; i < res.data.length; i++) {
+                $rootScope.time_x.push(res.data[i].time);
+                $rootScope.done.push(parseInt(1 + res.data[i].sum_1 - res.data[i].sum));
+                $rootScope.sum_1.push(parseInt(res.data[i].sum_1));
+            }
+            prj_keboard();
+            //$window.location.reload();
+        }
+    )
+    //任务看板
+
+    prj_keboard = function () {
+
+            $('#container1').ready(function () {
+                var chart = {
+                    zoomType: 'xy'
+                };
+                var title = {
+                    text: ''
+                };
+                var xAxis = {
+                    categories: $scope.time_x,
+                    crosshair: true
+                };
+
+                var series = [{
+                    name: '已完成',
+                    type: 'spline',
+                    yAxis: 1,
+                    data: $scope.done,
+                    tooltip: {
+                        valueSuffix: ''
+                    }
+                }, {
+                    name: '未完成',
+                    type: 'spline',
+                    yAxis: 1,
+                    data: $scope.sum_1,
+                    tooltip: {
+                        valueSuffix: ''
+                    },
+                },];
+                var yAxis = [{ // 第一条Y轴
+                    labels: {
+                        format: '{value}',
+                        style: {
+                            color: Highcharts.getOptions().colors[1]
+                        }
+                    },
+                    title: {
+                        text: '',
+                        style: {
+                            color: Highcharts.getOptions().colors[1]
+                        }
+                    }
+                }, { // 第二条Y轴
+                    title: {
+                        text: '',
+                        style: {
+                            color: Highcharts.getOptions().colors[0]
+                        }
+                    },
+                    labels: {
+                        format: '{value}',
+                        style: {
+                            color: Highcharts.getOptions().colors[0]
+                        }
+                    },
+                    opposite: true
+                }];
+                var tooltip = {
+                    shared: true,
+
+                };
+                var plotOptions = {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    },
+                    series: {
+                        cursor: 'pointer',
+                        events: {
+                            /*click: function (e) {
+                                if (type == 1) {
+                                    console.log(e.point.category);
+                                    $scope.changecharts($scope.project_id, e.point.category.split('-')[0] + '-' + e.point.category.split('-')[1], e.point.category.split('-')[0] + '-' + e.point.category.split('-')[1]);
+                                }
+                                if (type == 2) {
+                                    console.log(e.point.category);
+                                    $scope.changecharts($scope.project_id, e.point.category + '-' + '01', e.point.category + '-' + '12');
+                                }
+                            }*/
+                        }
+                    }
+                };
+                var legend = {
+                    layout: 'horizontal',//horizontal、vertical
+                    align: 'left',
+                    x: 580,
+                    verticalAlign: 'top',
+                    y: 20,
+                    floating: true,
+                    backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#faf8ff'
+                };
+
+                var json = {};
+                json.chart = chart;
+                json.title = title;
+                json.xAxis = xAxis;
+                json.yAxis = yAxis;
+                json.tooltip = tooltip;
+                json.legend = legend;
+                json.series = series;
+                json.plotOptions = plotOptions;
+                $('#container1').highcharts(json);
+            });
+
+    }
 
 
     //设置总任务角色
@@ -111,8 +253,6 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
             $scope.subtask_info.parter.splice(indexof, 1);
         }
     }
-
-
     //获取项目id为$scope.subprj_id的所有任务
     projectService.taskgroup_task_list($scope.subprj_id).then(
         function (res) {
@@ -154,6 +294,7 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
         )
     }
     $scope.subTaskChose = function (taskIndex, subTaskIndex) {
+        $scope.prj_role_list = JSON.parse($cookies.get('prj_role_list'));
         $scope.tasktype = 'son';
         $scope.taskIndex = taskIndex;
         $scope.subTaskIndex = subTaskIndex;
@@ -201,127 +342,21 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
     }).on("hide", function () {
         $("#timepicker1").blur();
     });
-
-
     //
-    document.getElementById("container1").style.display = 'inline-block';
-    $('#container1').ready(function () {
-        var chart = {
-            zoomType: 'xy'
-        };
-        var title = {
-            text: ''
-        };
-        var xAxis = {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            crosshair: true
-        };
-
-        var series = [{
-            name: '已完成',
-            type: 'spline', /*
-            yAxis: 1,*/
-            data: [7.0, 49, 9.5, 14.5, 18.2, 21.5, 25.2,
-                26.5, 23.3, 18.3, 13.9, 9.6],
-            tooltip: {
-                valueSuffix: ''
-            }
-        }, {
-            name: '未完成',
-            type: 'spline',
-            yAxis: 1,
-            data: [7.0, 6.9, 9.5, 10.5, 18.2, 21.5, 25.2,
-                26.5, 23.3, 18.3, 13.9, 9.6],
-            tooltip: {
-                valueSuffix: ''
-            },
-        },];
-        var yAxis = [{ // 第一条Y轴
-            labels: {
-                format: '{value}',
-                style: {
-                    color: Highcharts.getOptions().colors[1]
-                }
-            },
-            title: {
-                text: '',
-                style: {
-                    color: Highcharts.getOptions().colors[1]
-                }
-            }
-        }, { // 第二条Y轴
-            title: {
-                text: '',
-                style: {
-                    color: Highcharts.getOptions().colors[0]
-                }
-            },
-            labels: {
-                format: '{value}',
-                style: {
-                    color: Highcharts.getOptions().colors[0]
-                }
-            },
-            opposite: true
-        }];
-        var tooltip = {
-            shared: true,
-
-        };
-        var plotOptions = {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
-            },
-            series: {
-                cursor: 'pointer',
-                events: {
-                    /*click: function (e) {
-                        if (type == 1) {
-                            console.log(e.point.category);
-                            $scope.changecharts($scope.project_id, e.point.category.split('-')[0] + '-' + e.point.category.split('-')[1], e.point.category.split('-')[0] + '-' + e.point.category.split('-')[1]);
-                        }
-                        if (type == 2) {
-                            console.log(e.point.category);
-                            $scope.changecharts($scope.project_id, e.point.category + '-' + '01', e.point.category + '-' + '12');
-                        }
-                    }*/
-                }
-            }
-        };
-        var legend = {
-            layout: 'horizontal',//horizontal、vertical
-            align: 'left',
-            x: 580,
-            verticalAlign: 'top',
-            y: 20,
-            floating: true,
-            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
-        };
-
-        var json = {};
-        json.chart = chart;
-        json.title = title;
-        json.xAxis = xAxis;
-        json.yAxis = yAxis;
-        json.tooltip = tooltip;
-        json.legend = legend;
-        json.series = series;
-        json.plotOptions = plotOptions;
-        $('#container1').highcharts(json);
-    });
 
 
-    //
-    var menu = false;
-    $scope.showMenu = function () {
-        menu = !menu;
-        if (menu)
-            document.getElementById('prj_menu').style.display = 'inline-block';
+    console.log($rootScope.menu);
+    /*$scope.showMenu = function () {
+        $rootScope.menu = !$rootScope.menu;
+        if ($rootScope.menu)
+        {
+            document.getElementById('container1').style.display = 'inline-block';
+            $rootScope.menu = true;
+        }
+
         else
-            document.getElementById('prj_menu').style.display = 'none';
-    }
+            $rootScope.menu = false;
+    }*/
     //数组去冗余
     DropRepeat = function (arr) {
         // 遍历arr，把元素分别放入tmp数组(不存在才放)
@@ -337,4 +372,4 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
     $scope.bindquery = function (x) {
         $scope.query = x;
     }
-})
+});

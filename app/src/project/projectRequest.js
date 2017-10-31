@@ -114,4 +114,10 @@ project.service('projectService', function ($resource, $http, $rootScope) {
 
     }
 
+    //子任务看板
+    this.month_task_list =function (subprj_id) {
+        return $http.get($rootScope.ip + '/design_institute/public/admin/Task/month_task_list?subprj_id='+subprj_id);
+
+    }
+
 });
