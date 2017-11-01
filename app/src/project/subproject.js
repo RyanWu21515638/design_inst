@@ -23,7 +23,7 @@ subproject.controller('subprojectCtrl', function ($scope, $http, $timeout, $inte
    /* $scope.index = 0;
     $scope.subindex = 0;*/
     //获取所有项目列表--包括总项目下面的子项目
-    $scope.prj_list = JSON.parse($cookies.get('prj_list'));
+    $scope.prj_list = $rootScope.prj_list;
     $rootScope.menu = false;
 
 
@@ -34,8 +34,8 @@ subproject.controller('subprojectCtrl', function ($scope, $http, $timeout, $inte
         projectService.project_role_list(subprj_id).then(
             function (res) {
                 $scope.prj_role_list = res.data;
-
-                $cookies.put('prj_role_list', JSON.stringify($scope.prj_role_list), {'expires': expireDate});
+                //$cookies.put('prj_role_list','',{'expires': expireDate});
+                //$cookies.put('prj_role_list', JSON.stringify($scope.prj_role_list), {'expires': expireDate});
                 $state.go("index.project.subproject_info_detail",{prj_id:prj_id,subprj_id:subprj_id});
             }
         )

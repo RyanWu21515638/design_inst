@@ -96,6 +96,14 @@ project.service('projectService', function ($resource, $http, $rootScope) {
             role_id: data1.role_id,
         }
         return $http.post($rootScope.ip + '/design_institute/public/admin/Taskgroup/add_taskgroup', data, this.postCfg);
+    }
+    //删除任务列表
+    this.del_taskgroup = function (data1) {
+        var data = {
+            taskgroup_id :data1
+        }
+        return $http.post($rootScope.ip + '/design_institute/public/admin/Taskgroup/del_taskgroup', data, this.postCfg);
+
 
     }
     //新增子任务
@@ -111,6 +119,14 @@ project.service('projectService', function ($resource, $http, $rootScope) {
             urgent:data1.urgent,
         }
         return $http.post($rootScope.ip + '/design_institute/public/admin/Task/add_task', data, this.postCfg);
+
+    }
+    //删除子任务
+    this.del_task = function (data1) {
+        var data ={
+            task_id:data1
+        }
+        return $http.post($rootScope.ip + '/design_institute/public/admin/Task/del_task', data, this.postCfg);
 
     }
 

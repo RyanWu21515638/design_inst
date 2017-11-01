@@ -57,7 +57,8 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval, 
         projectService.project_list($scope.userinfo).then(
             function (res) {
                 $scope.prj_list = res.data;
-                $cookies.put('prj_list', JSON.stringify($scope.prj_list), {'expires': expireDate});
+                $rootScope.prj_list = res.data;
+                //$cookies.put('prj_list', JSON.stringify($scope.prj_list), {'expires': expireDate});
             }
         )
     };
@@ -77,7 +78,6 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval, 
                     $scope.usr_list[i]['check'][3] = false;
                     $scope.usr_list[i]['check'][4] = false;
                 }
-
             }
         )
     };
@@ -119,7 +119,9 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval, 
             $state.go("index.project.subproject", {index: index});
         }
     }
+
     //新建总项目
+
     $scope.newprj = function () {
         $scope.prjinfo.company_id = $cookies.get('company_id');
         $scope.prjinfo.creator_id = $cookies.get('openid');
@@ -168,8 +170,12 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval, 
         projectService.project_role_list($scope.rolesinfo.subprj_id).then(
             function (res) {
                 $scope.prj_role_list = res.data;
+                $rootScope.prj_role_list = res.data;
+                //$cookies.put('prj_role_list', '', {'expires': expireDate});
 
-                    $cookies.put('prj_role_list', JSON.stringify($scope.prj_role_list), {'expires': expireDate});
+                //$cookies.put('prj_role_list', JSON.stringify($scope.prj_role_list), {'expires': expireDate});
+
+
                     console.log('prj_role_list' + $scope.prj_role_list);
                     var ifexist = false;
                     for (var i = 0; i < $scope.usr_list.length; i++) {

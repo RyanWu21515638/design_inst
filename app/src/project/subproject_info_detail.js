@@ -54,11 +54,8 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
                     for (var i = 0; i < $scope.opt_prj_list.length; i++) {
                         $rootScope.imglist[i] = $scope.opt_prj_list[i].headimgurl;
                     }
+                    $rootScope.imglist[$scope.opt_prj_list.length] = 'app/build/image/all.jpg';
                     $rootScope.imglist = DropRepeat($rootScope.imglist);
-
-
-
-
                 }).error(function () {
                 alert("an unexpected error ocurred!");
             })
@@ -67,7 +64,14 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
     projectService.project_role_list($scope.subprj_id).then(
         function (res) {
             $scope.prj_role_list = res.data;
-            $cookies.put('prj_role_list', JSON.stringify($scope.prj_role_list), {'expires': expireDate});
+            for(var i = 0;i<$scope.prj_role_list.length;i++)
+            {
+                if($scope.prj_role_list[i].openid == $cookies.get('openid'))
+                {
+                    $scope.newtaskAuthor = $scope.prj_role_list[i].roles.var_3;
+                    break;
+                }
+            }
         }
     )
 
@@ -75,11 +79,15 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
         function (res) {
             $rootScope.time_x = [];
             $rootScope.done = [];
+            $rootScope.done_sum = 0;
             $rootScope.sum_1 = [];
+            $rootScope.sum_1_sum = 0;
             for (var i = 1; i < res.data.length; i++) {
                 $rootScope.time_x.push(res.data[i].time);
-                $rootScope.done.push(parseInt(1 + res.data[i].sum_1 - res.data[i].sum));
+                $rootScope.done.push(parseInt(res.data[i].sum_1 - res.data[i].sum));
+                $rootScope.done_sum = $rootScope.done_sum+parseInt(res.data[i].sum_1 - res.data[i].sum);
                 $rootScope.sum_1.push(parseInt(res.data[i].sum_1));
+                $rootScope.sum_1_sum = $rootScope.sum_1_sum+parseInt(res.data[i].sum_1);
             }
             prj_keboard();
             //$window.location.reload();
@@ -254,14 +262,18 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
         }
     }
     //获取项目id为$scope.subprj_id的所有任务
-    projectService.taskgroup_task_list($scope.subprj_id).then(
-        function (res) {
-            $scope.task_list = res.data;
-            for (var i = 0; i < $scope.task_list.length; i++) {
-                $scope.task_list[i]['length'] = $scope.task_list[i].subtask_list.length;
+    taskgroupTaskList =function () {
+        projectService.taskgroup_task_list($scope.subprj_id).then(
+            function (res) {
+                $scope.task_list = res.data;
+                for (var i = 0; i < $scope.task_list.length; i++) {
+                    $scope.task_list[i]['length'] = $scope.task_list[i].subtask_list.length;
+                }
             }
-        }
-    )
+        )
+    }
+    taskgroupTaskList();
+
     //新建总任务
     $scope.newTaskGroup = function () {
         console.log($scope.task_group_name);
@@ -271,16 +283,31 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
         projectService.add_taskgroup($scope.task_group_info).then(
             function (res) {
                 console.log(res.data);
+                taskgroupTaskList();
             }
         )
     }
-    //新建子任务
+    //删除总任务
+    $scope.delTaskgroup =function (taskgoup_id) {
+        //console.log(taskgoup_id);
+        projectService.del_taskgroup(taskgoup_id).then(
+            function (res) {
+                console.log(res.data);
+                taskgroupTaskList();
+            }
+        )
+    }
+    //选中总任务
     $scope.taskGroupChose = function (id, index) {
         $scope.tasktype = 'father';
+
+        console.log($scope.tasktype);
         $scope.taskgoup_name = $scope.task_list[index].name;
+        $scope.taskgoup_id = $scope.task_list[index].id;
         console.log($scope.taskgoup_name);
         $scope.subtask_info.taskgroup_id = id;
     }
+    //新建子任务
     $scope.newSubTask = function () {
         $scope.subtask_info.creator_id = $cookies.get('openid');
         $scope.subtask_info.end_time_plan = $scope.t1.year + '-' + $scope.t1.month + '-' + $scope.t1.day;
@@ -290,12 +317,27 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
         projectService.add_task($scope.subtask_info).then(
             function (res) {
                 console.log(res.data);
+                taskgroupTaskList();
             }
         )
     }
+    //保存子任务修改
+    $scope.saveSubTask = function () {
+
+    }
+    //删除子任务
+    $scope.delTask = function (task_id) {
+        projectService.del_task(task_id).then(
+            function (res) {
+                console.log(res.data);
+                taskgroupTaskList();
+            }
+        )
+    }
+    //选中子任务
     $scope.subTaskChose = function (taskIndex, subTaskIndex) {
-        $scope.prj_role_list = JSON.parse($cookies.get('prj_role_list'));
         $scope.tasktype = 'son';
+        console.log($scope.tasktype);
         $scope.taskIndex = taskIndex;
         $scope.subTaskIndex = subTaskIndex;
         $scope.subtask_info.subtask_name = $scope.task_list[taskIndex].subtask_list[subTaskIndex].name;
@@ -303,6 +345,7 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
         $scope.subtask_info.changer_id = $scope.task_list[taskIndex].subtask_list[subTaskIndex].changer_id;
         $scope.subtask_info.urgent = $scope.task_list[taskIndex].subtask_list[subTaskIndex].urgent;
         $scope.subtask_info.remarks = $scope.task_list[taskIndex].subtask_list[subTaskIndex].remarks;
+        $scope.subtask_info.id = $scope.task_list[taskIndex].subtask_list[subTaskIndex].id;
 
         var remindTime = $scope.task_list[taskIndex].subtask_list[subTaskIndex].end_time_plan;
         var str = remindTime.toString();
@@ -370,6 +413,10 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
         return tmp;
     }
     $scope.bindquery = function (x) {
+        if(x == 'app/build/image/all.jpg')
+            $scope.query = '';
+        else
         $scope.query = x;
     }
+    $(".popover-options a").popover({html : true });
 });

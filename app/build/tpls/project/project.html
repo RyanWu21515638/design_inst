@@ -1,5 +1,5 @@
 
-<div class="col-md-offset-2 col-md-8" style="border: 1px solid lightgrey;">
+<div class="col-md-offset-1 col-md-9" style="border: 1px solid lightgrey;">
     <div class="col-md-2 visible-lg visible-md" style="border-right: 1px solid lightgrey;padding-left: 1%;">
 
         <label class="col-md-12" style="background-color: #428bca;font-size: 16px;">项目管理</label>
@@ -20,17 +20,33 @@
          ng-if="menu">
         <div >
             <div>
-                <h3>项目菜单<span class="glyphicon glyphicon-tasks"></span></h3>
+                <h3><span class="glyphicon glyphicon-tasks"></span>项目菜单</h3>
             </div>
             <div>
-                <h4 style="border-bottom: 2px solid white;padding-bottom: 10px;padding-left: 10px;"><b>任务统计</b></h4>
+                <h4 style="border-top: 5px solid white;padding-top: 10px;padding-left: 10px;"><b>任务统计</b></h4>
+                <div style="height: 100px;">
+                    <div class="col-xs-5" style="height: 90%;margin-left: 5%;">
+                        <div style="text-align: center;padding-bottom: 5px;">总任务数</div>
+                        <a class="list-group-item"
+                           style="font-size: 32px;position:relative;text-align: center;height: 80%;">
+                        {{done_sum}}
+                        </a>
+                    </div>
+                    <div class="col-xs-5 col-xs-offset-1 col" style="height: 90%;">
+                        <div style="text-align: center;padding-bottom: 5px;">已完成</div>
+                        <a class="list-group-item"
+                           style="font-size: 32px;position:relative;text-align: center;height: 80%;">
+                        {{sum_1_sum}}
+                        </a>
+                    </div>
+                </div>
             </div>
             <div>
-                <h4 style="border-bottom: 2px solid white;padding-bottom: 10px;padding-left: 10px;"><b>项目进展</b></h4>
+                <h4 style="border-top: 5px solid white;padding-top: 10px;padding-left: 10px;"><b>项目进展</b></h4>
                 <div style="height: 200px;width: 90%;margin-left: 5%" id="container1"></div>
             </div>
             <div>
-                <h4 style="border-bottom: 2px solid white;padding-bottom: 10px;padding-left: 10px;"><b>项目动态</b></h4>
+                <h4 style="border-top: 5px solid white;padding-top: 10px;padding-left: 10px;"><b>项目动态</b></h4>
                 <form class="form-horizontal" role="form">
 
                     <div class="space-6"></div>
