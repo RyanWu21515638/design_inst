@@ -5079,7 +5079,7 @@ a.list-group-item .list-group-item-heading {
 
 a.list-group-item:hover, a.list-group-item:focus {
     text-decoration: none;
-    background-color: #f5f5f5;
+    background-color: #cccccc;
 }
 
 a.list-group-item.active, a.list-group-item.active:hover, a.list-group-item.active:focus {

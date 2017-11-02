@@ -9,6 +9,7 @@ index.controller('indexCtrl', function ($scope, $timeout, $interval, $location,$
     var expireDate = new Date();
     expireDate.setDate(expireDate.getDate() + 1);
     $scope.userinfo.headimgurl = $cookies.get('headimgurl');
+    $scope.userinfo.nickname = $cookies.get('nickname');
     $scope.logged = $cookies.get('logged');
     $scope.userinfo.status = $cookies.get('status');
     $scope.userinfo.issystem = $cookies.get('issystem');

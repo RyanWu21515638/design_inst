@@ -19,6 +19,7 @@ project.service('projectService', function ($resource, $http, $rootScope) {
     this.group_list = function () {
         return $http.get($rootScope.ip + '/design_institute/public/admin/Role/select_role')
     }
+    //新建总项目
     this.new_project = function (data1) {
         var data = {
             company_id: data1.company_id,
@@ -33,6 +34,15 @@ project.service('projectService', function ($resource, $http, $rootScope) {
         };
         return $http.post($rootScope.ip + '/design_institute/public/admin/Project/add_project', data, this.postCfg);
     }
+    //删除总项目
+    this.del_project = function (prj_id) {
+        var data = {
+            project_id:prj_id
+        }
+        return $http.post($rootScope.ip + '/design_institute/public/admin/Project/del_project', data, this.postCfg);
+
+    }
+    //新建子项目
     this.new_subproject = function (data1) {
         var data = {
             company_id: data1.company_id,
@@ -47,6 +57,7 @@ project.service('projectService', function ($resource, $http, $rootScope) {
         };
         return $http.post($rootScope.ip + '/design_institute/public/admin/SubProject/add_subproject', data, this.postCfg);
     }
+    //添加角色
     this.add_role = function (data1) {
         var data = {
             creator_id: data1.creator_id,
@@ -58,9 +69,11 @@ project.service('projectService', function ($resource, $http, $rootScope) {
         };
         return $http.post($rootScope.ip + '/design_institute/public/admin/Role/add_role', data, this.postCfg);
     }
+    //查询子项目已分配的人员
     this.project_role_list = function (subproject_id) {
         return $http.get($rootScope.ip + '/design_institute/public/admin/Role/project_role_list?subproject_id=' + subproject_id);
     }
+    //移除已分配的人员
     this.del_project_role = function (data1) {
         var data = {
             subproject_id: data1.subproject_id,
@@ -68,24 +81,31 @@ project.service('projectService', function ($resource, $http, $rootScope) {
         };
         return $http.post($rootScope.ip + '/design_institute/public/admin/Role/del_project_role', data, this.postCfg);
     }
+    //删除子项目
     this.del_subproject = function (subproject_id) {
         var data = {}
         data.subproject_id = subproject_id;
         return $http.post($rootScope.ip + '/design_institute/public/admin/Subproject/del_subproject', data, this.postCfg);
     }
+    //删除配置文件
     this.del_config = function (conf_id) {
         var data = {}
         data.config_id = conf_id;
         return $http.post($rootScope.ip + '/design_institute/public/admin/Config/del_config', data, this.postCfg);
     }
+    //文件下载列表
     this.download_list = function (data) {
         return $http.get($rootScope.ip + '/design_institute/public/admin/Project/Download_list?company_id=' + data.company_id + '&project_id=' + data.project_id
             + '&subproject_id=' + data.subproject_id);
     }
 
-    //获取任务任务列表
-    this.taskgroup_task_list = function (subprj_id) {
-        return $http.get($rootScope.ip + '/design_institute/public/admin/Taskgroup/taskgroup_task_list?subprj_id=' + subprj_id);
+    //获取总任务列表
+    this.taskgroup_task_list = function (data) {
+        console.log((data));
+        return $http.get($rootScope.ip + '/design_institute/public/admin/Taskgroup/taskgroup_task_list',
+            {params: data}
+        );
+
     }
     //新增任务列表
     this.add_taskgroup = function (data1) {
@@ -127,6 +147,18 @@ project.service('projectService', function ($resource, $http, $rootScope) {
             task_id:data1
         }
         return $http.post($rootScope.ip + '/design_institute/public/admin/Task/del_task', data, this.postCfg);
+
+    }
+    //子任务任务轨迹
+    this.get_project_tasktrailinfos = function (data1) {
+
+        var data={
+            task_id:data1.subtask_id
+        }
+        console.log(data);
+        return $http.get($rootScope.ip + '/design_institute/public/home/Projecttask/getProjecttasktrailinfos',
+            {params: (data)}
+            );
 
     }
 

@@ -1,3 +1,7 @@
+<style>
+
+</style>
+
 <div class="main-container" style="padding-left: 2%" ng-controller="subproject_info_detailCtrl">
     <div class="main-container-inner">
         <div class="page-content">
@@ -18,7 +22,7 @@
                          data-toggle="popover" title="创建者：{{x.creator_nickname}}">{{x.name}}·{{x.length}}
                         <a ng-if="newtaskAuthor == 'true' || userinfo.status=='2'"
                            ng-click="delTaskgroup(x.id)">
-                            <span class="icon-trash bigger-130 pull-right" ></span>
+                            <span class="icon-trash bigger-130 pull-right"></span>
                         </a>
                     </div>
                     <div class="" data-toggle="modal" data-target="#modal-form1"
@@ -27,25 +31,30 @@
                          ng-click="subTaskChose(p_taskIndex,$index)"
                          data-toggle="popover" title="负责人：{{x.changer_nickname}} 截止日期：{{x.end_time_plan}}">
 
-                        <label style="text-align: center;width: 50%">{{x.name}}</label>
+
+                        <label>{{x.name}}</label>
+
+
                         <div class="pull-right">
                             <img ng-if="x.changer_headimgurl != ''" src="{{x.changer_headimgurl}}"
                                  style="height: 20px;width: 20px;border-radius: 50%;margin-right: 10px;"
                             >
-                            <span ng-if="x.state != 1" class="glyphicon glyphicon-ok" style="color: rgb(0, 140, 0);">已完成</span>
-                           <!-- <span ng-if="x.state == 1" class="glyphicon glyphicon-check"></span>-->
+                            <span ng-if="x.state != 1" class="glyphicon glyphicon-ok"
+                                  style="color: rgb(0, 140, 0);">已完成</span>
+                            <!-- <span ng-if="x.state == 1" class="glyphicon glyphicon-check"></span>-->
                         </div>
 
                     </div>
 
-                    <div ng-if="newtaskAuthor == 'true' || userinfo.status=='2'" style="position:absolute;bottom:10px;margin-left: 30%;">
+                    <div ng-if="newtaskAuthor == 'true' || userinfo.status=='2'"
+                         style="position:relative;bottom:20px;margin-left: 30%;padding-top: 40px;">
                         <a href="" ng-click="taskGroupChose(x.id,$index)" data-toggle="modal"
                            data-target="#modal-form1"><span
                                 class="glyphicon glyphicon-plus-sign"></span>添加任务</a></div>
                 </div>
 
                 <div ng-if="newtaskAuthor == 'true' || userinfo.status=='2'" class="col-xs-2" style="background-color: #eeeeee;border-radius: 5px;margin-left:5px;
-                margin-top:10px;width:24%;position:relative;" ng-init="p_blur=false" >
+                margin-top:10px;width:24%;position:relative;" ng-init="p_blur=false">
                     <div style="font-size: 16px;padding: 10px;">
                         <a href="" ng-click="p_blur=!p_blur">
                             <span class="glyphicon glyphicon-plus"></span>新建任务列表
@@ -97,7 +106,7 @@
                             <button class="btn btn-danger pull-right"
                                     style="color: white;border-radius: 5px;"
                                     ng-if="newtaskAuthor == 'true' || userinfo.status=='2'"
-                                    ng-click="delTask(subtask_info.id )">
+                                    ng-click="delTask(subtask_info.subtask_id)">
                                 删除
                             </button>
 
@@ -208,12 +217,25 @@
                                    style="text-align: center;background-color: #eeeeee;margin: 10px;">
                                 任务轨迹</label>
                         </div>
-                        <div class="modal-body" ng-if="tasktype == 'son'">
-                            <div></div>
+                        <div class="modal-body" ng-if="tasktype == 'son'"
+                             style="background-color: whitesmoke;font-size: 12px;color:#a6a6a6;padding-bottom: 25px;padding-top: 25px;">
+                            <div ng-repeat="x in subtask_info.task_trail_info">
+
+                                <div style="padding: 6px 6px 6px 30px;">
+                                    <img src="{{x.headimgurl}}"
+                                         style="height: 30px;width: 30px;border-radius: 50%;">
+                                    {{x.name}}:{{x.info}}
+                                    <div class="pull-right" style="padding-right: 30px;">{{x.time}}</div>
+                                </div>
+                                <label style="padding: 2px 2px 2px;margin-left: 50px;border-left: 5px solid #a6a6a6">{{x.content}}
+                                </label>
+                            </div>
                         </div>
-                        <div class="modal-footer" style="text-align: center;" ng-if="newtaskAuthor == 'true' || userinfo.status=='2'">
+                        <div class="modal-footer" style="text-align: center;"
+                             ng-if="newtaskAuthor == 'true' || userinfo.status=='2'">
                             <button ng-if="tasktype == 'father'" class="btn btn-success"
-                                    style="color: white;border-radius: 5px;" ng-click="newSubTask()">
+                                    style="color: white;border-radius: 5px;" ng-click="newSubTask()"
+                                    data-dismiss="modal">
                                 添加
                             </button>
                             <button ng-if="tasktype == 'son'" class="btn btn-success"

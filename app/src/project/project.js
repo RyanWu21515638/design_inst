@@ -21,9 +21,10 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval, 
     $scope.userinfo.nickname = $cookies.get('nickname');
     $scope.userinfo.status = $cookies.get('status');
 
-    console.log($location.search().login_id);
-    console.log($location.search().subprj_id);
-    if($location.search().login_id!=undefined &&$location.search().login_id!='' &&$location.search().login_id!=null)
+    $scope.paramFromIPM = $location.search();
+    $cookies.put('paramFromIPM', JSON.stringify($scope.paramFromIPM), {'expires': expireDate});
+
+    if ($location.search().login_id != undefined && $location.search().login_id != '' && $location.search().login_id != null)
         $scope.userinfo.openid = $location.search().login_id;
     else
         $scope.userinfo.openid = $cookies.get('openid');
@@ -39,15 +40,15 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval, 
                     $cookies.put('headimgurl', res.headimgurl, {'expires': expireDate});
                     $cookies.put('nickname', res.nickname, {'expires': expireDate});
                     $cookies.put('openid', $scope.userinfo.openid, {'expires': expireDate});
+                    $cookies.put('issystem', res.remark, {'expires': expireDate});
                     $window.location.reload();
                 }
             }
         )
     };
 
-    if($cookies.get('openid') == undefined || $cookies.get('openid')=='' || $cookies.get('openid')==null ||
-        ($cookies.get('openid')!=$location.search().login_id && $location.search().login_id =='undefined'))
-    {
+    if ($cookies.get('openid') == undefined || $cookies.get('openid') == '' || $cookies.get('openid') == null ||
+        ($cookies.get('openid') != $location.search().login_id && $location.search().login_id == 'undefined')) {
         console.log($location.search().login_id);
         selectUser($location.search().login_id);
     }
@@ -58,7 +59,16 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval, 
             function (res) {
                 $scope.prj_list = res.data;
                 $rootScope.prj_list = res.data;
-                //$cookies.put('prj_list', JSON.stringify($scope.prj_list), {'expires': expireDate});
+                if ($location.search().subprj_id) {
+                    for (var i = 0; i < $scope.prj_list.length; i++) {
+                        for (var j = 0; j < $scope.prj_list[i].subproject_list.length; j++)
+                            if ($scope.prj_list[i].subproject_list[j].subproject_id == $location.search().subprj_id) {
+                                $scope.prj_id_params = $scope.prj_list[i].project_id;
+                                break;
+                            }
+                    }
+                    $state.go("index.project.subproject_info_detail", {prj_id: $scope.prj_id_params, subprj_id: $location.search().subprj_id});
+                }
             }
         )
     };
@@ -104,11 +114,7 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval, 
     configurationlist();
     grouplist();
 
-    if($location.search().subprj_id)
-    {
-        $state.go("index.project.subproject_info_detail",{prj_id:0,subprj_id:$location.search().subprj_id});
 
-    }
 
     //选定总项目
     $scope.prj_dt = function (index, prjid, media) {
@@ -121,7 +127,6 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval, 
     }
 
     //新建总项目
-
     $scope.newprj = function () {
         $scope.prjinfo.company_id = $cookies.get('company_id');
         $scope.prjinfo.creator_id = $cookies.get('openid');
@@ -137,6 +142,14 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval, 
             }
         )
     };
+    //删除总项目
+    $scope.delProject = function (prj_id) {
+        projectService.del_project(prj_id).then(
+            function (res) {
+                projectList();
+            }
+        )
+    }
     //新建子项目
     $scope.newsubprj = function () {
         $scope.subprjinfo.prj_id = $scope.prjinfo.prj_id;
@@ -176,21 +189,21 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval, 
                 //$cookies.put('prj_role_list', JSON.stringify($scope.prj_role_list), {'expires': expireDate});
 
 
-                    console.log('prj_role_list' + $scope.prj_role_list);
-                    var ifexist = false;
-                    for (var i = 0; i < $scope.usr_list.length; i++) {
-                        for (var j = 0; j < $scope.prj_role_list.length; j++) {
-                            if ($scope.usr_list[i].openid == $scope.prj_role_list[j].openid) {
-                                ifexist = true;
-                            }
-                            console.log(ifexist);
+                console.log('prj_role_list' + $scope.prj_role_list);
+                var ifexist = false;
+                for (var i = 0; i < $scope.usr_list.length; i++) {
+                    for (var j = 0; j < $scope.prj_role_list.length; j++) {
+                        if ($scope.usr_list[i].openid == $scope.prj_role_list[j].openid) {
+                            ifexist = true;
                         }
-                        if (ifexist) {
-                            $scope.usr_list[i]['show'] = false;
-                            ifexist = false;
-                            console.log($scope.usr_list);
-                        }
+                        console.log(ifexist);
                     }
+                    if (ifexist) {
+                        $scope.usr_list[i]['show'] = false;
+                        ifexist = false;
+                        console.log($scope.usr_list);
+                    }
+                }
 
 
             }

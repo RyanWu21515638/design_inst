@@ -38,15 +38,12 @@
                         </button>
                     </div>
                 </div>-->
-                <div class="visible-xs col-xs-12" style="margin-top: 10px;">
-                    <table class="table-responsive">
-                        <tbody>
-                        <tr ng-repeat="x in prj_list | filter:query" ng-click="prj_dt($index,x.project_id,2)"
-                            style="height: 80px; font-size: 20px;" >
-                            <td style="text-align: center;">{{x.name}}</td>
-                        </tr>
-                        </tbody>
-                    </table>
+                <div class="visible-xs col-xs-12" style="margin-top: 10px;margin-bottom: 10px;">
+                    <div class="list-group" ng-repeat="x in prj_list | filter:query" ng-click="prj_dt($index,x.project_id,2)"
+                         style="font-size: 20px;text-align: center;padding: 10px;margin-bottom: 0;" >
+
+                        <a class="list-group-item">{{x.name}}</a>
+                    </div>
                 </div>
 
                 <div class="table-responsive animated bounceInRight visible-lg visible-md"
@@ -79,11 +76,8 @@
                                 <button href="" data-toggle="modal"
                                         data-target="#modal-form2">新建子项目
                                 </button>
-
-                                <a style="color: red" ng-click="delete(x.userid)" href="">
+                                <a style="color: red" ng-click="delProject(x.project_id)" href="">
                                     <span class="icon-trash bigger-130"></span>
-
-
                                 </a></th>
                         </tr>
                         </tbody>
