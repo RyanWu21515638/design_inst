@@ -101,11 +101,9 @@ project.service('projectService', function ($resource, $http, $rootScope) {
 
     //获取总任务列表
     this.taskgroup_task_list = function (data) {
-        console.log((data));
         return $http.get($rootScope.ip + '/design_institute/public/admin/Taskgroup/taskgroup_task_list',
             {params: data}
         );
-
     }
     //新增任务列表
     this.add_taskgroup = function (data1) {
@@ -123,12 +121,11 @@ project.service('projectService', function ($resource, $http, $rootScope) {
             taskgroup_id :data1
         }
         return $http.post($rootScope.ip + '/design_institute/public/admin/Taskgroup/del_taskgroup', data, this.postCfg);
-
-
     }
     //新增子任务
     this.add_task = function (data1) {
         var data = {
+            subtask_id:data1.subtask_id,
             creator_id: data1.creator_id,
             taskgroup_id: data1.taskgroup_id,
             changer_id: data1.changer_id,
@@ -139,7 +136,6 @@ project.service('projectService', function ($resource, $http, $rootScope) {
             urgent:data1.urgent,
         }
         return $http.post($rootScope.ip + '/design_institute/public/admin/Task/add_task', data, this.postCfg);
-
     }
     //删除子任务
     this.del_task = function (data1) {
@@ -155,7 +151,6 @@ project.service('projectService', function ($resource, $http, $rootScope) {
         var data={
             task_id:data1.subtask_id
         }
-        console.log(data);
         return $http.get($rootScope.ip + '/design_institute/public/home/Projecttask/getProjecttasktrailinfos',
             {params: (data)}
             );

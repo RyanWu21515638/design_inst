@@ -12,6 +12,8 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval, 
     $scope.downloadinfo = {};           //所有文件下载链接列表
     $scope.roles = new Array();         //给某个人员分配权限
     $rootScope.menu = false;
+    $rootScope.fromIPM = $cookies.get('fromIPM');
+    console.log($rootScope.fromIPM);
     //获取用户微信id，公司id，设计院权限--可设置成全局变量
     //
     $scope.userinfo.openid = $cookies.get('openid');
@@ -24,10 +26,14 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval, 
     $scope.paramFromIPM = $location.search();
     $cookies.put('paramFromIPM', JSON.stringify($scope.paramFromIPM), {'expires': expireDate});
 
-    if ($location.search().login_id != undefined && $location.search().login_id != '' && $location.search().login_id != null)
+    if ($location.search().login_id != undefined && $location.search().login_id != '' && $location.search().login_id != null) {
         $scope.userinfo.openid = $location.search().login_id;
+        $cookies.put('fromIPM',true,{'expires': expireDate});
+    }
     else
+    {
         $scope.userinfo.openid = $cookies.get('openid');
+    }
     selectUser = function (openid) {
         $http.get($rootScope.ip + "/design_institute/public/admin/user/selectUser?openid=" + openid).success(
             function (res) {
@@ -41,14 +47,16 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval, 
                     $cookies.put('nickname', res.nickname, {'expires': expireDate});
                     $cookies.put('openid', $scope.userinfo.openid, {'expires': expireDate});
                     $cookies.put('issystem', res.remark, {'expires': expireDate});
-                    $window.location.reload();
+                    //$window.location.reload();
                 }
             }
         )
     };
+    console.log($cookies.get('openid'));
+    console.log($location.search().login_id);
 
     if ($cookies.get('openid') == undefined || $cookies.get('openid') == '' || $cookies.get('openid') == null ||
-        ($cookies.get('openid') != $location.search().login_id && $location.search().login_id == 'undefined')) {
+        ($cookies.get('openid') != $location.search().login_id && $location.search().login_id != undefined)) {
         console.log($location.search().login_id);
         selectUser($location.search().login_id);
     }
@@ -114,7 +122,7 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval, 
     configurationlist();
     grouplist();
 
-
+    //
 
     //选定总项目
     $scope.prj_dt = function (index, prjid, media) {
@@ -223,41 +231,54 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval, 
     //选定已设置权限的人员添加到项目中
     $scope.hide = function (index) {
         $scope.roles.length = 0;
-        $scope.usr_list[index]['show'] = false;
-        if ($scope.usr_list[index]['check'][0] == true) {
-            $scope.roles.push(1);
-        }
-        if ($scope.usr_list[index]['check'][1] == true) {
-            $scope.roles.push(2);
-        }
-        if ($scope.usr_list[index]['check'][2] == true) {
-            $scope.roles.push(3);
-        }
-        if ($scope.usr_list[index]['check'][3] == true) {
-            $scope.roles.push(4);
-        }
-        if ($scope.usr_list[index]['check'][4] == true) {
-            $scope.roles.push(5);
-        }
-        if ($scope.usr_list[index]['check'][5] == true) {
-            $scope.roles.push(6);
-        }
-        if ($scope.usr_list[index]['check'][6] == true) {
-            $scope.roles.push(7);
-        }
-        $scope.rolesinfo.company_id = $cookies.get('company_id');
-        $scope.rolesinfo.creator_id = $cookies.get('openid');
-        $scope.rolesinfo.start_time_plan = $scope.t3.year + '-' + $scope.t3.month + '-' + $scope.t3.day;
-        $scope.rolesinfo.end_time_plan = $scope.t4.year + '-' + $scope.t4.month + '-' + $scope.t4.day;
-        $scope.rolesinfo.openid = $scope.usr_list[index].openid;
-        $scope.rolesinfo.roleid = $scope.roles;
-        projectService.add_role($scope.rolesinfo).then(
-            function (res) {
-                if (res.data.success) {
-                    $scope.subchose($scope.rolesinfo.subprj_id);
-                }
+        if(!$scope.usr_list[index]['check'][0] && !$scope.usr_list[index]['check'][1]
+            &&!$scope.usr_list[index]['check'][2] && !$scope.usr_list[index]['check'][3]
+        &&!$scope.usr_list[index]['check'][4] && !$scope.usr_list[index]['check'][5]
+        &&!$scope.usr_list[index]['check'][6]
+        )alert("必须指定一个角色权限！");
+        else
+        {
+            $scope.usr_list[index]['show'] = false;
+            if ($scope.usr_list[index]['check'][0] == true) {
+                $scope.roles.push(1);
             }
-        )
+            if ($scope.usr_list[index]['check'][1] == true) {
+                $scope.roles.push(2);
+            }
+            if ($scope.usr_list[index]['check'][2] == true) {
+                $scope.roles.push(3);
+            }
+            if ($scope.usr_list[index]['check'][3] == true) {
+                $scope.roles.push(4);
+            }
+            if ($scope.usr_list[index]['check'][4] == true) {
+                $scope.roles.push(5);
+            }
+            if ($scope.usr_list[index]['check'][5] == true) {
+                $scope.roles.push(6);
+            }
+            if ($scope.usr_list[index]['check'][6] == true) {
+                $scope.roles.push(7);
+            }
+            $scope.rolesinfo.company_id = $cookies.get('company_id');
+            $scope.rolesinfo.creator_id = $cookies.get('openid');
+            $scope.rolesinfo.start_time_plan = $scope.t3.year + '-' + $scope.t3.month + '-' + $scope.t3.day;
+            $scope.rolesinfo.end_time_plan = $scope.t4.year + '-' + $scope.t4.month + '-' + $scope.t4.day;
+            $scope.rolesinfo.openid = $scope.usr_list[index].openid;
+            $scope.rolesinfo.roleid = $scope.roles;
+            projectService.add_role($scope.rolesinfo).then(
+                function (res) {
+                    if (res.data.success) {
+                        $scope.subchose($scope.rolesinfo.subprj_id);
+                    }
+                }
+            )
+        }
+
+    }
+    $scope.peopleDetail = function (index,nickname) {
+        $scope.people_detail_index = index;
+        $scope.people_detail_name = nickname;
     }
     //从已分配人员中删除
     $scope.remove = function (openid) {

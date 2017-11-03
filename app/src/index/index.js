@@ -13,6 +13,7 @@ index.controller('indexCtrl', function ($scope, $timeout, $interval, $location,$
     $scope.logged = $cookies.get('logged');
     $scope.userinfo.status = $cookies.get('status');
     $scope.userinfo.issystem = $cookies.get('issystem');
+    $rootScope.fromIPM = $cookies.get('fromIPM');
     $scope.pollScan = function () {
         $http.get('http://120.25.74.178/ipmwx/Home/Qrcode/pollScan?scene_id='+$scope.userinfo.scene_id).success(
             function (res) {

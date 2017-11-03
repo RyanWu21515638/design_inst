@@ -38,13 +38,14 @@
     }
 </style>
 
-<div class="navbar navbar-default visible-lg visible-md" role="navigation" ng-controller="indexCtrl">
-    <div class="container-fluid col-md-8 col-md-offset-2" style="height: 55px;">
+<div class="navbar navbar-default visible-lg visible-md visible-sm" role="navigation" ng-controller="indexCtrl" >
+    <div class="container-fluid col-md-8 col-md-offset-2" style="height: 55px;" ng-if="fromIPM != 'true'">
         <div class="navbar-header animated col-md-6">
               <!--  <img class="navbar-brand" src="app/build/image/logo.png" style="width: 80px;">-->
                 <a class="navbar-brand" href="" style="outline:none;"><b>
                     铝模设计院管理平台</b></a>
         </div>
+
         <div class="col-md-6 visible-lg visible-md">
             <ul class="nav navbar-nav col-md-9">
                 <!--<li class="col-md-3 col-xs-4"><a ui-sref="index.compare.oldlist" style="outline:none;">所有项目</a></li>
@@ -59,7 +60,7 @@
                                                                                                                      style="outline:none;text-align: center;">系统管理</a>
                 </li>
 
-                <li class="col-md-3 col-md-offset-1" ng-if="userinfo.status == '2'"><a
+                <li class="col-md-3 col-md-offset-1" ng-if="logged == 'true'"><a
                         ui-sref="index.project.project_info" style="outline:none; text-align: center;">项目管理</a></li>
 
                 <!--<li class="col-md-3 col-xs-4 visible-lg visible-md" ng-if="userinfo.status == '2'"><a ui-sref="index.forum.forum_items" href="" style="outline:none;text-align: center;">论坛交流</a></li>
@@ -79,12 +80,12 @@
                         <i class="icon-caret-down"></i>
                     </a>
                     <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-                        <li>
+                        <!--<li>
                             <a>
                                 <i class="icon-user"></i>
                                 修改个人信息
                             </a>
-                        </li>
+                        </li>-->
                         <!--<li>
                             <a ui-sref="upgradeUser">
                                 <i class="icon-double-angle-up"></i>

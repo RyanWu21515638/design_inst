@@ -1,5 +1,5 @@
 ﻿var routerApp = angular.module('routerApp', ['ui.router', 'index', 'login', 'project', 'forum', 'user', 'newforum', 'subproject',
-    'subproject_info_detail']);
+    'subproject_info_detail','upload']);
 
 
 /**
@@ -142,30 +142,5 @@ routerApp
 routerApp.run(function ($rootScope, $cookies) {
     $rootScope.ip = 'http://192.168.3.158';
     $rootScope.menu = false;
-    //$rootScope.ip = 'http://192.168.3.168';
-    //$rootScope.ip = 'http://192.168.3.7';
-    //$rootScope.ip = 'http://120.25.74.178';
-    //获取电脑名称
-    /*function getSysInfo(){
-     try{var locator = new ActiveXObject ("WbemScripting.SWbemLocator");}
-     catch (e){
-     alert(e);
-     }
-     var service = locator.ConnectServer();
-     //CPU信息
-     var cpu = new Enumerator (service.ExecQuery("SELECT * FROM Win32_Processor")).item();
-     var cpuType=cpu.Name,hostName=cpu.SystemName;
-     //内存信息
-     var memory = new Enumerator (service.ExecQuery("SELECT * FROM Win32_PhysicalMemory"));
-     for (var mem=[],i=0;!memory.atEnd();memory.moveNext()) mem[i++]={cap:memory.item().Capacity/1024/1024,speed:memory.item().Speed}
-     //系统信息
-     var system=new Enumerator (service.ExecQuery("SELECT * FROM Win32_ComputerSystem")).item();
-     var physicMenCap=Math.ceil(system.TotalPhysicalMemory/1024/1024),curUser=system.UserName,cpuCount=system.NumberOfProcessors
-     return {cpuType:cpuType,cpuCount:cpuCount,hostName:hostName,curUser:curUser,memCap:physicMenCap,mem:mem}
-     }
-     $rootScope.computer_id_noencode =(getSysInfo().curUser.split("\\")[0]);
-     $rootScope.computer_id =(encodeURI(getSysInfo().curUser.split("\\")[0]));*/
-    //console.log($rootScope.computer_id);
-    $rootScope.computer_id = "WIN-PRMNU2HQ1CD";
 })
 ;

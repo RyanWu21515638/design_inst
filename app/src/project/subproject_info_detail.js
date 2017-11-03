@@ -8,15 +8,17 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
 
     $scope.prj_id = $stateParams.prj_id;
     $scope.subprj_id = $stateParams.subprj_id;
-    console.log($scope.prj_id);
-    console.log($scope.subprj_id);
+
+    $rootScope.fromIPM = $cookies.get('fromIPM');
+    console.log($rootScope.fromIPM);
     if ($scope.subprj_id) {
         $rootScope.menu = true;
-        //document.getElementById('container1').style.display = 'inline-block';
     }
     else {
         $rootScope.menu = false;
     }
+
+
     $scope.task_group_info = {};
     $scope.subtask_info = {};
     $scope.subtask_info.subtask_name = "选择类型";
@@ -30,6 +32,7 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
     $scope.userinfo.company_id = $cookies.get('company_id');
     $scope.userinfo.status = $cookies.get('status');
 
+    $scope.refrash_task = false;
 
     $scope.grp_list = JSON.parse($cookies.get('grp_list'));
     $scope.paramFromIPM = JSON.parse($cookies.get('paramFromIPM'));
@@ -261,46 +264,48 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
     }
     //获取项目id为$scope.subprj_id的所有任务
     taskgroupTaskList = function () {
-        console.log($scope.paramFromIPM.subprj_id);
         $scope.paramFromIPM.subprj_id = $scope.subprj_id;
-        console.log($scope.paramFromIPM);
         projectService.taskgroup_task_list($scope.paramFromIPM).then(
             function (res) {
                 $scope.task_list = res.data;
+                console.log($scope.task_list);
                 for (var i = 0; i < $scope.task_list.length; i++) {
                     $scope.task_list[i]['length'] = $scope.task_list[i].subtask_list.length;
                 }
             }
         )
-
     }
     taskgroupTaskList();
 
+    $scope.$watch('refrash_task',function(){
+        taskgroupTaskList();
+    });
     //新建总任务
     $scope.newTaskGroup = function () {
-        console.log($scope.task_group_name);
         $scope.task_group_info.subprj_id = $scope.subprj_id;
         $scope.task_group_info.openid = $cookies.get('openid');
         $scope.task_group_info.role_id = $scope.role_id;
         projectService.add_taskgroup($scope.task_group_info).then(
             function (res) {
-                console.log(res.data);
-                taskgroupTaskList();
+                $window.location.reload();
             }
         )
     }
     //删除总任务
     $scope.delTaskgroup = function (taskgoup_id) {
-        //console.log(taskgoup_id);
         projectService.del_taskgroup(taskgoup_id).then(
             function (res) {
-                if(!res.success)
+                console.log(res.data);
+                if(!res.data.success)
                 {
                     alert("有已完成的子任务，总任务无法删除！");
                 }
                 else
                 {
-                    taskgroupTaskList();
+                    alert("删除成功！");
+                    $scope.refrash_task = !$scope.refrash_task;
+                    $window.location.reload();
+                    //taskgroupTaskList();
                 }
             }
         )
@@ -310,10 +315,8 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
         $scope.tasktype = 'father';
         $scope.subtask_info.subtask_name = "选择类型";
         $scope.subtask_info.subtask_id = '';
-        console.log($scope.tasktype);
         $scope.taskgoup_name = $scope.task_list[index].name;
         $scope.taskgoup_id = $scope.task_list[index].id;
-        console.log($scope.taskgoup_name);
         $scope.subtask_info.taskgroup_id = id;
     }
     //新建子任务
@@ -323,7 +326,7 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
 
         projectService.add_task($scope.subtask_info).then(
             function (res) {
-                taskgroupTaskList();
+                $window.location.reload();
             }
         )
     }
@@ -334,7 +337,15 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
         $scope.subtask_info.end_time_plan = $scope.t1.year + '-' + $scope.t1.month + '-' + $scope.t1.day;
         projectService.add_task($scope.subtask_info).then(
             function (res) {
-                taskgroupTaskList();
+                if(!res.data.success)
+                {
+                    alert('修改失败！');
+                }
+                else
+                {
+                    //$window.location.reload();
+                }
+
             }
         )
     }
@@ -342,13 +353,14 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
     $scope.delTask = function (task_id) {
         projectService.del_task(task_id).then(
             function (res) {
-                if(!res.success)
+                if(!res.data.success)
                 {
                     alert("任务已完成，无法删除！");
                 }
                 else
                 {
-                    taskgroupTaskList();
+                    alert("删除成功！");
+                    $window.location.reload();
                 }
 
             }
@@ -407,7 +419,6 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
         $scope.t1.year = ev.date.getFullYear();
         $scope.t1.month = ev.date.getMonth() + 1;
         $scope.t1.day = ev.date.getDate();
-        console.log('t1' + JSON.stringify($scope.t1) + 't2' + JSON.stringify($scope.t2));
         if ($scope.project_id) {
             //$scope.changecharts($scope.project_id, $scope.t1.year + '-' + $scope.t1.month +'-' +$scope.t1.day, $scope.t2.year + '-' + $scope.t2.month + '-' + $scope.t2.day);
         }
