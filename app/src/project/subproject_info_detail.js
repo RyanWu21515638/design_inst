@@ -1,5 +1,5 @@
 var subproject_info_detail = angular.module('subproject_info_detail', ['ngResource', 'ngCookies']);
-subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope, $http, $timeout, $interval, $window,
+subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope, $http, $filter,$timeout, $interval, $window,
                                                                           $stateParams, $state, $cookies, $location,
                                                                           $rootScope, projectService) {
 
@@ -44,8 +44,11 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
                 if ($scope.prj_list[j].project_id == $scope.prj_id) {
                     $scope.prj_name = $scope.prj_list[j].name;
                     for (var jj = 0; jj < $scope.prj_list[j].subproject_list.length; jj++) {
+
                         if ($scope.prj_list[j].subproject_list[jj].subproject_id == $scope.subprj_id)
                             $scope.subprj_name = $scope.prj_list[j].subproject_list[jj].name;
+
+
                     }
                 }
             }
@@ -268,9 +271,19 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
         projectService.taskgroup_task_list($scope.paramFromIPM).then(
             function (res) {
                 $scope.task_list = res.data;
-                console.log($scope.task_list);
+                var nowdate = new Date();
+                nowdate = $filter('date')(nowdate, "yyyy-MM-dd hh:mm:ss");
                 for (var i = 0; i < $scope.task_list.length; i++) {
                     $scope.task_list[i]['length'] = $scope.task_list[i].subtask_list.length;
+                    for(var j=0;j< $scope.task_list[i].subtask_list.length;j++)
+                    {
+                        $scope.task_list[i].subtask_list[j].end_time_plan = $scope.task_list[i].subtask_list[j].end_time_plan.substring(0,10);
+                        /*var d1 = $scope.task_list[i].subtask_list[j].end_time_plan.replace(/\-/g, "/");
+                        console.log(nowdate.replace(/\-/g, "/"));
+                        console.log(d1);
+                        console.log(parseInt(nowdate.replace(/\-/g, "/") - d1));*/
+
+                    }
                 }
             }
         )
@@ -343,7 +356,7 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
                 }
                 else
                 {
-                    //$window.location.reload();
+                    $window.location.reload();
                 }
 
             }

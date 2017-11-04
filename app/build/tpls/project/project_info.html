@@ -112,7 +112,10 @@
                                 <a ui-sref="index.project.subproject_info_detail({prj_id:prjinfo.prj_id,subprj_id:rolesinfo.subprj_id})">{{x.name}}</a>
                             </td>
                             <td>{{x.start_time_plan}}</td>
-                            <td>{{x.end_time_plan}}</td>
+                            <td>
+                                <label data-toggle="popover" title="项目告急！请快马加鞭" class="label label-danger" ng-if="x.D_value <= 3">{{x.end_time_plan}}</label>
+                                <label data-toggle="popover" title="领导在催了！" class="label label-warning" ng-if="x.D_value <= 3 && x.D_value>5">{{x.end_time_plan}}</label>
+                                <label data-toggle="popover" title="细心点，慢慢来喝杯茶，还有时间！" class="label label-default" ng-if="x.D_value >= 6">{{x.end_time_plan}}</label></td>
                             <td>{{x.start_time_real}}</td>
                             <td>{{x.end_time_real}}</td>
                             <td ng-if="x.state == 1">已立项，底图待深化</td>

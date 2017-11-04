@@ -32,7 +32,22 @@
                              style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;"
                              ng-click="subTaskChose(p_taskIndex,$index)"
                              data-toggle="popover" title="负责人：{{x.changer_nickname}} 截止日期：{{x.end_time_plan}}">
-                            <label>{{x.name}}</label>
+                            <label >{{x.name}}</label>
+                            <label ng-if="x.urgent == 1" class="label label-default"
+                                   data-toggle="popover" title="细心点，慢慢来喝杯茶，还有时间！">
+                                {{x.end_time_plan}}
+                            </label>
+                            <label ng-if="x.urgent == 2" class="label label-warning"
+                                   data-toggle="popover" title="领导在催了！">
+                                {{x.end_time_plan}}
+                            </label>
+                            <label ng-if="x.urgent == 3" class="label label-danger"
+                                   data-toggle="popover" title="项目告急！请快马加鞭">
+                                {{x.end_time_plan}}
+                            </label>
+
+
+
                             <div class="pull-right">
                                 <img ng-if="x.changer_headimgurl != ''" src="{{x.changer_headimgurl}}"
                                      style="height: 20px;width: 20px;border-radius: 50%;margin-right: 10px;"

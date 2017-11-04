@@ -1,5 +1,5 @@
 var project = angular.module('project', ['ngResource', 'ngCookies']);
-project.controller('projectCtrl', function ($scope, $http, $timeout, $interval, $window, $state, $cookies, $location,
+project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $interval, $window, $state, $cookies, $location,
                                             $rootScope, projectService) {
     var expireDate = new Date();
     expireDate.setDate(expireDate.getDate() + 1);
@@ -28,10 +28,9 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval, 
 
     if ($location.search().login_id != undefined && $location.search().login_id != '' && $location.search().login_id != null) {
         $scope.userinfo.openid = $location.search().login_id;
-        $cookies.put('fromIPM',true,{'expires': expireDate});
+        $cookies.put('fromIPM', true, {'expires': expireDate});
     }
-    else
-    {
+    else {
         $scope.userinfo.openid = $cookies.get('openid');
     }
     selectUser = function (openid) {
@@ -67,6 +66,22 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval, 
             function (res) {
                 $scope.prj_list = res.data;
                 $rootScope.prj_list = res.data;
+                var dn = new Date();
+                dn = $filter('date')(dn, "yyyy-MM-dd");
+                console.log(dn);
+                for (var jj = 0; jj < $scope.prj_list.length; jj++) {
+                    for (var jjj = 0; jjj < $scope.prj_list[jj].subproject_list.length; jjj++) {
+                        console.log(jjj+'-'+$scope.prj_list[jj].subproject_list.length);
+                        var da1 = $scope.prj_list[jj].subproject_list[jjj].end_time_plan;
+                        console.log(da1);
+                        var D_value = (da1.split('-')[0]-dn.split('-')[0])*365
+                                    + (da1.split('-')[1]-dn.split('-')[1])*30
+                                    + (da1.split('-')[2]-dn.split('-')[2]);
+                        $scope.prj_list[jj].subproject_list[jjj]['D_value'] = D_value;
+                    }
+                }
+                console.log($scope.prj_list);
+
                 if ($location.search().subprj_id) {
                     for (var i = 0; i < $scope.prj_list.length; i++) {
                         for (var j = 0; j < $scope.prj_list[i].subproject_list.length; j++)
@@ -75,7 +90,10 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval, 
                                 break;
                             }
                     }
-                    $state.go("index.project.subproject_info_detail", {prj_id: $scope.prj_id_params, subprj_id: $location.search().subprj_id});
+                    $state.go("index.project.subproject_info_detail", {
+                        prj_id: $scope.prj_id_params,
+                        subprj_id: $location.search().subprj_id
+                    });
                 }
             }
         )
@@ -231,13 +249,12 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval, 
     //选定已设置权限的人员添加到项目中
     $scope.hide = function (index) {
         $scope.roles.length = 0;
-        if(!$scope.usr_list[index]['check'][0] && !$scope.usr_list[index]['check'][1]
-            &&!$scope.usr_list[index]['check'][2] && !$scope.usr_list[index]['check'][3]
-        &&!$scope.usr_list[index]['check'][4] && !$scope.usr_list[index]['check'][5]
-        &&!$scope.usr_list[index]['check'][6]
-        )alert("必须指定一个角色权限！");
-        else
-        {
+        if (!$scope.usr_list[index]['check'][0] && !$scope.usr_list[index]['check'][1]
+            && !$scope.usr_list[index]['check'][2] && !$scope.usr_list[index]['check'][3]
+            && !$scope.usr_list[index]['check'][4] && !$scope.usr_list[index]['check'][5]
+            && !$scope.usr_list[index]['check'][6]
+        ) alert("必须指定一个角色权限！");
+        else {
             $scope.usr_list[index]['show'] = false;
             if ($scope.usr_list[index]['check'][0] == true) {
                 $scope.roles.push(1);
@@ -276,7 +293,7 @@ project.controller('projectCtrl', function ($scope, $http, $timeout, $interval, 
         }
 
     }
-    $scope.peopleDetail = function (index,nickname) {
+    $scope.peopleDetail = function (index, nickname) {
         $scope.people_detail_index = index;
         $scope.people_detail_name = nickname;
     }
