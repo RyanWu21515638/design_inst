@@ -39,28 +39,28 @@
 </style>
 
 <div class="navbar navbar-default visible-lg visible-md visible-sm" role="navigation" ng-controller="indexCtrl" >
-    <div class="container-fluid col-md-8 col-md-offset-2" style="height: 55px;" ng-if="fromIPM != 'true'">
-        <div class="navbar-header animated col-md-6">
+    <div class="container-fluid col-sm-8 col-sm-offset-2" style="height: 55px;" ng-if="fromIPM != 'true'">
+        <div class="navbar-header animated col-sm-6">
               <!--  <img class="navbar-brand" src="app/build/image/logo.png" style="width: 80px;">-->
                 <a class="navbar-brand" href="" style="outline:none;"><b>
                     铝模设计院管理平台</b></a>
         </div>
 
-        <div class="col-md-6 visible-lg visible-md">
-            <ul class="nav navbar-nav col-md-9">
+        <div class="col-sm-6 visible-lg visible-md visible-sm">
+            <ul class="nav navbar-nav col-sm-9">
                 <!--<li class="col-md-3 col-xs-4"><a ui-sref="index.compare.oldlist" style="outline:none;">所有项目</a></li>
                 <li class="col-md-3 col-xs-4"><a ui-sref="index.compare.oldlist" style="outline:none;">所有项目</a></li>-->
 
-                <li class="col-md-3 col-md-offset-2" ng-if="userinfo.issystem == '777' && userinfo.status == '2'"><a ui-sref="index.workstation.userinfo"
+                <li class="col-sm-4 col-sm-offset-2" ng-if="userinfo.issystem == '777' && userinfo.status == '2'"><a ui-sref="index.workstation.userinfo"
                                                                                            href=""
                                                                                            style="outline:none;text-align: center;">系统管理</a>
                 </li>
-                <li class="col-md-3 col-md-offset-6" ng-if="userinfo.issystem == '777' && userinfo.status != '2'"><a ui-sref="index.workstation.userinfo"
+                <li class="col-sm-4 col-sm-offset-6" ng-if="userinfo.issystem == '777' && userinfo.status != '2'"><a ui-sref="index.workstation.userinfo"
                                                                                                                      href=""
                                                                                                                      style="outline:none;text-align: center;">系统管理</a>
                 </li>
 
-                <li class="col-md-3 col-md-offset-1" ng-if="logged == 'true'"><a
+                <li class="col-sm-4 col-sm-offset-1" ng-if="logged == 'true'"><a
                         ui-sref="index.project.project_info" style="outline:none; text-align: center;">项目管理</a></li>
 
                 <!--<li class="col-md-3 col-xs-4 visible-lg visible-md" ng-if="userinfo.status == '2'"><a ui-sref="index.forum.forum_items" href="" style="outline:none;text-align: center;">论坛交流</a></li>
@@ -69,6 +69,7 @@
             </ul>
             <ul class="nav navbar-nav col-xs-3 visible-lg visible-md">
                 <li ng-if="logged != 'true'"><a data-toggle="modal"
+
                                                 data-target="#modal-form" ng-click="register_post()"
                                                 style="outline:none;" href="">登录</a></li>
                 <li ng-if="logged == 'true'">

@@ -46,7 +46,7 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
                     $cookies.put('nickname', res.nickname, {'expires': expireDate});
                     $cookies.put('openid', $scope.userinfo.openid, {'expires': expireDate});
                     $cookies.put('issystem', res.remark, {'expires': expireDate});
-                    //$window.location.reload();
+                    $window.location.reload();
                 }
             }
         )
@@ -62,33 +62,48 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
 
     //获取所有项目列表--包括总项目下面的子项目
     projectList = function () {
+        console.log('获取项目信息');
         projectService.project_list($scope.userinfo).then(
             function (res) {
                 $scope.prj_list = res.data;
                 $rootScope.prj_list = res.data;
                 var dn = new Date();
                 dn = $filter('date')(dn, "yyyy-MM-dd");
-                console.log(dn);
+                //每个项目时间节点计算
                 for (var jj = 0; jj < $scope.prj_list.length; jj++) {
                     for (var jjj = 0; jjj < $scope.prj_list[jj].subproject_list.length; jjj++) {
-                        console.log(jjj+'-'+$scope.prj_list[jj].subproject_list.length);
                         var da1 = $scope.prj_list[jj].subproject_list[jjj].end_time_plan;
-                        console.log(da1);
+
                         var D_value = (da1.split('-')[0]-dn.split('-')[0])*365
                                     + (da1.split('-')[1]-dn.split('-')[1])*30
                                     + (da1.split('-')[2]-dn.split('-')[2]);
                         $scope.prj_list[jj].subproject_list[jjj]['D_value'] = D_value;
                     }
                 }
-                console.log($scope.prj_list);
+                console.log(dn);
 
-                if ($location.search().subprj_id) {
+                console.log($location.search().subprj_id);
+                var sub_if_go = $location.search().subprj_id;
+                if (sub_if_go) {
                     for (var i = 0; i < $scope.prj_list.length; i++) {
                         for (var j = 0; j < $scope.prj_list[i].subproject_list.length; j++)
                             if ($scope.prj_list[i].subproject_list[j].subproject_id == $location.search().subprj_id) {
                                 $scope.prj_id_params = $scope.prj_list[i].project_id;
                                 break;
                             }
+                    }
+                    for (var j = 0; j < $scope.prj_list.length; j++) {
+                        if ($scope.prj_list[j].project_id == $scope.prj_id_params) {
+                            $scope.prj_name = $scope.prj_list[j].name;
+                            $cookies.put('prj_name',$scope.prj_name,{'expires': expireDate});
+                            for (var jj = 0; jj < $scope.prj_list[j].subproject_list.length; jj++) {
+                                if ($scope.prj_list[j].subproject_list[jj].subproject_id == $location.search().subprj_id)
+                                {
+                                    $scope.subprj_name = $scope.prj_list[j].subproject_list[jj].name;
+                                    $cookies.put('subprj_name',$scope.prj_name,{'expires': expireDate});
+                                }
+                            }
+                        }
                     }
                     $state.go("index.project.subproject_info_detail", {
                         prj_id: $scope.prj_id_params,
@@ -118,7 +133,7 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
         )
     };
     //获取公司配置列表
-    configurationlist = function () {
+    $scope.configurationlist = function () {
         projectService.configuration_list($scope.userinfo).then(
             function (res) {
                 $scope.conf_list = res.data;
@@ -126,7 +141,7 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
         )
     };
     //获取公司权限列表
-    grouplist = function () {
+    $scope.grouplist = function () {
         projectService.group_list().then(
             function (res) {
                 $scope.grp_list = res.data;
@@ -137,8 +152,8 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
     //初始化--可在全局初始化
     projectList();
     userList();
-    configurationlist();
-    grouplist();
+    //configurationlist();
+    //grouplist();
 
     //
 
@@ -205,7 +220,7 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
             $scope.usr_list[i]['check'][4] = false;
         }
         $scope.rolesinfo.subprj_id = prjid;
-        console.log($scope.rolesinfo.subprj_id);
+
         projectService.project_role_list($scope.rolesinfo.subprj_id).then(
             function (res) {
                 $scope.prj_role_list = res.data;
@@ -235,7 +250,23 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
             }
         )
     }
-
+    //
+    $scope.set_prj_suprj_name = function (subprj_id) {
+        for (var j = 0; j < $scope.prj_list.length; j++) {
+            if ($scope.prj_list[j].project_id == $scope.prjinfo.prj_id) {
+                $scope.prj_name = $scope.prj_list[j].name;
+                $cookies.put('prj_name',$scope.prj_name,{'expires': expireDate});
+                for (var jj = 0; jj < $scope.prj_list[j].subproject_list.length; jj++) {
+                    if ($scope.prj_list[j].subproject_list[jj].subproject_id == subprj_id)
+                    {
+                        $scope.subprj_name = $scope.prj_list[j].subproject_list[jj].name;
+                        $cookies.put('subprj_name',$scope.prj_name,{'expires': expireDate});
+                    }
+                }
+            }
+        }
+    }
+    //
     $scope.downloadList = function (subproject_id) {
         $scope.downloadinfo.company_id = $cookies.get('company_id');
         $scope.downloadinfo.project_id = $scope.prjinfo.prj_id;

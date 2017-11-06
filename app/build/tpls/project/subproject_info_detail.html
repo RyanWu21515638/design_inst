@@ -1,8 +1,6 @@
-<style>
 
-</style>
-
-<div class="main-container" style="padding-left: 2%" ng-controller="subproject_info_detailCtrl">
+<div ng-controller="subproject_info_detailCtrl">
+<div class="main-container col-md-10" style="padding-left: 2%" >
     <div class="main-container-inner">
         <div class="page-content">
             <div class="page-header visible-lg visible-md">
@@ -15,7 +13,6 @@
             </div>
             <div class="col-xs-12 row visible-lg visible-md" style="margin-bottom: 40px; overflow-x:scroll;">
                 <div style="width: 1000%;">
-
                     <div class="col-xs-2"
                          style="background-color: #eeeeee;border-radius: 5px;margin: 10px 0 20px 5px;width:300px;height: 702px;overflow-x: auto; overflow-y: auto;"
                          ng-repeat="x in task_list"
@@ -30,7 +27,7 @@
                         <div class="" data-toggle="modal" data-target="#modal-form1"
                              ng-repeat="x in task_list[$index].subtask_list"
                              style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;"
-                             ng-click="subTaskChose(p_taskIndex,$index)"
+                             ng-click="subTaskChose(p_taskIndex,$index);projectRoleList()"
                              data-toggle="popover" title="负责人：{{x.changer_nickname}} 截止日期：{{x.end_time_plan}}">
                             <label >{{x.name}}</label>
                             <label ng-if="x.urgent == 1" class="label label-default"
@@ -61,7 +58,7 @@
 
                         <div ng-if="newtaskAuthor == 'true' || userinfo.status=='2'"
                              style="position:relative;bottom:20px;margin-left: 30%;padding-top: 40px;">
-                            <a href="" ng-click="taskGroupChose(x.id,$index)" data-toggle="modal"
+                            <a href="" ng-click="taskGroupChose(x.id,$index);role_seletct(6);" data-toggle="modal"
                                data-target="#modal-form1"><span
                                     class="glyphicon glyphicon-plus-sign"></span>添加任务</a></div>
                     </div>
@@ -69,7 +66,7 @@
                     <div ng-if="newtaskAuthor == 'true' || userinfo.status=='2'" class="col-xs-2" style="background-color: #eeeeee;border-radius: 5px;margin-left:5px;
                 margin-top:10px;width:300px;position:relative;" ng-init="p_blur=false">
                         <div style="font-size: 16px;padding: 10px;">
-                            <a href="" ng-click="p_blur=!p_blur">
+                            <a href="" ng-click="p_blur=!p_blur;group_list()" >
                                 <span class="glyphicon glyphicon-plus"></span>新建任务列表
                             </a>
                         </div>
@@ -118,8 +115,9 @@
                                 单项配模</label>
                             <button class="btn btn-danger pull-right"
                                     style="color: white;border-radius: 5px;"
-                                    ng-if="newtaskAuthor == 'true' || userinfo.status=='2'"
-                                    ng-click="delTask(subtask_info.subtask_id)">
+                                    ng-if="(newtaskAuthor == 'true' || userinfo.status=='2') && tasktype == 'son'"
+                                    ng-click="delTask(subtask_info.subtask_id)"
+                                    data-dismiss="modal">
                                 删除
                             </button>
 
@@ -168,7 +166,7 @@
                             <div class="row" style="margin: 10px 0px 10px 50px;">
 
                                 <a class="col-xs-3" href="" data-toggle="modal"
-                                   data-target="#modal-form2_1">
+                                   data-target="#modal-form2_1" ng-click="role_seletct(6)">
                                     <span class="glyphicon glyphicon-plus-sign"></span>参与者
                                 </a>
                                 <label ng-repeat="x in subtask_info.partitionNickname">{{x}}
@@ -209,10 +207,9 @@
                                 </div>
                             </div>
                             <div class="row" style="margin: 10px 0px 10px 50px;">
-                                <a class="col-xs-3" href="" data-toggle="modal"
-                                   data-target="#modal-form2">
-                                    <span class="glyphicon glyphicon-plus-sign"></span>设置截止时间
-                                </a>
+                                <label class="col-xs-3" href="">
+                                  设置截止时间
+                                </label>
                                 <input size="16" value={{t1.year}}-{{t1.month}}-{{t1.day}}
                                        readonly class="col-md-4"
                                        id="timepicker1">
@@ -275,10 +272,11 @@
                                 <table class="table table-striped table-bordered table-hover">
                                     <tbody>
                                     <tr ng-repeat="x in prj_role_list" ng-click="chargerChose(x.nickname,x.openid)"
-                                        data-dismiss="modal">
+                                        data-dismiss="modal" ng-if="(x.role_id | filter:role_group) == role_group">
                                         <td style="text-align: center;">
                                             {{x.nickname}}
                                         </td>
+
                                     </tr>
                                 </table>
                             </div>
@@ -299,7 +297,7 @@
                                 <table class="table table-striped table-bordered table-hover">
                                     <tbody>
                                     <tr ng-repeat="x in prj_role_list" ng-click="partitionChose(x.nickname,x.openid)"
-                                        data-dismiss="modal">
+                                        data-dismiss="modal" ng-if="(x.role_id | filter:role_partition) == '6'">
                                         <td style="text-align: center;">
                                             {{x.nickname}}
                                         </td>
@@ -397,5 +395,70 @@
         </div><!--pagecontent-->
     </div><!-- main-container-inner-->
 </div>
+<div id="prj_menu" class="animated bounceInDown col-xs-12 col-md-2"
+     style="background-color: #eeeeee;height: 900px;border: 5px solid white;"
+     ng-if="menu">
+    <div >
+        <div>
+            <h3><span class="glyphicon glyphicon-tasks"></span>项目菜单</h3>
+        </div>
+        <div>
+            <h4 style="border-top: 5px solid white;padding-top: 10px;padding-left: 10px;"><b>任务统计</b></h4>
+            <div style="height: 100px;">
+                <div class="col-xs-5" style="height: 90%;margin-left: 5%;">
+                    <div style="text-align: center;padding-bottom: 5px;">总任务数</div>
+                    <a class="list-group-item"
+                       style="font-size: 32px;position:relative;text-align: center;height: 80%;color: #7fd112;">
+                        {{sum_1_sum}}
+                    </a>
+                </div>
+                <div class="col-xs-5 col-xs-offset-1 col" style="height: 90%;">
+                    <div style="text-align: center;padding-bottom: 5px;">已完成</div>
+                    <a class="list-group-item"
+                       style="font-size: 32px;position:relative;text-align: center;height: 80%;color:#ff9800;">
+                        {{done_sum}}
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div>
+            <h4 style="border-top: 5px solid white;padding-top: 10px;padding-left: 10px;"><b>项目进展</b></h4>
+            <div style="height: 200px;width: 90%;margin-left: 5%" id="container1"></div>
+        </div>
+        <div>
+            <h4 style="border-top: 5px solid white;padding-top: 10px;padding-left: 10px;"><b>项目动态</b>
+                <button>
+                    <span class="glyphicon glyphicon-repeat" ng-click="getProjectTrailInfos()"></span></button></h4>
 
+            <form class="form-horizontal" role="form">
 
+                <div class="space-6"></div>
+                <div style="margin-top: 2%;">
+                    <label style="text-align: right;">
+                        {{prj_list[index].subproject_list[subindex].name}} </label>
+                    <img ng-repeat="x in imglist" src="{{x}}" ng-click="bindquery(x)"
+                         style="height: 30px;width: 30px;border-radius: 50%;">
+                </div>
+                <div class="col-xs-12 list-group"
+                     style="margin-top: 10px;padding-left:10px;height: 302px;position:relative;overflow-x: auto; overflow-y: auto;">
+                    <a class="list-group-item" ng-repeat="x in opt_prj_list | filter:query"
+                       style="font-size: 14px;position:relative;overflow-x: auto; overflow-y: auto;">
+                        <div class="row">
+                            <div class="col-xs-2" style="text-align: center;">
+                                <img  src="{{x.headimgurl}}" style="height: 30px;width: 30px;border-radius: 50%;">
+                            </div>
+                            <div class="col-xs-10">
+                                <label>{{x.name}}:{{x.info}}</label>
+                                <label class="pull-right">{{x.time}}</label>
+                                <br>
+                                <div>{{x.content}}</div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</div>

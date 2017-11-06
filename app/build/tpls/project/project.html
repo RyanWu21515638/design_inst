@@ -1,11 +1,12 @@
 
-<div class="col-xs-10" style="border: 1px solid lightgrey;padding-top: 1%;" ng-controller="projectCtrl">
+<div class="col-xs-12 col-md-12" style="border: 1px solid lightgrey;padding-top: 1%;" ng-controller="prosideCtrl">
     <div ng-if="fromIPM != 'true'" class="col-md-1 visible-lg visible-md visible-sm "
          style="border-right: 1px solid lightgrey;padding-left: 1%;">
 
         <label class="col-md-12" style="background-color: #428bca;font-size: 16px;">项目管理</label>
         <ul class="nav nav-tabs nav-stacked">
-            <li class="visible-lg visible-md visible-sm"><a href="" ui-sref="index.project.configuration" style="outline:none;">软件配置</a>
+            <li class="visible-lg visible-md visible-sm"><a href="" ui-sref="index.project.configuration" style="outline:none;"
+            >软件配置</a>
             </li>
             <li><a href="" ui-sref="index.project.project_info" style="outline:none;">所有项目</a></li>
         </ul>
@@ -15,67 +16,3 @@
     </div>
 </div>
 
-<div ng-controller="subproject_info_detailCtrl" >
-    <div id="prj_menu" class="animated bounceInDown col-xs-12 col-md-2"
-         style="background-color: #eeeeee;height: 900px;border: 5px solid white;"
-         ng-if="menu && (fromIPM != 'true')">
-        <div>
-            <div>
-                <h3><span class="glyphicon glyphicon-tasks"></span>项目菜单</h3>
-            </div>
-            <div>
-                <h4 style="border-top: 5px solid white;padding-top: 10px;padding-left: 10px;"><b>任务统计</b></h4>
-                <div style="height: 100px;">
-                    <div class="col-xs-5" style="height: 90%;margin-left: 5%;">
-                        <div style="text-align: center;padding-bottom: 5px;">总任务数</div>
-                        <a class="list-group-item"
-                           style="font-size: 32px;position:relative;text-align: center;height: 80%;color: #7fd112;">
-                        {{sum_1_sum}}
-                        </a>
-                    </div>
-                    <div class="col-xs-5 col-xs-offset-1 col" style="height: 90%;">
-                        <div style="text-align: center;padding-bottom: 5px;">已完成</div>
-                        <a class="list-group-item"
-                           style="font-size: 32px;position:relative;text-align: center;height: 80%;color:#ff9800;">
-                        {{done_sum}}
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <h4 style="border-top: 5px solid white;padding-top: 10px;padding-left: 10px;"><b>项目进展</b></h4>
-                <div style="height: 200px;width: 90%;margin-left: 5%" id="container1"></div>
-            </div>
-            <div>
-                <h4 style="border-top: 5px solid white;padding-top: 10px;padding-left: 10px;"><b>项目动态</b></h4>
-                <form class="form-horizontal" role="form">
-
-                    <div class="space-6"></div>
-                    <div style="margin-top: 2%;">
-                        <label style="text-align: right;">
-                            {{prj_list[index].subproject_list[subindex].name}}： </label>
-                        <img ng-repeat="x in imglist" src="{{x}}" ng-click="bindquery(x)"
-                             style="height: 30px;width: 30px;border-radius: 50%;">
-                    </div>
-                    <div class="col-xs-12 list-group"
-                         style="margin-top: 10px;padding-left:10px;height: 302px;position:relative;overflow-x: auto; overflow-y: auto;">
-                        <a class="list-group-item" ng-repeat="x in opt_prj_list | filter:query"
-                           style="font-size: 14px;position:relative;overflow-x: auto; overflow-y: auto;">
-                            <div class="row">
-                                <div class="col-xs-2" style="text-align: center;">
-                                    <img  src="{{x.headimgurl}}" style="height: 30px;width: 30px;border-radius: 50%;">
-                                </div>
-                                <div class="col-xs-10">
-                                    <label>{{x.name}}:{{x.info}}</label>
-                                    <label class="pull-right">{{x.time}}</label>
-                                    <br>
-                                    <div>{{x.content}}</div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>

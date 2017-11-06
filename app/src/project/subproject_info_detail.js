@@ -1,31 +1,37 @@
 var subproject_info_detail = angular.module('subproject_info_detail', ['ngResource', 'ngCookies']);
-subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope, $http, $filter,$timeout, $interval, $window,
+subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope, $http, $filter, $timeout, $interval, $window,
                                                                           $stateParams, $state, $cookies, $location,
                                                                           $rootScope, projectService) {
 
     var expireDate = new Date();
     expireDate.setDate(expireDate.getDate() + 1);
-
-    $scope.prj_id = $stateParams.prj_id;
-    $scope.subprj_id = $stateParams.subprj_id;
-
     $rootScope.fromIPM = $cookies.get('fromIPM');
-    console.log($rootScope.fromIPM);
+    $scope.prj_id = $stateParams.prj_id;
+    $scope.paramFromIPM = JSON.parse($cookies.get('paramFromIPM'));
+    if ($scope.paramFromIPM.subprj_id) {
+        //$scope.prj_id = $scope.paramFromIPM.prj_id;
+        $scope.subprj_id = $scope.paramFromIPM.subprj_id;
+        //$cookies.put('paramFromIPM', '', {'expires': expireDate});
+        //$window.location.reload();
+    }
+    else {
+
+        $scope.subprj_id = $stateParams.subprj_id;
+    }
+
     if ($scope.subprj_id) {
         $rootScope.menu = true;
     }
     else {
         $rootScope.menu = false;
     }
-
-
     $scope.task_group_info = {};
     $scope.subtask_info = {};
     $scope.subtask_info.subtask_name = "选择类型";
     $scope.subtask_info.emergency = "普通";
     $scope.subtask_info.urgent = 1;
-    $scope.subtask_info.partitionNickname = [];
-    $scope.subtask_info.parter = [];
+    $scope.subtask_info.partitionNickname = new Array();
+    $scope.subtask_info.parter = new Array();
 
     $scope.userinfo = {};
     $scope.userinfo.openid = $cookies.get('openid');
@@ -34,50 +40,43 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
 
     $scope.refrash_task = false;
 
-    $scope.grp_list = JSON.parse($cookies.get('grp_list'));
-    $scope.paramFromIPM = JSON.parse($cookies.get('paramFromIPM'));
-    projectService.project_list($scope.userinfo).then(
-        function (res) {
-            $scope.prj_list = res.data;
-            //根据prj_id和subprj_id查询项目名称
-            for (var j = 0; j < $scope.prj_list.length; j++) {
-                if ($scope.prj_list[j].project_id == $scope.prj_id) {
-                    $scope.prj_name = $scope.prj_list[j].name;
-                    for (var jj = 0; jj < $scope.prj_list[j].subproject_list.length; jj++) {
+    $scope.prj_name = $cookies.get('prj_name');
+    $scope.subprj_name = $cookies.get('subprj_name');
 
-                        if ($scope.prj_list[j].subproject_list[jj].subproject_id == $scope.subprj_id)
-                            $scope.subprj_name = $scope.prj_list[j].subproject_list[jj].name;
+    $scope.getProjectTrailInfos = function () {
+
+              $http.get($rootScope.ip + '/design_institute/public/home/Projecttrailinfo/getProjecttrailinfos?' +
+                  'prj_id=' + $scope.prj_id + '&subproject_id=' + $scope.subprj_id).success(
+                  function (res) {
+                      $rootScope.opt_prj_list = res;
+                      $rootScope.imglist = new Array();
+                      for (var i = 0; i < $scope.opt_prj_list.length; i++) {
+                          $rootScope.imglist[i] = $scope.opt_prj_list[i].headimgurl;
+                      }
+                      $rootScope.imglist[$scope.opt_prj_list.length] = 'app/build/image/all.jpg';
+                      $rootScope.imglist = DropRepeat($rootScope.imglist);
+                  }).error(function () {
+                  alert("an unexpected error ocurred!");
+              })
 
 
+    }
+
+
+    $scope.projectRoleList = function () {
+        projectService.project_role_list($scope.subprj_id).then(
+            function (res) {
+                $scope.prj_role_list = res.data;
+                for (var i = 0; i < $scope.prj_role_list.length; i++) {
+                    if ($scope.prj_role_list[i].openid == $cookies.get('openid')) {
+                        $scope.newtaskAuthor = $scope.prj_role_list[i].roles.var_3;
+                        break;
                     }
                 }
             }
-            $http.get($rootScope.ip + '/design_institute/public/home/Projecttrailinfo/getProjecttrailinfos?' +
-                'prj_id=' + $scope.prj_id + '&subproject_id=' + $scope.subprj_id).success(
-                function (res) {
-                    $rootScope.opt_prj_list = res;
-                    $rootScope.imglist = new Array();
-                    for (var i = 0; i < $scope.opt_prj_list.length; i++) {
-                        $rootScope.imglist[i] = $scope.opt_prj_list[i].headimgurl;
-                    }
-                    $rootScope.imglist[$scope.opt_prj_list.length] = 'app/build/image/all.jpg';
-                    $rootScope.imglist = DropRepeat($rootScope.imglist);
-                }).error(function () {
-                alert("an unexpected error ocurred!");
-            })
-        }
-    )
-    projectService.project_role_list($scope.subprj_id).then(
-        function (res) {
-            $scope.prj_role_list = res.data;
-            for (var i = 0; i < $scope.prj_role_list.length; i++) {
-                if ($scope.prj_role_list[i].openid == $cookies.get('openid')) {
-                    $scope.newtaskAuthor = $scope.prj_role_list[i].roles.var_3;
-                    break;
-                }
-            }
-        }
-    )
+        )
+    }
+
 
     projectService.month_task_list($scope.subprj_id).then(
         function (res) {
@@ -98,7 +97,6 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
         }
     )
     //任务看板
-
     prj_keboard = function () {
 
         $('#container1').ready(function () {
@@ -224,13 +222,27 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
     }
     //设置子任务负责人
     $scope.chargerChose = function (nickname, openid) {
+        var exsit = false;
+        for (var i = 0; i < $scope.subtask_info.parter.length; i++) {
+            if ($scope.subtask_info.parter[i] == openid) {
+                exsit = true;
+                break;
+            }
+        }
+        if (exsit) {
+            $scope.removePartition(nickname);
+        }
         $scope.subtask_info.chargerNickname = nickname;
         $scope.subtask_info.changer_id = openid;
+    }
+
+    $scope.role_seletct = function (x) {
+        console.log(x);
+        $scope.role_partition = x;
     }
     //设置子任务参与者
     $scope.partitionChose = function (nickname, openid) {
         var exsit = false;
-        var ischarger = false;
         if (openid == $scope.subtask_info.changer_id) {
             alert("已设置为负责人!");
         }
@@ -238,7 +250,7 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
             for (var i = 0; i < $scope.subtask_info.parter.length; i++) {
                 if ($scope.subtask_info.parter[i] == openid) {
                     exsit = true;
-                    break
+                    break;
                 }
             }
             if (exsit) {
@@ -275,14 +287,8 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
                 nowdate = $filter('date')(nowdate, "yyyy-MM-dd hh:mm:ss");
                 for (var i = 0; i < $scope.task_list.length; i++) {
                     $scope.task_list[i]['length'] = $scope.task_list[i].subtask_list.length;
-                    for(var j=0;j< $scope.task_list[i].subtask_list.length;j++)
-                    {
-                        $scope.task_list[i].subtask_list[j].end_time_plan = $scope.task_list[i].subtask_list[j].end_time_plan.substring(0,10);
-                        /*var d1 = $scope.task_list[i].subtask_list[j].end_time_plan.replace(/\-/g, "/");
-                        console.log(nowdate.replace(/\-/g, "/"));
-                        console.log(d1);
-                        console.log(parseInt(nowdate.replace(/\-/g, "/") - d1));*/
-
+                    for (var j = 0; j < $scope.task_list[i].subtask_list.length; j++) {
+                        $scope.task_list[i].subtask_list[j].end_time_plan = $scope.task_list[i].subtask_list[j].end_time_plan.substring(0, 10);
                     }
                 }
             }
@@ -290,35 +296,82 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
     }
     taskgroupTaskList();
 
-    $scope.$watch('refrash_task',function(){
-        taskgroupTaskList();
-    });
-    //新建总任务
-    $scope.newTaskGroup = function () {
-        $scope.task_group_info.subprj_id = $scope.subprj_id;
-        $scope.task_group_info.openid = $cookies.get('openid');
-        $scope.task_group_info.role_id = $scope.role_id;
-        projectService.add_taskgroup($scope.task_group_info).then(
+    $scope.group_list =function () {
+        projectService.group_list().then(
             function (res) {
-                $window.location.reload();
+                $scope.grp_list = res.data;
+                $cookies.put('grp_list', JSON.stringify($scope.grp_list), {'expires': expireDate});
             }
         )
+    }
+
+
+    //新建总任务
+    $scope.newTaskGroup = function () {
+        console.log($scope.role_name);
+        if($scope.role_name == '' || $scope.role_name == undefined)
+        {
+          alert("先选择角色权限！");
+        }
+        else{
+            $scope.task_group_info.subprj_id = $scope.subprj_id;
+            $scope.task_group_info.openid = $cookies.get('openid');
+            $scope.task_group_info.role_id = $scope.role_id;
+            projectService.add_taskgroup($scope.task_group_info).then(
+                function (res) {
+                    //$window.location.reload();
+                    //taskgroupTaskList();
+
+                    //******************************************
+                    $scope.paramFromIPM.subprj_id = $scope.subprj_id;
+                    projectService.taskgroup_task_list($scope.paramFromIPM).then(
+                        function (res) {
+                            $scope.task_list = res.data;
+                            var nowdate = new Date();
+                            nowdate = $filter('date')(nowdate, "yyyy-MM-dd hh:mm:ss");
+                            for (var i = 0; i < $scope.task_list.length; i++) {
+                                $scope.task_list[i]['length'] = $scope.task_list[i].subtask_list.length;
+                                for (var j = 0; j < $scope.task_list[i].subtask_list.length; j++) {
+                                    $scope.task_list[i].subtask_list[j].end_time_plan = $scope.task_list[i].subtask_list[j].end_time_plan.substring(0, 10);
+                                }
+                            }
+                        }
+                    )
+                    //******************************************
+                }
+            )
+        }
+
     }
     //删除总任务
     $scope.delTaskgroup = function (taskgoup_id) {
         projectService.del_taskgroup(taskgoup_id).then(
             function (res) {
                 console.log(res.data);
-                if(!res.data.success)
-                {
+                if (!res.data.success) {
                     alert("有已完成的子任务，总任务无法删除！");
                 }
-                else
-                {
+                else {
                     alert("删除成功！");
                     $scope.refrash_task = !$scope.refrash_task;
-                    $window.location.reload();
+                    //$window.location.reload();
                     //taskgroupTaskList();
+                    //******************************************
+                    $scope.paramFromIPM.subprj_id = $scope.subprj_id;
+                    projectService.taskgroup_task_list($scope.paramFromIPM).then(
+                        function (res) {
+                            $scope.task_list = res.data;
+                            var nowdate = new Date();
+                            nowdate = $filter('date')(nowdate, "yyyy-MM-dd hh:mm:ss");
+                            for (var i = 0; i < $scope.task_list.length; i++) {
+                                $scope.task_list[i]['length'] = $scope.task_list[i].subtask_list.length;
+                                for (var j = 0; j < $scope.task_list[i].subtask_list.length; j++) {
+                                    $scope.task_list[i].subtask_list[j].end_time_plan = $scope.task_list[i].subtask_list[j].end_time_plan.substring(0, 10);
+                                }
+                            }
+                        }
+                    )
+                    //******************************************
                 }
             }
         )
@@ -326,54 +379,110 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
     //选中总任务
     $scope.taskGroupChose = function (id, index) {
         $scope.tasktype = 'father';
+        $scope.subtask_info = {};
         $scope.subtask_info.subtask_name = "选择类型";
         $scope.subtask_info.subtask_id = '';
+        $scope.subtask_info.taskgroup_id = id;
+        $scope.subtask_info.partitionNickname = [];
+        $scope.subtask_info.parter = [];
+        $scope.subtask_info.urgent =1;
+
         $scope.taskgoup_name = $scope.task_list[index].name;
         $scope.taskgoup_id = $scope.task_list[index].id;
-        $scope.subtask_info.taskgroup_id = id;
+
+
+        $scope.role_group = $scope.task_list[index].role_id;
     }
     //新建子任务
     $scope.newSubTask = function () {
         $scope.subtask_info.creator_id = $cookies.get('openid');
         $scope.subtask_info.end_time_plan = $scope.t1.year + '-' + $scope.t1.month + '-' + $scope.t1.day;
 
+        console.log($scope.subtask_info);
         projectService.add_task($scope.subtask_info).then(
             function (res) {
-                $window.location.reload();
+                //$window.location.reload();
+                //******************************************
+                $scope.paramFromIPM.subprj_id = $scope.subprj_id;
+                projectService.taskgroup_task_list($scope.paramFromIPM).then(
+                    function (res) {
+                        $scope.task_list = res.data;
+                        var nowdate = new Date();
+                        nowdate = $filter('date')(nowdate, "yyyy-MM-dd hh:mm:ss");
+                        for (var i = 0; i < $scope.task_list.length; i++) {
+                            $scope.task_list[i]['length'] = $scope.task_list[i].subtask_list.length;
+                            for (var j = 0; j < $scope.task_list[i].subtask_list.length; j++) {
+                                $scope.task_list[i].subtask_list[j].end_time_plan = $scope.task_list[i].subtask_list[j].end_time_plan.substring(0, 10);
+                            }
+                        }
+                    }
+                )
+                //******************************************
             }
         )
     }
     //保存子任务修改
     $scope.saveSubTask = function () {
-        $scope.subtask_info.creator_id = $scope.task_list[$scope.taskIndex].creator_id;
-        $scope.subtask_info.taskgroup_id = $scope.task_list[$scope.taskIndex].id;
-        $scope.subtask_info.end_time_plan = $scope.t1.year + '-' + $scope.t1.month + '-' + $scope.t1.day;
-        projectService.add_task($scope.subtask_info).then(
-            function (res) {
-                if(!res.data.success)
-                {
-                    alert('修改失败！');
+        if ($scope.subtask_info.state == 3)
+            alert("项目已完成，无法修改！");
+        else {
+            $scope.subtask_info.creator_id = $scope.task_list[$scope.taskIndex].creator_id;
+            $scope.subtask_info.taskgroup_id = $scope.task_list[$scope.taskIndex].id;
+            $scope.subtask_info.end_time_plan = $scope.t1.year + '-' + $scope.t1.month + '-' + $scope.t1.day;
+            projectService.add_task($scope.subtask_info).then(
+                function (res) {
+                    if (!res.data.success) {
+                        alert('修改失败！');
+                    }
+                    else {
+                        //$window.location.reload();
+                        //******************************************
+                        $scope.paramFromIPM.subprj_id = $scope.subprj_id;
+                        projectService.taskgroup_task_list($scope.paramFromIPM).then(
+                            function (res) {
+                                $scope.task_list = res.data;
+                                var nowdate = new Date();
+                                nowdate = $filter('date')(nowdate, "yyyy-MM-dd hh:mm:ss");
+                                for (var i = 0; i < $scope.task_list.length; i++) {
+                                    $scope.task_list[i]['length'] = $scope.task_list[i].subtask_list.length;
+                                    for (var j = 0; j < $scope.task_list[i].subtask_list.length; j++) {
+                                        $scope.task_list[i].subtask_list[j].end_time_plan = $scope.task_list[i].subtask_list[j].end_time_plan.substring(0, 10);
+                                    }
+                                }
+                            }
+                        )
+                        //******************************************
+                    }
                 }
-                else
-                {
-                    $window.location.reload();
-                }
-
-            }
-        )
+            )
+        }
     }
     //删除子任务
     $scope.delTask = function (task_id) {
         projectService.del_task(task_id).then(
             function (res) {
-                if(!res.data.success)
-                {
+                if (!res.data.success) {
                     alert("任务已完成，无法删除！");
                 }
-                else
-                {
+                else {
                     alert("删除成功！");
-                    $window.location.reload();
+                    //$window.location.reload();
+                    //******************************************
+                    $scope.paramFromIPM.subprj_id = $scope.subprj_id;
+                    projectService.taskgroup_task_list($scope.paramFromIPM).then(
+                        function (res) {
+                            $scope.task_list = res.data;
+                            var nowdate = new Date();
+                            nowdate = $filter('date')(nowdate, "yyyy-MM-dd hh:mm:ss");
+                            for (var i = 0; i < $scope.task_list.length; i++) {
+                                $scope.task_list[i]['length'] = $scope.task_list[i].subtask_list.length;
+                                for (var j = 0; j < $scope.task_list[i].subtask_list.length; j++) {
+                                    $scope.task_list[i].subtask_list[j].end_time_plan = $scope.task_list[i].subtask_list[j].end_time_plan.substring(0, 10);
+                                }
+                            }
+                        }
+                    )
+                    //******************************************
                 }
 
             }
@@ -383,6 +492,8 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
     $scope.subTaskChose = function (taskIndex, subTaskIndex) {
         $scope.tasktype = 'son';
         $scope.taskIndex = taskIndex;
+        $scope.role_group = $scope.task_list[taskIndex].role_id
+        $scope.taskgoup_name = $scope.task_list[taskIndex].name;
         $scope.subTaskIndex = subTaskIndex;
         $scope.subtask_info.subtask_id = $scope.task_list[taskIndex].subtask_list[subTaskIndex].id;
         $scope.subtask_info.subtask_name = $scope.task_list[taskIndex].subtask_list[subTaskIndex].name;
@@ -392,6 +503,7 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
         $scope.subtask_info.remarks = $scope.task_list[taskIndex].subtask_list[subTaskIndex].remarks;
         $scope.subtask_info.partitionNickname = [];
         $scope.subtask_info.parter = [];
+        $scope.subtask_info.state = $scope.task_list[taskIndex].subtask_list[subTaskIndex].state;
         for (var i = 0; i < $scope.task_list[taskIndex].subtask_list[subTaskIndex].parter_list.length; i++) {
             $scope.subtask_info.partitionNickname.push($scope.task_list[taskIndex].subtask_list[subTaskIndex].parter_list[i].nickname);
             $scope.subtask_info.parter.push($scope.task_list[taskIndex].subtask_list[subTaskIndex].parter_list[i].openid);

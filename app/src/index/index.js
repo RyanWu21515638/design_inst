@@ -14,6 +14,7 @@ index.controller('indexCtrl', function ($scope, $timeout, $interval, $location,$
     $scope.userinfo.status = $cookies.get('status');
     $scope.userinfo.issystem = $cookies.get('issystem');
     $rootScope.fromIPM = $cookies.get('fromIPM');
+    console.log($scope.userinfo);
     $scope.pollScan = function () {
         $http.get('http://120.25.74.178/ipmwx/Home/Qrcode/pollScan?scene_id='+$scope.userinfo.scene_id).success(
             function (res) {
@@ -42,6 +43,12 @@ index.controller('indexCtrl', function ($scope, $timeout, $interval, $location,$
             alert("an unexpected error ocurred!");
         });
     };
+
+    if($scope.logged == 'false' || $scope.logged == '')
+    {
+        $scope.register_post();
+        $('#modal-form').modal('show');
+    }
 
     function delAllCookie(){
         /*var myDate=new Date();
@@ -92,11 +99,11 @@ index.controller('indexCtrl', function ($scope, $timeout, $interval, $location,$
             }
         )
     };
-    if($location.search().openid)
+    if($location.search().login_id)
     {
         if(!$cookies.get("openid"))
         {
-            selectUser($location.search().openid);
+            selectUser($location.search().login_id);
         }
     }
 
