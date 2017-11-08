@@ -13,7 +13,6 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
     $scope.roles = new Array();         //给某个人员分配权限
     $rootScope.menu = false;
     $rootScope.fromIPM = $cookies.get('fromIPM');
-    console.log($rootScope.fromIPM);
     //获取用户微信id，公司id，设计院权限--可设置成全局变量
     //
     $scope.userinfo.openid = $cookies.get('openid');
@@ -22,11 +21,14 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
     $scope.userinfo.company_name = $cookies.get('company_name');
     $scope.userinfo.nickname = $cookies.get('nickname');
     $scope.userinfo.status = $cookies.get('status');
+    $scope.userinfo.currentPage = 1;
+    $scope.userinfo.itemsPerPage = 10;
 
     $scope.paramFromIPM = $location.search();
     $cookies.put('paramFromIPM', JSON.stringify($scope.paramFromIPM), {'expires': expireDate});
 
     if ($location.search().login_id != undefined && $location.search().login_id != '' && $location.search().login_id != null) {
+
         $scope.userinfo.openid = $location.search().login_id;
         $cookies.put('fromIPM', true, {'expires': expireDate});
     }
@@ -36,7 +38,7 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
     selectUser = function (openid) {
         $http.get($rootScope.ip + "/design_institute/public/admin/user/selectUser?openid=" + openid).success(
             function (res) {
-                if (res.company_id) {
+                if (res.company_id != -1 && res.company_id !='' && res.company_id != undefined && res.company_id != null) {
                     $scope.logged = 'true';
                     $cookies.put('logged', 'true', {'expires': expireDate});
                     $cookies.put('status', res.status, {'expires': expireDate});
@@ -45,24 +47,26 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
                     $cookies.put('headimgurl', res.headimgurl, {'expires': expireDate});
                     $cookies.put('nickname', res.nickname, {'expires': expireDate});
                     $cookies.put('openid', $scope.userinfo.openid, {'expires': expireDate});
-                    $cookies.put('issystem', res.remark, {'expires': expireDate});
+                    projectList();
+                    userList();
                     $window.location.reload();
                 }
             }
         )
     };
-    console.log($cookies.get('openid'));
-    console.log($location.search().login_id);
-
-    if ($cookies.get('openid') == undefined || $cookies.get('openid') == '' || $cookies.get('openid') == null ||
-        ($cookies.get('openid') != $location.search().login_id && $location.search().login_id != undefined)) {
-        console.log($location.search().login_id);
-        selectUser($location.search().login_id);
-    }
+   // console.log($location.search().login_id);
+    //console.log($cookies.get('openid'));
 
     //获取所有项目列表--包括总项目下面的子项目
     projectList = function () {
-        console.log('获取项目信息');
+        $scope.userinfo.openid = $cookies.get('openid');
+        $scope.userinfo.company_id = $cookies.get('company_id');
+        $scope.userinfo.headimgurl = $cookies.get('headimgurl');
+        $scope.userinfo.company_name = $cookies.get('company_name');
+        $scope.userinfo.nickname = $cookies.get('nickname');
+        $scope.userinfo.status = $cookies.get('status');
+        $scope.userinfo.currentPage = 1;
+        $scope.userinfo.itemsPerPage = 10;
         projectService.project_list($scope.userinfo).then(
             function (res) {
                 $scope.prj_list = res.data;
@@ -73,22 +77,24 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
                 for (var jj = 0; jj < $scope.prj_list.length; jj++) {
                     for (var jjj = 0; jjj < $scope.prj_list[jj].subproject_list.length; jjj++) {
                         var da1 = $scope.prj_list[jj].subproject_list[jjj].end_time_plan;
-
-                        var D_value = (da1.split('-')[0]-dn.split('-')[0])*365
-                                    + (da1.split('-')[1]-dn.split('-')[1])*30
-                                    + (da1.split('-')[2]-dn.split('-')[2]);
-                        $scope.prj_list[jj].subproject_list[jjj]['D_value'] = D_value;
+                        if(da1 != '' && da1 != null && da1 != undefined)
+                        {
+                            var D_value = (da1.split('-')[0]-dn.split('-')[0])*365
+                                + (da1.split('-')[1]-dn.split('-')[1])*30
+                                + (da1.split('-')[2]-dn.split('-')[2]);
+                            $scope.prj_list[jj].subproject_list[jjj]['D_value'] = D_value;
+                        }
+                        else
+                            $scope.prj_list[jj].subproject_list[jjj]['D_value'] = 100;
                     }
                 }
-                console.log(dn);
-
-                console.log($location.search().subprj_id);
                 var sub_if_go = $location.search().subprj_id;
                 if (sub_if_go) {
                     for (var i = 0; i < $scope.prj_list.length; i++) {
                         for (var j = 0; j < $scope.prj_list[i].subproject_list.length; j++)
                             if ($scope.prj_list[i].subproject_list[j].subproject_id == $location.search().subprj_id) {
                                 $scope.prj_id_params = $scope.prj_list[i].project_id;
+
                                 break;
                             }
                     }
@@ -113,6 +119,7 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
             }
         )
     };
+
     //获取所有设计院用户
     userList = function () {
         projectService.user_list($scope.userinfo).then(
@@ -132,6 +139,16 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
             }
         )
     };
+    if ($cookies.get('openid') == undefined || $cookies.get('openid') == '' || $cookies.get('openid') == null ||
+        ($cookies.get('openid') != $location.search().login_id && $location.search().login_id != undefined)) {
+        selectUser($scope.userinfo.openid);
+    }
+    else
+    {
+        projectList();
+        userList();
+    }
+
     //获取公司配置列表
     $scope.configurationlist = function () {
         projectService.configuration_list($scope.userinfo).then(
@@ -149,14 +166,6 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
             }
         )
     }
-    //初始化--可在全局初始化
-    projectList();
-    userList();
-    //configurationlist();
-    //grouplist();
-
-    //
-
     //选定总项目
     $scope.prj_dt = function (index, prjid, media) {
         //选定总项目
@@ -198,12 +207,11 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
         $scope.subprjinfo.creator_id = $cookies.get('openid');
         $scope.subprjinfo.start_time_plan = $scope.t5.year + '-' + $scope.t5.month + '-' + $scope.t5.day;
         $scope.subprjinfo.end_time_plan = $scope.t6.year + '-' + $scope.t6.month + '-' + $scope.t6.day;
-        console.log($scope.subprjinfo);
         projectService.new_subproject($scope.subprjinfo).then(
             function (res) {
                 if (res.data.success) {
                     $('#modal-form2').modal('hide');
-                    projectList();
+                    //projectList();
                 }
             }
         )
@@ -225,28 +233,18 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
             function (res) {
                 $scope.prj_role_list = res.data;
                 $rootScope.prj_role_list = res.data;
-                //$cookies.put('prj_role_list', '', {'expires': expireDate});
-
-                //$cookies.put('prj_role_list', JSON.stringify($scope.prj_role_list), {'expires': expireDate});
-
-
-                console.log('prj_role_list' + $scope.prj_role_list);
                 var ifexist = false;
                 for (var i = 0; i < $scope.usr_list.length; i++) {
                     for (var j = 0; j < $scope.prj_role_list.length; j++) {
                         if ($scope.usr_list[i].openid == $scope.prj_role_list[j].openid) {
                             ifexist = true;
                         }
-                        console.log(ifexist);
                     }
                     if (ifexist) {
                         $scope.usr_list[i]['show'] = false;
                         ifexist = false;
-                        console.log($scope.usr_list);
                     }
                 }
-
-
             }
         )
     }
@@ -330,12 +328,10 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
     }
     //从已分配人员中删除
     $scope.remove = function (openid) {
-        console.log(openid);
         $scope.removeinfo.openid = openid;
         $scope.removeinfo.subproject_id = $scope.rolesinfo.subprj_id;
         projectService.del_project_role($scope.removeinfo).then(
             function (res) {
-                console.log(res.data.success);
                 if (res.data.success) {
                     $scope.subchose($scope.rolesinfo.subprj_id);
                 }
@@ -357,7 +353,6 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
     $scope.delConf = function (conf_id) {
         projectService.del_config(conf_id).then(
             function (res) {
-                console.log(res.data);
                 if (!res.data.success) {
                     alert("此配置正在被使用，无法删除！");
                 }
@@ -426,7 +421,6 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
         $scope.t1.year = ev.date.getFullYear();
         $scope.t1.month = ev.date.getMonth() + 1;
         $scope.t1.day = ev.date.getDate();
-        console.log('t1' + JSON.stringify($scope.t1) + 't2' + JSON.stringify($scope.t2));
         if ($scope.project_id) {
             //$scope.changecharts($scope.project_id, $scope.t1.year + '-' + $scope.t1.month +'-' +$scope.t1.day, $scope.t2.year + '-' + $scope.t2.month + '-' + $scope.t2.day);
         }
@@ -446,7 +440,6 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
         $scope.t2.year = ev.date.getFullYear();
         $scope.t2.month = ev.date.getMonth() + 1;
         $scope.t2.day = ev.date.getDate();
-        console.log('t1' + JSON.stringify($scope.t1) + 't2' + JSON.stringify($scope.t2));
         if ($scope.project_id) {
             //$scope.changecharts($scope.project_id, $scope.t.year + '-' + $scope.t1.month, $scope.t2.year + '-' + $scope.t2.month);
         }
@@ -465,7 +458,6 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
         $scope.t3.year = ev.date.getFullYear();
         $scope.t3.month = ev.date.getMonth() + 1;
         $scope.t3.day = ev.date.getDate();
-        console.log('t3' + JSON.stringify($scope.t1) + 't4' + JSON.stringify($scope.t2));
         if ($scope.project_id) {
             //$scope.changecharts($scope.project_id, $scope.t1.year + '-' + $scope.t1.month +'-' +$scope.t1.day, $scope.t2.year + '-' + $scope.t2.month + '-' + $scope.t2.day);
         }
@@ -485,7 +477,6 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
         $scope.t4.year = ev.date.getFullYear();
         $scope.t4.month = ev.date.getMonth() + 1;
         $scope.t4.day = ev.date.getDate();
-        console.log('t3' + JSON.stringify($scope.t1) + 't4' + JSON.stringify($scope.t2));
         if ($scope.project_id) {
             //$scope.changecharts($scope.project_id, $scope.t.year + '-' + $scope.t1.month, $scope.t2.year + '-' + $scope.t2.month);
         }
@@ -505,7 +496,6 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
         $scope.t5.year = ev.date.getFullYear();
         $scope.t5.month = ev.date.getMonth() + 1;
         $scope.t5.day = ev.date.getDate();
-        console.log('t5' + JSON.stringify($scope.t1) + 't6' + JSON.stringify($scope.t2));
         if ($scope.project_id) {
             //$scope.changecharts($scope.project_id, $scope.t.year + '-' + $scope.t1.month, $scope.t2.year + '-' + $scope.t2.month);
         }
@@ -525,7 +515,6 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
         $scope.t6.year = ev.date.getFullYear();
         $scope.t6.month = ev.date.getMonth() + 1;
         $scope.t6.day = ev.date.getDate();
-        console.log('t5' + JSON.stringify($scope.t1) + 't6' + JSON.stringify($scope.t2));
         if ($scope.project_id) {
             //$scope.changecharts($scope.project_id, $scope.t.year + '-' + $scope.t1.month, $scope.t2.year + '-' + $scope.t2.month);
         }
@@ -667,6 +656,29 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
                 fontSize: '10px'
             }
         }
+    });
+    getData = function () {
+        $scope.userinfo.itemsPerPage = $scope.userinfo.itemsPerPage + 10;
+        projectList();
+    }
+
+    $scope.scrollT_old = 0;
+    //定义鼠标滚动事件
+    $("#prj_tab").scroll(
+        function () {
+            var h = $(this).height();//div可视区域的高度
+            var sh = $(this)[0].scrollHeight;//滚动的高度，$(this)指代jQuery对象，而$(this)[0]指代的是dom节点
+            var st =$(this)[0].scrollTop;//滚动条的高度，即滚动条的当前位置到div顶部的距离
+            console.log(h+'-'+sh+'-'+st);
+            if((sh-h) == st)
+            {
+                getData();
+            }
+        }
+    );
+    //继续加载按钮事件
+    $("#btn_Page").click(function () {
+        getData();
     });
 
 })

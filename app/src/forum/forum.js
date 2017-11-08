@@ -5,12 +5,10 @@ forum.controller('forumCtrl', function ($scope, $location, $http,$timeout, $inte
 
     var expireDate = new Date();
     expireDate.setDate(expireDate.getDate() + 1);
-
     console.log($location.search().login_id);
     console.log($location.search().company_id);
     console.log($location.search().project_id);
     console.log($location.search().subprj_id);
-
     $scope.detail=function(index)
     {
         $state.go("index.forum.forum_detail",{index: index});
@@ -18,7 +16,6 @@ forum.controller('forumCtrl', function ($scope, $location, $http,$timeout, $inte
     $scope.prb_list_index = $stateParams.index;
     console.log($scope.prb_list_index);
     $scope.prb_sovle_desc = '';
-//keyVal==undefined || keyVal=="" || keyVal==null
     selectUser = function (openid) {
         $http.get($rootScope.ip+"/design_institute/public/admin/user/selectUser?openid=" + openid).success(
 
@@ -54,19 +51,6 @@ forum.controller('forumCtrl', function ($scope, $location, $http,$timeout, $inte
     };
     if($location.search().openid!=undefined &&$location.search().openid!='' &&$location.search().openid!=null)
         selectUser($location.search().openid);
-
-    //if($location.search().openid !=undefined && $location.search().openid !=undefined!="" &&$location.search().openid !=undefined!=null)
-    /*if($location.search().openid !='')
-    {
-        selectUser($location.search().openid);
-        $scope.tt1 = $timeout(function(){
-            $window.location.reload();
-        },1000);
-
-    }*/
-
-
-
     $scope.userinfo = {};
     $scope.userinfo.openid = $cookies.get('openid');
     $scope.userinfo.company_id = $cookies.get('company_id');
@@ -78,8 +62,6 @@ forum.controller('forumCtrl', function ($scope, $location, $http,$timeout, $inte
     $scope.probleminfo.project_id = $cookies.get('project_id');
     $scope.probleminfo.subproject_id = $cookies.get('subproject_id');
     $scope.newprobleminfo = {};
-
-
     projectList = function () {
         projectService.project_list($scope.userinfo).then(
             function (res) {
@@ -144,9 +126,5 @@ forum.controller('forumCtrl', function ($scope, $location, $http,$timeout, $inte
     }
 })
 forum.config(['$locationProvider', function ($locationProvider) {
-    //$locationProvider.html5Mode(true);
-    /*$locationProvider.html5Mode({
-        enabled: true,
-        requireBase: false
-    });*/
+
 }]);

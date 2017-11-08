@@ -8,7 +8,8 @@ project.service('projectService', function ($resource, $http, $rootScope) {
     };
     //获取所有项目信息
     this.project_list = function (data) {
-        return $http.get($rootScope.ip + '/design_institute/public/admin/Project/project_list?openid=' + data.openid + '&company_id=' + data.company_id);
+        return $http.get($rootScope.ip + '/design_institute/public/admin/Project/project_list?openid=' + data.openid + '&company_id=' + data.company_id
+        +'&currentpage=1'+'&itemsPerPage='+data.itemsPerPage);
     }
     this.user_list = function (data) {
         return $http.get($rootScope.ip + '/design_institute/public/admin/User/Userlist?company_id=' + data.company_id + '&status=' + data.status);
@@ -161,6 +162,10 @@ project.service('projectService', function ($resource, $http, $rootScope) {
     this.month_task_list =function (subprj_id) {
         return $http.get($rootScope.ip + '/design_institute/public/admin/Task/month_task_list?subprj_id='+subprj_id);
 
+    }
+    //查询所有负责人
+    this.select_check_charger =function (subprj_id) {
+        return $http.get($rootScope.ip + '/design_institute/public/admin/Task/select_check_charger?subproject_id='+subprj_id);
     }
 
 });

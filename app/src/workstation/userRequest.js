@@ -15,8 +15,10 @@ user.service('userService', function ($resource, $http, $rootScope) {
     this.company_list = function () {
         return $http.get($rootScope.ip +'/design_institute/public/admin/Company/company_list');
     }
-    this.ipm_user_list = function (company_id) {
-        return $http.get($rootScope.ip+ '/design_institute/public/admin/User/ipm_user_list?company_id='+company_id);
+    this.ipm_user_list = function (data1) {
+
+        return $http.get($rootScope.ip+ '/design_institute/public/admin/User/ipm_user_list?company_id='+data1.company_id+
+        '&currentpage=1'+'&itemsPerPage='+data1.itemsPerPage);
     }
     this.add_ipminst_user = function (openid,company_id) {
         return $http.get($rootScope.ip+'/design_institute/public/admin/User/add_ipminst_user?openid='+openid+'&company_id='+company_id);

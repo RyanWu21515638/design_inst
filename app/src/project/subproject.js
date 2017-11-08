@@ -17,35 +17,19 @@ subproject.controller('subprojectCtrl', function ($scope, $http, $timeout, $inte
     $scope.userinfo.company_id = $cookies.get('company_id');
     $scope.userinfo.status = $cookies.get('status');
     //
-
     $scope.index = $stateParams.index;
     $scope.subindex = $stateParams.subindex;
-   /* $scope.index = 0;
-    $scope.subindex = 0;*/
+
     //获取所有项目列表--包括总项目下面的子项目
     $scope.prj_list = $rootScope.prj_list;
     $rootScope.menu = false;
-
-
     $scope.subprj_dt = function (prj_id,subprj_id) {
-        console.log(prj_id);
-        console.log(subprj_id);
 
         projectService.project_role_list(subprj_id).then(
             function (res) {
                 $scope.prj_role_list = res.data;
-                //$cookies.put('prj_role_list','',{'expires': expireDate});
-                //$cookies.put('prj_role_list', JSON.stringify($scope.prj_role_list), {'expires': expireDate});
                 $state.go("index.project.subproject_info_detail",{prj_id:prj_id,subprj_id:subprj_id});
             }
         )
-
     }
-    //if (parseFloat($scope.subindex).toString() != "NaN") {
-
-    //}
-
-
-
-
 })

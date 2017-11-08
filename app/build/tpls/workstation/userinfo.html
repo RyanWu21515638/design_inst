@@ -1,11 +1,17 @@
-<div class="main-container" style="padding-left: 2%" ng-controller="userCtrl">
+
+<style type="text/css">
+    .fixed {
+        position: fixed;
+        left: 93%;
+        top: 80%;
+    }
+</style>
+<div id="top_user" class="main-container" style="padding-left: 2%;border: 1px solid lightgrey;" ng-controller="userCtrl">
     <div class="main-container-inner">
         <div class="page-content">
-
             <div class="space-24"></div>
             <div class="page-header">
                 <h3>
-                    <!--<i class="icon-spinner icon-spin orange bigger-125"></i>-->
                     <b>用户列表</b>
                 </h3>
             </div>
@@ -23,7 +29,6 @@
                 <div class="table-responsive animated bounceInRight">
                     <table id="sample-table-2" class="table table-striped table-hover">
                         <thead>
-                        <!--colspan="4"用于合并单元格-->
                         <tr>
                             <th>序号</th>
                             <th>头像</th>
@@ -31,12 +36,11 @@
                             <th>国家</th>
                             <th>省</th>
                             <th>地区</th>
-                            <th>所属公司</th><!--
-                            <th width="20%">身份</th>-->
+                            <th>所属公司</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="x in ipm_list | filter:query |filter:q1" ng-click="ngtest($index)" ng-dblclick="dbclick($index)">
+                        <tr ng-repeat="x in ipm_list | filter:query |filter:q1">
                             <td>{{$index+1}}</td>
                             <td>
                                 <img class="nav-user-photo" src="{{x.headimgurl}}"
@@ -49,17 +53,30 @@
                             <td ng-if="x.company_id != '1'"><button ng-click="addIpminstUser(x.openid,x.company_id)">添加到设计院</button></td>
                             <td ng-if="x.company_id == '1'"><span class="label label-success">设计院用户</span>
                                 <a href="" ng-click="delIpminstUser(x.openid)"><span class="label label-danger">从设计院删除</span></a></td>
-                           <!-- <td>{{x.company_id}}</td>
-                            <td>{{x.status}}</td>-->
                         </tr>
+                        <th>
+                            <td colspan="7" style="text-align: center;">
+                            <button id="btn_Page">点击加载</button></td>
+                        </th>
                         </tbody>
                     </table>
                 </div>
             </form>
-
-
         </div><!--pagecontent-->
     </div><!-- main-container-inner-->
+    <div class="fixed">
+        <table>
+            <tbody>
+            <tr>
+                <td data-toggle="popover" title="返回顶部">
+                    <button id="upbtn" type="button" class="btn btn-info col-md-12" ng-click="scrollup()">
+                        <span class="glyphicon glyphicon-chevron-up"></span></button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
 </div>
 
 

@@ -109,9 +109,6 @@ routerApp
 
             })
 
-
-
-
             //登录注册
             .state('login', {
                 url: '/login',
@@ -141,6 +138,7 @@ routerApp
 
 routerApp.run(function ($rootScope, $cookies) {
     $rootScope.ip = 'http://192.168.3.158';
+    //$rootScope.ip = 'http://120.25.74.178';
     $rootScope.menu = false;
 })
 ;

@@ -7,7 +7,6 @@ conf.controller('confCtrl', function ($scope, $http, $filter,$timeout, $interval
     $scope.userinfo = {};               //用户信息
 
     //获取用户微信id，公司id，设计院权限--可设置成全局变量
-    //
     $scope.userinfo.openid = $cookies.get('openid');
     $scope.userinfo.company_id = $cookies.get('company_id');
     $scope.userinfo.headimgurl = $cookies.get('headimgurl');
@@ -15,14 +14,12 @@ conf.controller('confCtrl', function ($scope, $http, $filter,$timeout, $interval
     $scope.userinfo.nickname = $cookies.get('nickname');
     $scope.userinfo.status = $cookies.get('status');
 
-
     //获取公司配置列表
         projectService.configuration_list($scope.userinfo).then(
             function (res) {
                 $scope.conf_list = res.data;
             }
         )
-
 
     $scope.delConf = function (conf_id) {
         projectService.del_config(conf_id).then(
@@ -34,13 +31,7 @@ conf.controller('confCtrl', function ($scope, $http, $filter,$timeout, $interval
                 else {
                     $window.location.reload();
                 }
-
             }
         )
     }
-
-
-
-
-
 })

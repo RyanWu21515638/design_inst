@@ -7,5 +7,4 @@ newforum.controller('newforumCtrl', function ($scope, $location, $timeout, $inte
         alert('发帖成功！');
         $state.go('index.forum.forum_items');
     }
-
 });
