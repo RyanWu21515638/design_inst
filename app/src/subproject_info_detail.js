@@ -437,8 +437,7 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
         if ($scope.subtask_info.state == 3)
             alert("项目已完成，无法修改！");
         else {
-            $scope.subtask_info.creator_id = $cookies.get('openid');
-            console.log($scope.subtask_info.creator_id);
+            $scope.subtask_info.creator_id = $scope.task_list[$scope.taskIndex].creator_id;
             $scope.subtask_info.taskgroup_id = $scope.task_list[$scope.taskIndex].id;
             $scope.subtask_info.end_time_plan = $scope.t1.year + '-' + $scope.t1.month + '-' + $scope.t1.day;
             projectService.add_task($scope.subtask_info).then(

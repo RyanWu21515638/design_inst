@@ -14,6 +14,8 @@ conf.controller('confCtrl', function ($scope, $http, $filter,$timeout, $interval
     $scope.userinfo.nickname = $cookies.get('nickname');
     $scope.userinfo.status = $cookies.get('status');
 
+    $scope.goPage = $cookies.get('goPage');
+
     //获取公司配置列表
         projectService.configuration_list($scope.userinfo).then(
             function (res) {
@@ -34,4 +36,6 @@ conf.controller('confCtrl', function ($scope, $http, $filter,$timeout, $interval
             }
         )
     }
+
+
 })

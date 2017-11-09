@@ -211,7 +211,7 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
             function (res) {
                 if (res.data.success) {
                     $('#modal-form2').modal('hide');
-                    //projectList();
+                    projectList();
                 }
             }
         )

@@ -109,7 +109,10 @@
                             data-toggle="popover" title="点击项目名称查看任务详情">
                             <td style="text-align: center;">{{$index+1}}</td>
                             <td>
-                                <a ui-sref="index.project.subproject_info_detail({prj_id:prjinfo.prj_id,subprj_id:rolesinfo.subprj_id})"
+                                <a ng-if="fromIPM == 'true'"
+                                   ng-click="set_prj_suprj_name(x.subproject_id)">{{x.name}}</a>
+                                <a ng-if="fromIPM != 'true'"
+                                   ui-sref="index.project.subproject_info_detail({prj_id:prjinfo.prj_id,subprj_id:rolesinfo.subprj_id})"
                                    ng-click="set_prj_suprj_name(x.subproject_id)">{{x.name}}</a>
                             </td>
                             <td>{{x.start_time_plan}}</td>

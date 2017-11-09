@@ -11,12 +11,18 @@
             </div>
                 <form id="import" enctype="multipart/form-data" method="post"
                       ng-controller="uploadCtrl" action=""
-                ng-if="userinfo.status == '2'">
+                      ng-if="userinfo.status == '2' && (goPage == '' || goPage == null || goPage == undefined)"
+                ng-init="init()">
                     <input type="file" name="file" required/>
                     <input type="hidden" name="openid" value="{{userinfo.openid}}">
                     <input type="hidden" name="company_id" value="{{userinfo.company_id}}">
                     <input type="submit" value="上传配置文件"><label style="color: red;">(*zip,*rar)</label>
                 </form>
+            <form enctype="multipart/form-data" method="post" ng-controller="uploadCtrl"
+                  ng-if="userinfo.status == '2' && (goPage != '' && goPage != null && goPage != undefined)">
+                <button ng-click="choseConf()">选择配置文件</button>
+            </form>
+
             <form class="form-horizontal">
                 <div class="space-6"></div>
                 <div class="table-responsive">
@@ -30,7 +36,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="x in conf_list | filter:query" ng-click="ngtest($index)" ng-dblclick="dbclick($index)">
+                        <tr ng-repeat="x in conf_list | filter:query">
                             <td>{{$index+1}}</td>
                             <td>{{x.name}}</td>
                             <td>{{x.nickname}}</td>

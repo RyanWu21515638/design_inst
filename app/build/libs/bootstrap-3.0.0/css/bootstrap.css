@@ -1903,6 +1903,7 @@ textarea.input-lg {
   -ms-user-select: none;
   -o-user-select: none;
   user-select: none;
+  border-radius: 5px;
 }
 .btn:focus {
   outline: thin dotted #333;
@@ -1972,6 +1973,7 @@ fieldset[disabled] .btn-default.active {
   color: #ffffff;
   background-color: #428bca;
   border-color: #357ebd;
+  border-radius: 5px;
 }
 .btn-primary:hover,
 .btn-primary:focus,
@@ -2197,7 +2199,7 @@ fieldset[disabled] .btn-link:focus {
   padding: 5px 10px;
   font-size: 12px;
   line-height: 1.5;
-  border-radius: 0;
+  border-radius: 5px;
 }
 .btn-xs {
   padding: 1px 5px;
