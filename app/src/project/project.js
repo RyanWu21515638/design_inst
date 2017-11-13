@@ -1,8 +1,9 @@
 var project = angular.module('project', ['ngResource', 'ngCookies']);
-project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $interval, $window, $state, $cookies, $location,
+project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $interval, $window, $state, $cookies, $location,
                                             $rootScope, projectService) {
     var expireDate = new Date();
     expireDate.setDate(expireDate.getDate() + 1);
+
 
     $scope.userinfo = {};               //用户信息
     $scope.prjinfo = {};                //创建总项目信息
@@ -38,7 +39,7 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
     selectUser = function (openid) {
         $http.get($rootScope.ip + "/design_institute/public/admin/user/selectUser?openid=" + openid).success(
             function (res) {
-                if (res.company_id != -1 && res.company_id !='' && res.company_id != undefined && res.company_id != null) {
+                if (res.company_id != -1 && res.company_id != '' && res.company_id != undefined && res.company_id != null) {
                     $scope.logged = 'true';
                     $cookies.put('logged', 'true', {'expires': expireDate});
                     $cookies.put('status', res.status, {'expires': expireDate});
@@ -54,7 +55,7 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
             }
         )
     };
-   // console.log($location.search().login_id);
+    // console.log($location.search().login_id);
     //console.log($cookies.get('openid'));
 
     //获取所有项目列表--包括总项目下面的子项目
@@ -77,11 +78,10 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
                 for (var jj = 0; jj < $scope.prj_list.length; jj++) {
                     for (var jjj = 0; jjj < $scope.prj_list[jj].subproject_list.length; jjj++) {
                         var da1 = $scope.prj_list[jj].subproject_list[jjj].end_time_plan;
-                        if(da1 != '' && da1 != null && da1 != undefined)
-                        {
-                            var D_value = (da1.split('-')[0]-dn.split('-')[0])*365
-                                + (da1.split('-')[1]-dn.split('-')[1])*30
-                                + (da1.split('-')[2]-dn.split('-')[2]);
+                        if (da1 != '' && da1 != null && da1 != undefined) {
+                            var D_value = (da1.split('-')[0] - dn.split('-')[0]) * 365
+                                + (da1.split('-')[1] - dn.split('-')[1]) * 30
+                                + (da1.split('-')[2] - dn.split('-')[2]);
                             $scope.prj_list[jj].subproject_list[jjj]['D_value'] = D_value;
                         }
                         else
@@ -101,12 +101,12 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
                     for (var j = 0; j < $scope.prj_list.length; j++) {
                         if ($scope.prj_list[j].project_id == $scope.prj_id_params) {
                             $scope.prj_name = $scope.prj_list[j].name;
-                            $cookies.put('prj_name',$scope.prj_name,{'expires': expireDate});
+                            $cookies.put('prj_name', $scope.prj_name, {'expires': expireDate});
                             for (var jj = 0; jj < $scope.prj_list[j].subproject_list.length; jj++) {
-                                if ($scope.prj_list[j].subproject_list[jj].subproject_id == $location.search().subprj_id)
-                                {
+                                if ($scope.prj_list[j].subproject_list[jj].subproject_id == $location.search().subprj_id) {
                                     $scope.subprj_name = $scope.prj_list[j].subproject_list[jj].name;
-                                    $cookies.put('subprj_name',$scope.prj_name,{'expires': expireDate});
+                                    $cookies.put('subprj_name', $scope.prj_name, {'expires': expireDate});
+                                    $cookies.put('subprj_state',$scope.prj_list[j].subproject_list[jj].subproject_id,{'expires': expireDate});
                                 }
                             }
                         }
@@ -143,8 +143,7 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
         ($cookies.get('openid') != $location.search().login_id && $location.search().login_id != undefined)) {
         selectUser($scope.userinfo.openid);
     }
-    else
-    {
+    else {
         projectList();
         userList();
     }
@@ -167,12 +166,21 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
         )
     }
     //选定总项目
-    $scope.prj_dt = function (index, prjid, media) {
+    $scope.prj_dt = function (prjid, media) {
         //选定总项目
-        $scope.index = index;
+        for(var i = 0;i<$scope.prj_list.length;i++)
+        {
+            if($scope.prj_list[i].project_id == prjid)
+            {
+                $scope.index = i;
+                break;
+            }
+        }
+
         $scope.prjinfo.prj_id = prjid;
+        //移动端
         if (media == 2) {
-            $state.go("index.project.subproject", {index: index});
+            $state.go("index.project.subproject", {index: $scope.index});
         }
     }
 
@@ -193,12 +201,27 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
         )
     };
     //删除总项目
-    $scope.delProject = function (prj_id) {
-        projectService.del_project(prj_id).then(
-            function (res) {
-                projectList();
-            }
-        )
+    $scope.delProject = function (prj_id, prj_name, type) {
+        $scope.delete_type = 1;
+        if (type == 1) {
+            $scope.delete_prj_id = prj_id;
+            $scope.delete_prj_name = prj_name;
+        }
+        else if (type == 2)
+        {
+            projectService.del_project($scope.delete_prj_id).then(
+                function (res) {
+                    if (res.data.success == false || res.data.success == '' || res.data.success == null || res.data.success == undefined) {
+                        alert("正在进行的项目无法删除！");
+                    }
+                    else {
+                        $('#modal-delete').modal('hide');
+                        projectList();
+                    }
+
+                }
+            )
+        }
     }
     //新建子项目
     $scope.newsubprj = function () {
@@ -217,7 +240,9 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
         )
     };
     //选定子项目
-    $scope.subchose = function (prjid) {
+    $scope.subchose = function (prjid,state) {
+        $cookies.put('subprj_state',state,{'expires': expireDate});
+
         for (var i = 0; i < $scope.usr_list.length; i++) {
             $scope.usr_list[i]['show'] = true;
             $scope.usr_list[i]['check'] = new Array();
@@ -253,12 +278,11 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
         for (var j = 0; j < $scope.prj_list.length; j++) {
             if ($scope.prj_list[j].project_id == $scope.prjinfo.prj_id) {
                 $scope.prj_name = $scope.prj_list[j].name;
-                $cookies.put('prj_name',$scope.prj_name,{'expires': expireDate});
+                $cookies.put('prj_name', $scope.prj_name, {'expires': expireDate});
                 for (var jj = 0; jj < $scope.prj_list[j].subproject_list.length; jj++) {
-                    if ($scope.prj_list[j].subproject_list[jj].subproject_id == subprj_id)
-                    {
+                    if ($scope.prj_list[j].subproject_list[jj].subproject_id == subprj_id) {
                         $scope.subprj_name = $scope.prj_list[j].subproject_list[jj].name;
-                        $cookies.put('subprj_name',$scope.prj_name,{'expires': expireDate});
+                        $cookies.put('subprj_name', $scope.prj_name, {'expires': expireDate});
                     }
                 }
             }
@@ -338,30 +362,28 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
             }
         )
     }
-    $scope.delSubproject = function (subproject_id) {
-        projectService.del_subproject(subproject_id).then(
-            function (res) {
-                if (!res.data.success) {
-                    alert("项目进行中，无法删除！");
+    $scope.delSubproject = function (subprj_id,subprj_name,type) {
+        $scope.delete_type = 2;
+        if(type == 1)
+        {
+            $scope.delete_subprj_id = subprj_id;
+            $scope.delete_subprj_name = subprj_name;
+        }
+        else if(type ==2)
+        {
+            projectService.del_subproject($scope.delete_subprj_id).then(
+                function (res) {
+                    if (!res.data.success) {
+                        alert("项目进行中，无法删除！");
+                    }
+                    else {
+                        $('#modal-delete').modal('hide');
+                        projectList();
+                    }
                 }
-                else {
-                    $window.location.reload();
-                }
-            }
-        )
-    }
-    $scope.delConf = function (conf_id) {
-        projectService.del_config(conf_id).then(
-            function (res) {
-                if (!res.data.success) {
-                    alert("此配置正在被使用，无法删除！");
-                }
-                else {
-                    $window.location.reload();
-                }
+            )
+        }
 
-            }
-        )
     }
     //highchars 图表
     var time = new Date();
@@ -668,10 +690,9 @@ project.controller('projectCtrl', function ($scope, $http, $filter,$timeout, $in
         function () {
             var h = $(this).height();//div可视区域的高度
             var sh = $(this)[0].scrollHeight;//滚动的高度，$(this)指代jQuery对象，而$(this)[0]指代的是dom节点
-            var st =$(this)[0].scrollTop;//滚动条的高度，即滚动条的当前位置到div顶部的距离
-            console.log(h+'-'+sh+'-'+st);
-            if((sh-h) == st)
-            {
+            var st = $(this)[0].scrollTop;//滚动条的高度，即滚动条的当前位置到div顶部的距离
+            console.log(h + '-' + sh + '-' + st);
+            if ((sh - h) == st) {
                 getData();
             }
         }

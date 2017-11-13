@@ -280,7 +280,7 @@ html {
 
 body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    /*font-size: 14px;*/
+    font-size: 14px;
     line-height: 1.428571429;
     color: #333333;
     background-color: #ffffff;
@@ -1559,7 +1559,7 @@ th {
     padding: 5px;
     line-height: 1.428571429;
     vertical-align: top;
-    border-top: 1px solid #F9F9F9;
+    border-top: 1px solid #dddddd;
 }
 
 .table > thead > tr > th {
@@ -1600,7 +1600,7 @@ th {
 }
 
 .table-hover > tbody > tr:hover > td, .table-hover > tbody > tr:hover > th {
-    background-color: #FFFFCB;
+    background-color: lightgrey;
 }
 
 
@@ -1701,12 +1701,6 @@ label {
     margin-bottom: 5px;
     font-weight: bold;
 }
-
-
-/*label:hover{
-    background-color: white;
-}*/
-
 
 input[type="search"] {
     -webkit-box-sizing: border-box;
@@ -2076,8 +2070,7 @@ textarea.input-lg {
 .btn-default {
     color: #333333;
     background-color: #ffffff;
-
-    border-radius: 5px;
+    border-color: #cccccc;
 }
 
 .btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active, .open .dropdown-toggle.btn-default {
@@ -2097,9 +2090,8 @@ textarea.input-lg {
 
 .btn-primary {
     color: #ffffff;
-    background-color: #68AF27;
-    border-color: #68AF27;
-    border-radius: 5px;
+    background-color: #428bca;
+    border-color: #357ebd;
 }
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary {
@@ -2240,7 +2232,7 @@ textarea.input-lg {
     padding: 5px 10px;
     font-size: 12px;
     line-height: 1.5;
-    border-radius: 5px;
+    border-radius: 0;
 }
 
 .btn-xs {
@@ -3138,8 +3130,8 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
     display: none;
     float: left;
     min-width: 160px;
-    padding: 1px 0;
-    margin: 1px 0 0;
+    padding: 5px 0;
+    margin: 2px 0 0;
     list-style: none;
     font-size: 14px;
     background-color: #ffffff;
@@ -4689,23 +4681,6 @@ textarea.input-group-sm > .form-control, textarea.input-group-sm > .input-group-
 
 .label-danger[href]:hover, .label-danger[href]:focus {
     background-color: #c9302c;
-}
-
-.label-xpp-1{
-    background-color: #000000;
-}
-
-.label-xpp-1[href]:hover, .label-xpp-1[href]:focus {
-    background-color: #ec971f;
-}
-
-
-.label-xpp-2 {
-    background-color: white;
-}
-
-.label-xpp-2[href]:hover, .label-xpp-2[href]:focus {
-    background-color: #ec971f;
 }
 
 .badge {

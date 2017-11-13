@@ -40,10 +40,10 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="x in ipm_list | filter:query |filter:q1">
+                        <tr ng-repeat="x in ipm_list | filter:query |filter:q1"> <!--ng-repeat="x in ipm_list | filter:query |filter:q1"-->
                             <td>{{$index+1}}</td>
                             <td>
-                                <img class="nav-user-photo" src="{{x.headimgurl}}"
+                                <img class="nav-user-photo" ng-src="{{x.headimgurl}}"
                                      alt="{{x.nickname}}" style="width: 24px;height: 24px;border-radius: 50%;"/>
                             </td>
                             <td>{{x.nickname}}</td>

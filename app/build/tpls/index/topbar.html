@@ -70,7 +70,7 @@
                 <li ng-if="logged == 'true' && fromIPM != 'true'">
                     <a data-toggle="dropdown" class="dropdown-toggle" href="">
 
-                        <img class="nav-user-photo" src="{{userinfo.headimgurl}}"
+                        <img class="nav-user-photo" ng-src="{{userinfo.headimgurl}}"
                              alt="{{userinfo.nickname}}" style="width: 24px;height: 24px;border-radius: 50%;"/>
                         {{userinfo.nickname}}
                         <i class="icon-caret-down"></i>
@@ -112,7 +112,7 @@
                 </div>
 
                 <div class="modal-body overflow-visible">
-                    <img style="width: 100%;height: 80%;border: 1px solid #ededed;" src="{{userinfo.url}}">
+                    <img style="width: 100%;height: 80%;border: 1px solid #ededed;" ng-src="{{userinfo.url}}">
                 </div>
                 <div class="modal-footer" style="text-align: center;">
                     <h4 ng-if="logged == 'false'" style="text-align: center;">请使用微信扫码登陆鈤励铝模设计院管理平台</h4>

@@ -33,6 +33,7 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
     $scope.userinfo.openid = $cookies.get('openid');
     $scope.userinfo.company_id = $cookies.get('company_id');
     $scope.userinfo.status = $cookies.get('status');
+    $scope.subprj_state = $cookies.get('subprj_state');
 
     $scope.refrash_task = false;
 
@@ -240,6 +241,8 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
         var exsit = false;
         if (openid == $scope.subtask_info.changer_id) {
             alert("已设置为负责人!");
+
+
         }
         else {
             for (var i = 0; i < $scope.subtask_info.parter.length; i++) {
@@ -252,6 +255,7 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
                 alert('已经添加过了');
             }
             else {
+                $('#modal-form2_1').modal('hide');
                 $scope.subtask_info.partitionNickname.push(nickname);
                 $scope.subtask_info.parter.push(openid);
                 exsit = false;

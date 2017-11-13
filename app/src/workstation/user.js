@@ -5,7 +5,8 @@ user.controller('userCtrl', function ($scope, $http, $timeout, $interval, $state
     $scope.userinfo.company_id = $cookies.get('company_id');
     $scope.userinfo.status = $cookies.get('status');
     $scope.userinfo.headimgurl = $cookies.get('headimgurl');
-
+    //$scope.ipm_list = new Object();
+    $scope.ipm_list = new Array();
     $scope.paginationConf = {
         currentPage: 1,
         totalItems: 22,
@@ -20,7 +21,7 @@ user.controller('userCtrl', function ($scope, $http, $timeout, $interval, $state
 
 
     getData = function () {
-        $scope.userinfo.itemsPerPage = $scope.userinfo.itemsPerPage + 50;
+        $scope.userinfo.currentPage = $scope.userinfo.currentPage +1;
         ipmList();
     }
     $scope.scrollT_old = 0;
@@ -32,8 +33,11 @@ user.controller('userCtrl', function ($scope, $http, $timeout, $interval, $state
                 var height = $(document).height()-$(window).height();
                 if(scrtop >= height)
                 {
-                    getData();
-                    $('body,html').animate({scrollTop:$(document).height()}, 500);
+                    if($scope.refrash)
+                    {
+                        getData();
+                        $('body,html').animate({scrollTop:$(document).height()}, 800);
+                    }
                 }
         }
     );
@@ -63,10 +67,23 @@ user.controller('userCtrl', function ($scope, $http, $timeout, $interval, $state
             }
         )
     }*/
+    var j=-1;
     ipmList = function () {
         userService.ipm_user_list($scope.userinfo).then(
             function (res) {
-                $scope.ipm_list = res.data;
+                if(res.data.length == 0)
+                {
+                    $scope.refrash = false;
+                }
+                else {$scope.refrash = true;}
+                for(var i = 0;i<res.data.length;i++)
+                {
+                    j++;
+                    $scope.ipm_list[j] = res.data[i];
+                }
+
+                //$scope.ipm_list = Object.assign([], $scope.ipm_list, res.data);//angular.merge($scope.ipm_list, res.data);
+                console.log($scope.ipm_list);
             }
         )
     }

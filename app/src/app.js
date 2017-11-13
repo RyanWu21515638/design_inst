@@ -1,4 +1,4 @@
-﻿var routerApp = angular.module('routerApp', ['ui.router', 'index', 'login', 'project', 'forum', 'user', 'newforum', 'subproject',
+﻿var routerApp = angular.module('routerApp', ['ui.router','index', 'login', 'project', 'forum', 'user', 'newforum', 'subproject',
     'subproject_info_detail','upload','conf','proside']);
 
 
@@ -37,7 +37,7 @@ routerApp
             })
             .state('index.project.project_info', {
                 url: '/project_info',
-                templateUrl: 'app/build/tpls/project/project_info.html'
+                templateUrl: 'app/build/tpls/project/project_info.html?'+ (new Date()).getMilliseconds()
 
             })
             .state('index.project.configuration', {
@@ -137,7 +137,7 @@ routerApp
  */
 
 routerApp.run(function ($rootScope, $cookies) {
-    $rootScope.ip = 'http://192.168.3.158';
+    $rootScope.ip = '';
     //$rootScope.ip = 'http://120.25.74.178';
     $rootScope.menu = false;
 })

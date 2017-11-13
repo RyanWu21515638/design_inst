@@ -5,7 +5,7 @@
         <div class="page-content">
             <div class="page-header visible-lg visible-md">
                 <h3>
-                    <b>任务面板</b>
+                    <b>任务面板{{prj_name}}-{{subprj_name}}{{prj_id}}</b>
                     <div class="btn-group">
                         <!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
                                 style="border-radius: 5px;">{{prj_name}}-{{subprj_name}}{{prj_id}}{{subprj_id}}
@@ -30,18 +30,19 @@
                          style="background-color: #eeeeee;border-radius: 5px;margin: 10px 0 20px 5px;width:300px;height: 702px;overflow-x: auto; overflow-y: auto;"
                          ng-repeat="x in task_list"
                          ng-init="p_taskIndex=$index">
-                        <div class="popover-options" style="font-size: 16px;padding: 10px;text-align: center;font-weight: bolder;"
+                        <div class="popover-options" style="padding: 10px;text-align: center;font-weight: bolder;"
                              data-toggle="popover" title="创建者：{{x.creator_nickname}}">{{x.name}}·{{x.length}}
-                            <a ng-if="newtaskAuthor == 'true' || userinfo.status=='2'"
+                            <a ng-if="(newtaskAuthor == 'true' || userinfo.status=='2') && subprj_state !=6"
                                ng-click="delTaskgroup(x.id)">
                                 <span class="icon-trash bigger-130 pull-right"></span>
                             </a>
                         </div>
-                        <div class="" data-toggle="modal" data-target="#modal-form1"
+                        <div data-toggle="modal" data-target="#modal-form1"
                              ng-repeat="x in task_list[$index].subtask_list"
-                             style="background-color: white;margin: 10px;font-size: 14px;padding: 5px;border-radius: 5px;"
+                             style="background-color: white;margin: 10px;padding: 5px;border-radius: 5px;"
                              ng-click="subTaskChose(p_taskIndex,$index);projectRoleList()"
                              data-toggle="popover" title="负责人：{{x.changer_nickname}} 截止日期：{{x.end_time_plan}}">
+
                             <label >{{x.name}}</label>
                             <label ng-if="x.urgent == 1" class="label label-default"
                                    data-toggle="popover" title="细心点，慢慢来喝杯茶，还有时间！">
@@ -62,13 +63,15 @@
                                       style="color: rgb(0, 140, 0);">已完成</span>
                             </div>
                         </div>
-                        <div ng-if="newtaskAuthor == 'true' || userinfo.status=='2'"
+                        <div ng-if="(newtaskAuthor == 'true' || userinfo.status=='2') && subprj_state !=6"
                              style="position:relative;bottom:20px;margin-left: 30%;padding-top: 40px;">
-                            <a href="" ng-click="taskGroupChose(x.id,$index);role_seletct(6);projectRoleList();" data-toggle="modal"
+                            <a href="" ng-click="taskGroupChose(x.id,$index);role_seletct(6);projectRoleList();"
+                               data-toggle="modal"
                                data-target="#modal-form1"><span
                                     class="glyphicon glyphicon-plus-sign"></span>添加任务</a></div>
                     </div>
-                    <div ng-if="newtaskAuthor == 'true' || userinfo.status=='2'" class="col-xs-2" style="background-color: #eeeeee;border-radius: 5px;margin-left:5px;
+                    <div ng-if="(newtaskAuthor == 'true' || userinfo.status=='2') && subprj_state !=6"
+                         class="col-xs-2" style="background-color: #eeeeee;border-radius: 5px;margin-left:5px;
                 margin-top:10px;width:300px;position:relative;" ng-init="p_blur=false">
                         <div style="font-size: 16px;padding: 10px;">
                             <a href="" ng-click="p_blur=!p_blur;group_list()" >
@@ -119,7 +122,7 @@
                                 单项配模</label>
                             <button class="btn btn-danger pull-right"
                                     style="color: white;border-radius: 5px;"
-                                    ng-if="(newtaskAuthor == 'true' || userinfo.status=='2') && tasktype == 'son'"
+                                    ng-if="(newtaskAuthor == 'true' || userinfo.status=='2') && tasktype == 'son' && subprj_state !=6"
                                     ng-click="delTask(subtask_info.subtask_id)"
                                     data-dismiss="modal">
                                 删除
@@ -244,12 +247,12 @@
                         </div>
                         <div class="modal-footer" style="text-align: center;"
                              ng-if="newtaskAuthor == 'true' || userinfo.status=='2'">
-                            <button ng-if="tasktype == 'father'" class="btn btn-success"
+                            <button ng-if="tasktype == 'father' && subprj_state !=6" class="btn btn-success"
                                     style="color: white;border-radius: 5px;" ng-click="newSubTask()"
                                     data-dismiss="modal">
                                 添加
                             </button>
-                            <button ng-if="tasktype == 'son'" class="btn btn-success"
+                            <button ng-if="tasktype == 'son' && subprj_state !=6" class="btn btn-success"
                                     style="color: white;border-radius: 5px;" ng-click="saveSubTask()" data-dismiss="modal">
                                 保存
                             </button>
@@ -276,6 +279,8 @@
                                         data-dismiss="modal" ng-if="(x.role_id | filter:role_group) == role_group">
                                         <td style="text-align: center;">
                                             {{x.nickname}}
+                                            <img class="pull-right" src="{{x.headimgurl}}"
+                                                 style="height: 20px;width: 20px;border-radius: 50%;">
                                         </td>
                                     </tr>
                                 </table>
@@ -290,21 +295,26 @@
                     <div class="modal-content" style="border-radius: 5px;">
                         <div class="modal-header">
                             <label class="blue bigger"
-                                   style="text-align: center;background-color: #eeeeee;margin: 10px;">添加参与者</label>
+                                   style="text-align: center;background-color: #eeeeee;margin: 10px;">添加参与者
+                            </label>
                         </div>
                         <div class="modal-body">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover">
                                     <tbody>
                                     <tr ng-repeat="x in prj_role_list" ng-click="partitionChose(x.nickname,x.openid)"
-                                        data-dismiss="modal" ng-if="((x.role_id | filter:role_partition) == '6') && role_group !=6 ">
+                                         ng-if="((x.role_id | filter:role_partition) == '6') && role_group !=6 ">
                                         <td style="text-align: center;">
                                             {{x.nickname}}
+                                            <img class="pull-right" src="{{x.headimgurl}}"
+                                                 style="height: 20px;width: 20px;border-radius: 50%;">
                                         </td>
                                     </tr>
-                                    <tr ng-if="role_group ==6 " ng-repeat="x in partition_ischeck" data-dismiss="modal"
+                                    <tr ng-if="role_group ==6 " ng-repeat="x in partition_ischeck"
                                         ng-click="partitionChose(x.changer_Name,x.openid)">
-                                        <td style="text-align: center;">{{x.changer_Name}}</td>
+                                        <td style="text-align: center;">{{x.changer_Name}}
+                                            <img class="pull-right" src="{{x.headimgurl}}"
+                                                 style="height: 20px;width: 20px;border-radius: 50%;"></td>
                                     </tr>
                                 </table>
                             </div>
@@ -409,7 +419,7 @@
             <h4 style="border-top: 5px solid white;padding-top: 10px;padding-left: 10px;"><b>任务统计</b></h4>
             <div style="height: 100px;">
                 <div class="col-xs-5" style="height: 90%;margin-left: 5%;">
-                    <div style="text-align: center;padding-bottom: 5px;">总任务数</div>
+                    <div style="text-align: center;padding-bottom: 5px;width: 100%;">总任务数</div>
                     <a class="list-group-item"
                        style="font-size: 32px;position:relative;text-align: center;height: 80%;color: #7fd112;">
                         {{sum_1_sum}}

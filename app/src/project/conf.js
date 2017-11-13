@@ -31,7 +31,11 @@ conf.controller('confCtrl', function ($scope, $http, $filter,$timeout, $interval
                     alert("此配置正在被使用，无法删除！");
                 }
                 else {
-                    $window.location.reload();
+                    projectService.configuration_list($scope.userinfo).then(
+                        function (res) {
+                            $scope.conf_list = res.data;
+                        }
+                    )
                 }
             }
         )
