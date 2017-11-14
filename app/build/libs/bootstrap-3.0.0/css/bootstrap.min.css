@@ -2076,7 +2076,7 @@ textarea.input-lg {
 .btn-default {
     color: #333333;
     background-color: #ffffff;
-
+    border-color: #cccccc;
     border-radius: 5px;
 }
 
@@ -2097,8 +2097,8 @@ textarea.input-lg {
 
 .btn-primary {
     color: #ffffff;
-    background-color: #68AF27;
-    border-color: #68AF27;
+    background-color: #3276b1;
+    border-color: #285e8e;
     border-radius: 5px;
 }
 
@@ -2121,6 +2121,7 @@ textarea.input-lg {
     color: #ffffff;
     background-color: #f0ad4e;
     border-color: #eea236;
+    border-radius: 5px;
 }
 
 .btn-warning:hover, .btn-warning:focus, .btn-warning:active, .btn-warning.active, .open .dropdown-toggle.btn-warning {
@@ -2142,6 +2143,7 @@ textarea.input-lg {
     color: #ffffff;
     background-color: #d9534f;
     border-color: #d43f3a;
+    border-radius: 5px;
 }
 
 .btn-danger:hover, .btn-danger:focus, .btn-danger:active, .btn-danger.active, .open .dropdown-toggle.btn-danger {
@@ -2163,6 +2165,7 @@ textarea.input-lg {
     color: #ffffff;
     background-color: #5cb85c;
     border-color: #4cae4c;
+    border-radius: 5px;
 }
 
 .btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active, .open .dropdown-toggle.btn-success {

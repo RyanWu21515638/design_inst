@@ -52,12 +52,12 @@ routerApp
             })
             .state('index.project.subproject_info', {
                 url: '/subproject_info/:index/:subindex',
-                templateUrl: 'app/build/tpls/project/subproject_info.html'
+                templateUrl: 'app/build/tpls/project/subproject_info.html?'+ (new Date()).getMilliseconds()
 
             })
             .state('index.project.subproject_info_detail', {
                 url: '/subproject_info_detail/:prj_id/:subprj_id',
-                templateUrl: 'app/build/tpls/project/subproject_info_detail.html'
+                templateUrl: 'app/build/tpls/project/subproject_info_detail.html?'+ (new Date()).getMilliseconds()
 
             })
 

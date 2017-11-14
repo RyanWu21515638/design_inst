@@ -15,6 +15,7 @@
                     <img ng-repeat="x in imglist" src="{{x}}" ng-click="bindquery(x)"
                          style="height: 30px;width: 30px;border-radius: 50%;">
                 </div>
+
                 <div class="visible-xs col-xs-12 list-group" style="margin-top: 10px;">
                     <a class="list-group-item" ng-repeat="x in opt_prj_list | filter:query" style="font-size: 14px;">
                         <div class="row">
@@ -30,6 +31,7 @@
                         </div>
                     </a>
                 </div>
+
             </form>
         </div><!--pagecontent-->
     </div><!-- main-container-inner-->

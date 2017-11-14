@@ -36,11 +36,19 @@
                     </div>
                 </div>-->
                 <div class="visible-xs col-xs-12" style="margin-top: 10px;margin-bottom: 10px;">
+                    <div class="row" style="text-align: center;">
+                        <label class="label label-primary" >总项目列表</label>
+                    </div>
+
                     <div class="list-group" ng-repeat="x in prj_list | filter:query"
                          ng-click="prj_dt(x.project_id,2)"
                          style="font-size: 20px;text-align: center;padding: 10px;margin-bottom: 0;">
 
-                        <a class="list-group-item">{{x.name}}</a>
+                        <a class="list-group-item">{{x.name}}
+                            <label ng-if="x.state == 1">
+                                <span class="label label-warning">已立项</span></label>
+                            <label ng-if="x.state == 2">
+                                <span class="label label-success">已归档</span></label></a>
                     </div>
                 </div>
 
@@ -83,10 +91,9 @@
                             <th ng-if="userinfo.status == '2'" >
 
                                 <div class="dropdown">
-                                    <label type="button" class="btn-sm label-primary dropdown-toggle"
+                                    <label type="button" class="btn-xs label-primary dropdown-toggle"
                                            id="dropdownMenu2" style="color: white;"
                                             data-toggle="dropdown">
-
                                         <span class="caret"></span>
                                     </label>
                                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
@@ -135,9 +142,9 @@
                             data-toggle="popover" title="点击项目名称查看任务详情">
                             <td style="text-align: center;">{{$index+1}}</td>
                             <td>
-                                <label style="cursor:pointer;border: 1px solid #000000;width: 80%;padding: 2px;border-radius: 5px;" ng-if="fromIPM == 'true'"
+                                <label class="label-default" style="cursor:pointer;" ng-if="fromIPM == 'true'"
                                        ng-click="set_prj_suprj_name(x.subproject_id)">{{x.name}}</label>
-                                <label style="cursor:pointer;border: 1px solid #000000;width: 80%;padding: 2px;border-radius: 5px;" ng-if="fromIPM != 'true'"
+                                <label class="label label-default" style="cursor:pointer;" ng-if="fromIPM != 'true'"
                                        ui-sref="index.project.subproject_info_detail({prj_id:prjinfo.prj_id,subprj_id:rolesinfo.subprj_id})"
                                        ng-click="set_prj_suprj_name(x.subproject_id)">{{x.name}}</label>
                             </td>
@@ -159,7 +166,7 @@
                             <td ng-if="x.state == 6"><span class="label label-success">项目已归档</span></td>
                             <th>
                                 <div class="dropdown">
-                                    <label type="button" class="btn-sm label-primary dropdown-toggle" id="dropdownMenu1"
+                                    <label type="button" class="btn-xs label-primary dropdown-toggle" id="dropdownMenu1"
                                             data-toggle="dropdown">
 
                                         <span class="caret"></span>

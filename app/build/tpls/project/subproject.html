@@ -6,20 +6,92 @@
                     <b>子项目列表</b>
                 </h3>
             </div>
-            <form class="form-horizontal" role="form">
-
-                <div class="space-6"></div>
-                <div class="visible-xs col-xs-12" style="margin-top: 10px;">
-                    <table class="table-responsive">
-                        <tbody>
-                        <tr ng-repeat="x in prj_list[index].subproject_list | filter:query" ng-click="subprj_dt(prj_list[index].project_id,x.subproject_id)"
-                            style="height: 80px; font-size: 20px;">
-                            <td style="text-align: center;">{{x.name}}</td>
-                        </tr>
-                        </tbody>
-                    </table>
+            <!--<form class="form-horizontal" role="form">-->
+            <div class="space-6"></div>
+            <div class="visible-xs col-xs-12" style="margin-top: 10px;margin-bottom: 10px;">
+                <div clas="row" style="text-align: center;">
+                    <label class="label label-primary">{{prj_name}}-子项目列表</label>
                 </div>
-            </form>
+                <div class="list-group col-xs-12" ng-repeat="x in prj_list[index].subproject_list | filter:query"
+                     style="font-size: 20px;padding: 10px;margin-bottom: 0;">
+                    <a class="list-group-item col-xs-12" style="height: 90px;">
+                        <div class="col-xs-9"><label style="text-align: left;">{{x.name}}</label>
+                        </div>
+
+                        <div class="col-xs-3">
+                            <button class="btn btn-primary pull-right"
+                                    data-toggle="modal" data-target="#modal-form1" ng-click="subprjChose($index)">进度
+                            </button>
+                        </div>
+                        <div>
+                            <label class="label label-warning " ng-if="x.state == 1">已立项，底图待深化</label>
+                            <span class="label label-primary" ng-if="x.state == 2">底图已深化，底图深化待审核</span>
+                            <span class="label label-info" ng-if="x.state == 3">底图深化已审核，待标准层下单</span>
+                            <span class="label label-danger" ng-if="x.state == 4">标准层已下单,待变化层下单</span>
+                            <span class="label label-default" ng-if="x.state == 5">变化层已下单，待归档</span>
+                            <span class="label label-success" ng-if="x.state == 6">项目已归档</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+
+            <div id="modal-form1" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" style="width:90%;margin-top: 4%;">
+                    <div class="modal-content" style="border-radius: 5px;">
+                        <div class="modal-header">
+                            <label class="blue bigger"
+                                   style="text-align: center;background-color: #eeeeee;margin: 10px;">
+                                子项目·{{subprj_name}}·进度</label>
+                        </div>
+                        <div class="modal-body"
+                             style="background-color: whitesmoke;font-size: 12px;color:#a6a6a6;padding-bottom: 25px;
+                             padding-top: 20px;">
+
+                            <div style="padding-left: 20px;" ng-if="!status_select">
+                                <label class="label label-warning"> 已立项，底图待深化</label>
+                                尚无其他进度
+                            </div>
+
+                            <div style="padding-left: 20px;" ng-repeat="x in status_list" ng-if="status_select">
+                                <div><label style="background-color: white;">{{x.time}}</label></div>
+                                <div style="border-left: 1px solid #a6a6a6;height: 20px;margin-left: 20px;margin-bottom: 2px;"></div>
+                                <div style="margin-left: 18px;">
+                                    <label class="label label-warning" ng-if="x.state == 1"> 已立项，底图待深化</label>
+                                    <label class="label label-primary" ng-if="x.state == 2">底图已深化，底图深化待审核</label>
+                                    <label class="label label-info" ng-if="x.state == 3">底图深化已审核，待标准层下单</label>
+                                    <label class="label label-danger" ng-if="x.state == 4">标准层已下单,待变化层下单</label>
+                                    <label class="label label-default" ng-if="x.state == 5">变化层已下单，待归档</label>
+                                    <label class="label label-success" ng-if="x.state == 6">项目已归档</label>
+
+
+                                    <label class="pull-right" style="margin-right: 20px;">
+                                        <img src="{{x.headimgurl}}"
+                                                                   style="height: 20px;width: 20px;border-radius: 50%;">
+                                        <label>{{x.creator_nickname}}</label>
+                                        {{x.nickname}}</label>
+                                </div>
+                                <div style="border-left: 1px solid #a6a6a6;height: 20px;margin-left: 20px;"></div>
+
+                            </div>
+
+                        </div>
+                        <div class="modal-footer" style="text-align: center;">
+                            <button class="btn btn-success"
+                                    ng-click="subprj_dt(prj_list[index].project_id,x.subproject_id)"
+                                    data-dismiss="modal">
+                                详情
+                            </button>
+                            <button class="btn btn-primary" style="color: white;"
+                                    data-dismiss="modal">返回
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         </div><!--pagecontent-->
     </div><!-- main-container-inner-->
 </div>

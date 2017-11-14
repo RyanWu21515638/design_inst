@@ -161,11 +161,16 @@ project.service('projectService', function ($resource, $http, $rootScope) {
     //子任务看板
     this.month_task_list =function (subprj_id) {
         return $http.get($rootScope.ip + '/design_institute/public/admin/Task/month_task_list?subprj_id='+subprj_id);
-
     }
     //查询所有负责人
     this.select_check_charger =function (subprj_id) {
         return $http.get($rootScope.ip + '/design_institute/public/admin/Task/select_check_charger?subproject_id='+subprj_id);
     }
 
+    //移动端
+    //查询子项目状态
+    this.find_state = function (subprj_id) {
+        return $http.get($rootScope.ip + '/design_institute/public/admin/Subproject/find_state?subproject_id='+subprj_id);
+
+    }
 });

@@ -55,8 +55,6 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
                   }).error(function () {
                   alert("an unexpected error ocurred!");
               })
-
-
     }
 
 
@@ -438,7 +436,7 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
     }
     //保存子任务修改
     $scope.saveSubTask = function () {
-        if ($scope.subtask_info.state == 3)
+        if ($scope.subtask_info.state != 1)
             alert("项目已完成，无法修改！");
         else {
             $scope.subtask_info.creator_id = $cookies.get('openid');
