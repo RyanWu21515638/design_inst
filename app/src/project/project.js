@@ -106,7 +106,7 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
                                 if ($scope.prj_list[j].subproject_list[jj].subproject_id == $location.search().subprj_id) {
                                     $scope.subprj_name = $scope.prj_list[j].subproject_list[jj].name;
                                     $cookies.put('subprj_name', $scope.prj_name, {'expires': expireDate});
-                                    $cookies.put('subprj_state',$scope.prj_list[j].subproject_list[jj].subproject_id,{'expires': expireDate});
+                                    $cookies.put('subprj_state', $scope.prj_list[j].subproject_list[jj].subproject_id, {'expires': expireDate});
                                 }
                             }
                         }
@@ -168,10 +168,8 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
     //选定总项目
     $scope.prj_dt = function (prjid, media) {
         //选定总项目
-        for(var i = 0;i<$scope.prj_list.length;i++)
-        {
-            if($scope.prj_list[i].project_id == prjid)
-            {
+        for (var i = 0; i < $scope.prj_list.length; i++) {
+            if ($scope.prj_list[i].project_id == prjid) {
                 $scope.index = i;
                 break;
             }
@@ -194,6 +192,7 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
         projectService.new_project($scope.prjinfo).then(
             function (res) {
                 if (res.data.success) {
+                    alert("总项目创建成功");
                     $('#modal-form1').modal('hide');
                     projectList();
                 }
@@ -207,8 +206,7 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
             $scope.delete_prj_id = prj_id;
             $scope.delete_prj_name = prj_name;
         }
-        else if (type == 2)
-        {
+        else if (type == 2) {
             projectService.del_project($scope.delete_prj_id).then(
                 function (res) {
                     if (res.data.success == false || res.data.success == '' || res.data.success == null || res.data.success == undefined) {
@@ -233,6 +231,7 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
         projectService.new_subproject($scope.subprjinfo).then(
             function (res) {
                 if (res.data.success) {
+                    alert("子项目创建成功");
                     $('#modal-form2').modal('hide');
                     projectList();
                 }
@@ -240,8 +239,8 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
         )
     };
     //选定子项目
-    $scope.subchose = function (prjid,state) {
-        $cookies.put('subprj_state',state,{'expires': expireDate});
+    $scope.subchose = function (prjid, state) {
+        $cookies.put('subprj_state', state, {'expires': expireDate});
 
         for (var i = 0; i < $scope.usr_list.length; i++) {
             $scope.usr_list[i]['show'] = true;
@@ -346,9 +345,10 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
         }
 
     }
-    $scope.peopleDetail = function (index, nickname) {
+    $scope.peopleDetail = function (index, nickname,headimgurl) {
         $scope.people_detail_index = index;
         $scope.people_detail_name = nickname;
+        $scope.people_detail_headimgurl = headimgurl;
     }
     //从已分配人员中删除
     $scope.remove = function (openid) {
@@ -362,15 +362,14 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
             }
         )
     }
-    $scope.delSubproject = function (subprj_id,subprj_name,type) {
+    //删除子项目
+    $scope.delSubproject = function (subprj_id, subprj_name, type) {
         $scope.delete_type = 2;
-        if(type == 1)
-        {
+        if (type == 1) {
             $scope.delete_subprj_id = subprj_id;
             $scope.delete_subprj_name = subprj_name;
         }
-        else if(type ==2)
-        {
+        else if (type == 2) {
             projectService.del_subproject($scope.delete_subprj_id).then(
                 function (res) {
                     if (!res.data.success) {
@@ -443,9 +442,6 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
         $scope.t1.year = ev.date.getFullYear();
         $scope.t1.month = ev.date.getMonth() + 1;
         $scope.t1.day = ev.date.getDate();
-        if ($scope.project_id) {
-            //$scope.changecharts($scope.project_id, $scope.t1.year + '-' + $scope.t1.month +'-' +$scope.t1.day, $scope.t2.year + '-' + $scope.t2.month + '-' + $scope.t2.day);
-        }
     }).on("hide", function () {
         $("#timepicker1").blur();
     });
@@ -462,12 +458,10 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
         $scope.t2.year = ev.date.getFullYear();
         $scope.t2.month = ev.date.getMonth() + 1;
         $scope.t2.day = ev.date.getDate();
-        if ($scope.project_id) {
-            //$scope.changecharts($scope.project_id, $scope.t.year + '-' + $scope.t1.month, $scope.t2.year + '-' + $scope.t2.month);
-        }
     }).on("hide", function () {
         $("#timepicker2").blur();
     });
+    //时间选择器3
     $("#timepicker3").datetimepicker({
         language: 'zh-CN',
         format: "yyyy-mm-dd",
@@ -480,70 +474,10 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
         $scope.t3.year = ev.date.getFullYear();
         $scope.t3.month = ev.date.getMonth() + 1;
         $scope.t3.day = ev.date.getDate();
-        if ($scope.project_id) {
-            //$scope.changecharts($scope.project_id, $scope.t1.year + '-' + $scope.t1.month +'-' +$scope.t1.day, $scope.t2.year + '-' + $scope.t2.month + '-' + $scope.t2.day);
-        }
+        console.log($scope.t3);
     }).on("hide", function () {
         $("#timepicker3").blur();
     });
-    //时间选择器3
-    $("#timepicker4").datetimepicker({
-        language: 'zh-CN',
-        format: "yyyy-mm-dd",
-        startView: 3,
-        minView: 2,
-        autoclose: true,
-        todayBtn: false,
-        pickerPosition: "bottom-left"
-    }).on('changeDay', function (ev) {
-        $scope.t4.year = ev.date.getFullYear();
-        $scope.t4.month = ev.date.getMonth() + 1;
-        $scope.t4.day = ev.date.getDate();
-        if ($scope.project_id) {
-            //$scope.changecharts($scope.project_id, $scope.t.year + '-' + $scope.t1.month, $scope.t2.year + '-' + $scope.t2.month);
-        }
-    }).on("hide", function () {
-        $("#timepicker4").blur();
-    });
-    //时间选择器4
-    $("#timepicker5").datetimepicker({
-        language: 'zh-CN',
-        format: "yyyy-mm-dd",
-        startView: 3,
-        minView: 2,
-        autoclose: true,
-        todayBtn: false,
-        pickerPosition: "bottom-left"
-    }).on('changeDay', function (ev) {
-        $scope.t5.year = ev.date.getFullYear();
-        $scope.t5.month = ev.date.getMonth() + 1;
-        $scope.t5.day = ev.date.getDate();
-        if ($scope.project_id) {
-            //$scope.changecharts($scope.project_id, $scope.t.year + '-' + $scope.t1.month, $scope.t2.year + '-' + $scope.t2.month);
-        }
-    }).on("hide", function () {
-        $("#timepicker5").blur();
-    });
-    //时间选择器5
-    $("#timepicker6").datetimepicker({
-        language: 'zh-CN',
-        format: "yyyy-mm-dd",
-        startView: 3,
-        minView: 2,
-        autoclose: true,
-        todayBtn: false,
-        pickerPosition: "bottom-left"
-    }).on('changeDay', function (ev) {
-        $scope.t6.year = ev.date.getFullYear();
-        $scope.t6.month = ev.date.getMonth() + 1;
-        $scope.t6.day = ev.date.getDate();
-        if ($scope.project_id) {
-            //$scope.changecharts($scope.project_id, $scope.t.year + '-' + $scope.t1.month, $scope.t2.year + '-' + $scope.t2.month);
-        }
-    }).on("hide", function () {
-        $("#timepicker6").blur();
-    });
-
 
     $('#containertb').highcharts({
         chart: {
@@ -702,4 +636,54 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
         getData();
     });
 
+    $scope.alterTime = function (prj_id, subprj_id, type, time_compare) {
+        if($scope.userinfo.status != 2)
+        {
+            alert('无修改权限！');
+        }
+        else{
+            $scope.alter_time_info = {
+                prj_id: prj_id,
+                subprj_id: subprj_id,
+                type: type,
+                time_compare: time_compare //type为1：存的是计划结束时间；2：存的计划开始时间
+            }
+            $('#modal-alterTime').modal('show');
+        }
+    }
+    $scope.saveAlterTime = function () {
+        $scope.alter_time_info.time_var = $scope.t3.year + '-' + $scope.t3.month + '-' + $scope.t3.day;
+        if ($scope.alter_time_info.type == 1) {
+            if ((Date.parse(new Date($scope.alter_time_info.time_var)) / 1000) > (Date.parse(new Date($scope.alter_time_info.time_compare)) / 1000))
+              alert('开始时间不能晚于结束时间！');
+            else {
+                projectService.alter_time($scope.alter_time_info).then(
+                    function (res) {
+                        if (!res.data.success) {
+                            alert("无变更!");
+                        } else {
+                            alert("修改成功！");
+                            projectList();
+                        }
+                    }
+                )
+            }
+        }
+        if ($scope.alter_time_info.type == 2) {
+            if ((Date.parse(new Date($scope.alter_time_info.time_var)) / 1000) < (Date.parse(new Date($scope.alter_time_info.time_compare)) / 1000))
+                alert('结束时间不能早于开始时间！');
+            else {
+                projectService.alter_time($scope.alter_time_info).then(
+                    function (res) {
+                        if (!res.data.success) {
+                            alert("无变更!");
+                        } else {
+                            alert("修改成功！");
+                            projectList();
+                        }
+                    }
+                )
+            }
+        }
+    }
 })

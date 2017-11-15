@@ -189,11 +189,10 @@
                                         </myfigcaption>
                                     </myfigure>
                                 </label>
+                                <img ng-if="x.state != 1" src="app/build/image/done.png" style="width: 45px;position: absolute;">
                                 <div class="pull-right">
                                     <img ng-if="x.changer_headimgurl != ''" src="{{x.changer_headimgurl}}"
-                                         style="height: 20px;width: 20px;border-radius:50%;margin-right: 10px;"> <span
-                                        ng-if="x.state != 1" class="glyphicon glyphicon-ok"
-                                        style="color: rgb(0, 140, 0);">已完成</span>
+                                         style="height: 20px;width: 20px;border-radius:50%;margin-right: 10px;">
                                 </div>
                             </div>
                             <div ng-if="(newtaskAuthor == 'true' || userinfo.status=='2') && subprj_state !=6"
@@ -573,7 +572,7 @@
                 <h4 style="border-top: 5px solid white;padding-top: 10px;padding-left: 10px;"><b>任务统计</b></h4>
                 <div style="height: 100px;">
                     <div class="col-xs-5" style="height: 90%;margin-left: 5%;">
-                        <div style="text-align: center;padding-bottom: 5px;width: 100%;">总任务数</div>
+                        <div style="text-align: center;padding-bottom: 5px;width: 100%;">总任务</div>
                         <a class="list-group-item"
                            style="font-size: 32px;position:relative;text-align: center;height: 80%;color: #7fd112;">
                             {{sum_1_sum}}
@@ -633,7 +632,7 @@
     </div>
     <div id="modal-prjDT" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
-        <div class="modal-dialog" style="width:60%;margin-top: 4%;">
+        <div class="modal-dialog" style="width:80%;margin-top: 4%;">
             <div class="modal-content" style="border-radius: 5px;">
                 <div class="modal-header">
                     <label class="blue bigger"
@@ -647,10 +646,10 @@
                          style="height: 30px;width: 30px;border-radius: 50%;">
                 </div>
                 <div class="modal-body"
-                     style="background-color: whitesmoke;font-size: 12px;color:#a6a6a6;padding-bottom: 25px;
-                             padding-top: 20px;">
-                    <div class="col-xs-12 list-group"
-                         style="margin-top: 10px;padding-left:10px;height: 552px;position:relative;overflow-x: auto; overflow-y: auto;">
+                     style="background-color: whitesmoke;font-size: 12px;color:#a6a6a6;padding-bottom: 5px;
+                             padding-top: 5px;">
+                    <div id="prjDT_opt" class="col-xs-12 list-group"
+                         style="margin-top: 5px;padding-left:5px;position:relative;overflow-x: auto; overflow-y: auto;">
                         <a class="list-group-item" ng-repeat="x in opt_prj_list | filter:query"
                            style="font-size: 14px;position:relative;overflow-x: auto; overflow-y: auto;">
                             <div class="row">
@@ -669,7 +668,7 @@
 
                 </div>
                 <div class="modal-footer" style="text-align: center;">
-                    <button class="btn btn-primary" style="color: white;"
+                    <button class="btn btn-primary pull-right" style="color: white;"
                             data-dismiss="modal">返回
                     </button>
                 </div>

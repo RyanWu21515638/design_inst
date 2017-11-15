@@ -3,6 +3,10 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
                                                                           $stateParams, $state, $cookies, $location,
                                                                           $rootScope, projectService) {
 
+
+    var winHeight = document.body.clientHeight;
+    console.log(winHeight);
+    document.getElementById("prjDT_opt").style.height= winHeight*0.6 +"px";
     var expireDate = new Date();
     expireDate.setDate(expireDate.getDate() + 1);
     $rootScope.fromIPM = $cookies.get('fromIPM');

@@ -58,6 +58,17 @@ project.service('projectService', function ($resource, $http, $rootScope) {
         };
         return $http.post($rootScope.ip + '/design_institute/public/admin/SubProject/add_subproject', data, this.postCfg);
     }
+    //修改项目时间
+    this.alter_time = function (data) {
+        /*var data = {
+            prj_id:prj_id,
+            subprj_id:subprj_id,
+            type:type,
+            time_var:time_var
+        }*/
+        return $http.post($rootScope.ip + '/design_institute/public/admin/Alter/alter_time', data, this.postCfg);
+
+    }
     //添加角色
     this.add_role = function (data1) {
         var data = {

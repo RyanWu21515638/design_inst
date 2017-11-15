@@ -6,22 +6,19 @@
                     <b>项目列表</b>
                 </h3>
             </div>
-            <form class="form-horizontal" role="form">
+            <div class="form-horizontal" role="form">
                 <div class="form-group visible-lg visible-md visible-sm" style=" margin-left: 2%;">
                     <label class="col-xs-3" style="text-align: right;"> 总项目查询： </label>
                     <div class="col-xs-6">
                         <input placeholder="请输入总项目名称或者创建者查询" ng-model="query" style="width: 50%;margin-right: 10px;"/>
                     </div>
                     <div class="col-xs-3 visible-lg visible-md visible-sm" ng-if="userinfo.status == '2'">
-                        <button type="button" class="btn btn-primary right" data-toggle="modal"
+                        <button type="button" class="btn btn-primary" data-toggle="modal"
                                 data-target="#modal-form1" ng-click="newprjJuge();configurationlist();">
                             新建总项目
                         </button>
                     </div>
                 </div>
-                <div class="space-6"></div>
-
-
                 <!--<div class="visible-xs" style="margin-top: 2%;">
                     <label class="col-xs-3" style="text-align: right;"> 总项目查询： </label>
                     <div class="col-xs-12">
@@ -36,7 +33,7 @@
                     </div>
                 </div>-->
                 <div class="visible-xs col-xs-12" style="margin-top: 10px;margin-bottom: 10px;">
-                    <div class="row" style="text-align: center;">
+                    <div class="row" style="text-align: center;margin-bottom: 20px;">
                         <label class="label label-primary" >总项目列表</label>
                     </div>
 
@@ -82,8 +79,8 @@
 
                             </td>
 
-                            <td>{{x.start_time_plan}}</td>
-                            <td>{{x.end_time_plan}}</td>
+                            <td ng-dblclick ="alterTime(x.project_id,0,1,x.end_time_plan)" data-toggle="popover" title="双击可修改时间">{{x.start_time_plan}}</td>
+                            <td ng-dblclick ="alterTime(x.project_id,0,2,x.start_time_plan)" data-toggle="popover" title="双击可修改时间">{{x.end_time_plan}}</td>
                             <td ng-if="x.state == 1">
                                 <span class="label label-warning">已立项</span></td>
                             <td ng-if="x.state == 2">
@@ -142,14 +139,15 @@
                             data-toggle="popover" title="点击项目名称查看任务详情">
                             <td style="text-align: center;">{{$index+1}}</td>
                             <td>
-                                <label class="label-default" style="cursor:pointer;" ng-if="fromIPM == 'true'"
+                                <label class="label label-default" style="cursor:pointer;" ng-if="fromIPM == 'true'"
                                        ng-click="set_prj_suprj_name(x.subproject_id)">{{x.name}}</label>
                                 <label class="label label-default" style="cursor:pointer;" ng-if="fromIPM != 'true'"
                                        ui-sref="index.project.subproject_info_detail({prj_id:prjinfo.prj_id,subprj_id:rolesinfo.subprj_id})"
                                        ng-click="set_prj_suprj_name(x.subproject_id)">{{x.name}}</label>
                             </td>
-                            <td>{{x.start_time_plan}}</td>
-                            <td>
+                            <td ng-dblclick ="alterTime(0,x.subproject_id,1,x.end_time_plan)" data-toggle="popover" title="双击可修改时间">
+                                {{x.start_time_plan}}</td>
+                            <td ng-dblclick ="alterTime(0,x.subproject_id,2,x.start_time_plan)" data-toggle="popover" title="双击可修改时间">
                                 <label data-toggle="popover" title="项目告急！请快马加鞭" class="label label-danger"
                                        ng-if="x.D_value <= 3">{{x.end_time_plan}}</label>
                                 <label data-toggle="popover" title="领导在催了！" class="label label-warning"
@@ -179,7 +177,7 @@
                                         </li>
                                         <li role="presentation">
                                             <a href="" data-toggle="modal" ng-click="grouplist()"
-                                               data-target="#modal-form3" ng-if="userinfo.status == '2'">详情</a>
+                                               data-target="#modal-form3" ng-if="userinfo.status == '2'">人员权限分配</a>
                                         </li>
                                         <li role="presentation">
                                             <a style="color: red" data-toggle="modal"
@@ -193,7 +191,6 @@
 
                                     </ul>
                                 </div>
-
                                 <!--<a href="" style="color: red;" ng-click="downloadList(x.subproject_id)"
                                    data-toggle="modal"
                                    data-target="#modal-form4">成果下载</a>
@@ -205,11 +202,33 @@
                                    ng-if="userinfo.status == '2'">
                                     <span class="icon-trash bigger-130"></span>
                                 </a>-->
-
                             </th>
                         </tr>
                         </tbody>
                     </table>
+                </div>
+                <div id="modal-alterTime" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog" style="width:30%;margin-top: 8%;">
+                        <div class="modal-content" style="border-radius: 5px;">
+                            <div class="modal-header">
+                                <h2 class="blue bigger" style="text-align: center;">修改时间</h2>
+                            </div>
+
+                            <div class="modal-body overflow-visible">
+                                <div class="row" style="padding-top: 2%">
+                                    <label class="col-sm-4 col-sm-offset-1">重新选择时间:</label>
+                                    <input size="16" value={{t3.year}}-{{t3.month}}-{{t3.day}}
+                                           readonly class="col-sm-5"
+                                           id="timepicker3">
+                                </div>
+                            </div>
+                            <div class="modal-footer" style="text-align: center;">
+                                <button class="btn btn-success col-sm-offset-4" ng-click="saveAlterTime()" data-dismiss="modal">保存</button>
+                                <button class="btn btn-danger" data-dismiss="modal">返回</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div id="modal-form1" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                      aria-hidden="true">
@@ -252,7 +271,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer" style="text-align: center;">
-                                <button class="btn btn-success col-sm-offset-4" ng-click="newprj()">创建</button>
+                                <button class="btn btn-success col-sm-offset-4" ng-click="newprj()" data-dismiss="modal">创建</button>
                                 <button class="btn btn-danger" data-dismiss="modal">返回</button>
                             </div>
                         </div>
@@ -287,7 +306,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer" style="text-align: center;">
-                                <button class="btn btn-success col-sm-offset-3" ng-click="newsubprj()">创建子项目</button>
+                                <button class="btn btn-success col-sm-offset-3" ng-click="newsubprj()"
+                                        data-dismiss="modal">创建子项目</button>
                             </div>
                         </div>
                     </div>
@@ -310,11 +330,11 @@
                             <div class="modal-footer" style="text-align: center;">
                                 <button class="btn btn-success col-sm-offset-3"
                                         ng-if="delete_type == '1'"
-                                        ng-click="delProject(delete_prj_id,delete_prj_name,2)">删除
+                                        ng-click="delProject(delete_prj_id,delete_prj_name,2)" data-dismiss="modal">删除
                                 </button>
                                 <button class="btn btn-success col-sm-offset-3"
                                         ng-if="delete_type == '2'"
-                                        ng-click="delSubproject(delete_subprj_id,delete_subprj_name,2)">删除
+                                        ng-click="delSubproject(delete_subprj_id,delete_subprj_name,2)" data-dismiss="modal">删除
                                 </button>
                                 <button class="btn btn-danger" data-dismiss="modal">返回</button>
                             </div>
@@ -386,7 +406,7 @@
                                         </thead>
                                         <tbody>
                                         <tr ng-repeat="x in usr_list | filter:query"
-                                            ng-click="peopleDetail($index,x.nickname)"
+                                            ng-click="peopleDetail($index,x.nickname,x.headimgurl)"
                                             ng-if="x.show == true">
                                             <td style="text-align: center;">{{$index+1}}</td>
                                             <td>{{ x.nickname}}
@@ -413,12 +433,16 @@
                                         <thead>
                                         <tr>
                                             <th colspan="10">剩余可分配的人员<label
-                                                    style="color:red;">{{people_detail_name}}</label>所参与的项目信息
+                                                    style="color:red;">
+                                                <img class="pull-right" src="{{people_detail_headimgurl}}"
+                                                     style="height: 20px;width: 20px;border-radius: 50%;">
+
+                                                {{people_detail_name}}</label>所参与的项目信息
                                             </th>
                                         </tr>
                                         <tr>
                                             <th>项目名称</th>
-                                            <th>参与具体任务</th>
+                                            <th>参与具体任务<label class="label label-danger">只显示正在进行中的任务</label></th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -498,7 +522,7 @@
                         </div>
                     </div>
                 </div>
-            </form>
+            </div>
         </div><!--pagecontent-->
     </div><!-- main-container-inner-->
 </div>

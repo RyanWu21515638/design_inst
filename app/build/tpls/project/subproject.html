@@ -9,7 +9,7 @@
             <!--<form class="form-horizontal" role="form">-->
             <div class="space-6"></div>
             <div class="visible-xs col-xs-12" style="margin-top: 10px;margin-bottom: 10px;">
-                <div clas="row" style="text-align: center;">
+                <div clas="row" style="text-align: center;margin-bottom: 20px;">
                     <label class="label label-primary">{{prj_name}}-子项目列表</label>
                 </div>
                 <div class="list-group col-xs-12" ng-repeat="x in prj_list[index].subproject_list | filter:query"
@@ -56,7 +56,7 @@
 
                             <div style="padding-left: 20px;" ng-repeat="x in status_list" ng-if="status_select">
                                 <div><label style="background-color: white;">{{x.time}}</label></div>
-                                <div style="border-left: 1px solid #a6a6a6;height: 20px;margin-left: 20px;margin-bottom: 2px;"></div>
+                                <div style="border-left: 1px solid #a6a6a6;height: 10px;margin-left: 20px;margin-bottom: 2px;"></div>
                                 <div style="margin-left: 18px;">
                                     <label class="label label-warning" ng-if="x.state == 1"> 已立项，底图待深化</label>
                                     <label class="label label-primary" ng-if="x.state == 2">底图已深化，底图深化待审核</label>
@@ -72,13 +72,13 @@
                                         <label>{{x.creator_nickname}}</label>
                                         {{x.nickname}}</label>
                                 </div>
-                                <div style="border-left: 1px solid #a6a6a6;height: 20px;margin-left: 20px;"></div>
+                                <div style="border-left: 1px solid #a6a6a6;height: 10px;margin-left: 20px;"></div>
 
                             </div>
 
                         </div>
-                        <div class="modal-footer" style="text-align: center;">
-                            <button class="btn btn-success"
+                        <div class="modal-footer" style="text-align: right;">
+                            <button class="btn btn-success "
                                     ng-click="subprj_dt(prj_list[index].project_id,x.subproject_id)"
                                     data-dismiss="modal">
                                 详情

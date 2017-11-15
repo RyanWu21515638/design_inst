@@ -53,6 +53,7 @@ subproject.controller('subprojectCtrl', function ($scope, $http, $timeout, $inte
         $scope.status_list = [];
         $scope.subprj_id = $scope.prj_list[$scope.index].subproject_list[sub_index].subproject_id;
         $scope.subprj_name = $scope.prj_list[$scope.index].subproject_list[sub_index].name;
+        $cookies.put('subprj_name', $scope.subprj_name, {'expires': expireDate});
         projectService.find_state($scope.subprj_id).then(
             function (res) {
                 if(res.data.success == false)

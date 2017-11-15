@@ -17,17 +17,17 @@ user.controller('userCtrl', function ($scope, $http, $timeout, $interval, $state
         }*/
     };
     $scope.userinfo.currentPage = 1;
-    $scope.userinfo.itemsPerPage = 50;
+    $scope.userinfo.itemsPerPage = 400;
 
 
     getData = function () {
-        $scope.userinfo.currentPage = $scope.userinfo.currentPage +1;
+        //$scope.userinfo.currentPage = $scope.userinfo.currentPage +1;
         ipmList();
     }
     $scope.scrollT_old = 0;
 
     //定义鼠标滚动事件
-    $(window).scroll(
+    /*$(window).scroll(
         function () {
                 var scrtop = $(document).scrollTop();
                 var height = $(document).height()-$(window).height();
@@ -40,7 +40,7 @@ user.controller('userCtrl', function ($scope, $http, $timeout, $interval, $state
                     }
                 }
         }
-    );
+    );*/
     //继续加载按钮事件
     $("#btn_Page").click(function () {
         getData();
@@ -67,52 +67,85 @@ user.controller('userCtrl', function ($scope, $http, $timeout, $interval, $state
             }
         )
     }*/
-    var j=-1;
+    var j = -1;
     ipmList = function () {
         userService.ipm_user_list($scope.userinfo).then(
             function (res) {
-                if(res.data.length == 0)
-                {
+                if (res.data.length == 0) {
                     $scope.refrash = false;
                 }
-                else {$scope.refrash = true;}
-                for(var i = 0;i<res.data.length;i++)
-                {
+                else {
+                    $scope.refrash = true;
+                }
+                for (var i = 0; i < res.data.length; i++) {
                     j++;
                     $scope.ipm_list[j] = res.data[i];
                 }
-
-                //$scope.ipm_list = Object.assign([], $scope.ipm_list, res.data);//angular.merge($scope.ipm_list, res.data);
-                console.log($scope.ipm_list);
             }
         )
     }
     //userList();
     //companyProjectList();
     ipmList();
-    $scope.prj_dt =function(index)
-    {
-        $scope.index =index;
+    $scope.prj_dt = function (index) {
+        $scope.index = index;
     }
-    $scope.addIpminstUser =function (openid,companyid) {
-        userService.add_ipminst_user(openid,companyid).then(
+    $scope.addIpminstUser = function (openid, companyid) {
+        $scope.userinfo.currentPage = 1;
+        $scope.ipm_list = [];
+        j = -1;
+        userService.add_ipminst_user(openid, companyid).then(
             function (res) {
-                ipmList();
+                if (res.data.success) {
+                    alert('添加成功！');
+                    userService.ipm_user_list($scope.userinfo).then(
+                        function (res) {
+
+                            for (var i = 0; i < res.data.length; i++) {
+                                j++;
+                                $scope.ipm_list[j] = res.data[i];
+                            }
+                        }
+                    )
+                }
+                else {
+                    alert('添加失败!');
+                }
+
             }
         )
-    }
-    $scope.delIpminstUser =function (openid) {
+    };
+
+    $scope.delIpminstUser = function (openid) {
+        $scope.userinfo.currentPage = 1;
+        $scope.ipm_list = [];
+        j = -1;
         userService.del_ipminst_user(openid).then(
             function (res) {
-                ipmList();
+                if (res.data.success) {
+                    alert('删除成功！');
+                    userService.ipm_user_list($scope.userinfo).then(
+                        function (res) {
+
+                            for (var i = 0; i < res.data.length; i++) {
+                                j++;
+                                $scope.ipm_list[j] = res.data[i];
+                            }
+                        }
+                    )
+                }
+                else {
+                    alert('删除失败!');
+                }
+
             }
         )
     };
     $scope.scrollup = function () {
         $(window).scrollTop(0);
-/*
-        $('body').scrollTop(0);
+        /*
+                $('body').scrollTop(0);
 
-        $('html').scrollTop(0);*/
+                $('html').scrollTop(0);*/
     }
 })
