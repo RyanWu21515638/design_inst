@@ -1,5 +1,5 @@
 var user = angular.module('user', ['ngResource', 'ngCookies']);
-user.controller('userCtrl', function ($scope, $http, $timeout, $interval, $state, $cookies, $rootScope, userService) {
+user.controller('userCtrl', function ($scope, $http, $timeout, $interval, $state, $cookies, $rootScope, userService,projectService) {
     $scope.userinfo = {};
     $scope.userinfo.openid = $cookies.get('openid');
     $scope.userinfo.company_id = $cookies.get('company_id');
@@ -18,7 +18,7 @@ user.controller('userCtrl', function ($scope, $http, $timeout, $interval, $state
     };
     $scope.userinfo.currentPage = 1;
     $scope.userinfo.itemsPerPage = 400;
-
+    $scope.roles = [];
 
     getData = function () {
         //$scope.userinfo.currentPage = $scope.userinfo.currentPage +1;
@@ -87,24 +87,61 @@ user.controller('userCtrl', function ($scope, $http, $timeout, $interval, $state
     //userList();
     //companyProjectList();
     ipmList();
+    grouplist = function () {
+        projectService.group_list().then(
+            function (res) {
+                $scope.grp_list = res.data;
+            }
+        )
+    }
+
     $scope.prj_dt = function (index) {
         $scope.index = index;
     }
     $scope.addIpminstUser = function (openid, companyid) {
-        $scope.userinfo.currentPage = 1;
-        $scope.ipm_list = [];
-        j = -1;
-        userService.add_ipminst_user(openid, companyid).then(
+        $scope.roles.length = 0;
+        $scope.add_user_info = {
+            openid:openid,
+            company_id:companyid
+        };
+        grouplist();
+    };
+    $scope.addIpminstUser_submit=function(){
+
+
+        if (!$scope.roles[0] && !$scope.roles[1]
+            && !$scope.roles[2] && !$scope.roles[3]
+            && !$scope.roles[4] && !$scope.roles[5]
+            && !$scope.roles[6]
+        ){
+            alert("必须指定一个角色权限！");
+        }
+        else {
+            $scope.roles_INT = 0;
+            if($scope.roles[0])
+                $scope.roles_INT = $scope.roles_INT + 1;
+            if($scope.roles[1])
+                $scope.roles_INT = $scope.roles_INT + 2;
+            if($scope.roles[2])
+                $scope.roles_INT = $scope.roles_INT + 4;
+            if($scope.roles[3])
+                $scope.roles_INT = $scope.roles_INT + 8;
+            if($scope.roles[4])
+                $scope.roles_INT = $scope.roles_INT + 16;
+            if($scope.roles[5])
+                $scope.roles_INT = $scope.roles_INT + 32;
+            if($scope.roles[6])
+                $scope.roles_INT = $scope.roles_INT + 64;
+        }
+
+        $scope.add_user_info.roles_INT = $scope.roles_INT;
+        userService.add_ipminst_user($scope.add_user_info).then(
             function (res) {
                 if (res.data.success) {
                     alert('添加成功！');
                     userService.ipm_user_list($scope.userinfo).then(
                         function (res) {
-
-                            for (var i = 0; i < res.data.length; i++) {
-                                j++;
-                                $scope.ipm_list[j] = res.data[i];
-                            }
+                            $scope.ipm_list = res.data;
                         }
                     )
                 }
@@ -114,7 +151,7 @@ user.controller('userCtrl', function ($scope, $http, $timeout, $interval, $state
 
             }
         )
-    };
+    }
 
     $scope.delIpminstUser = function (openid) {
         $scope.userinfo.currentPage = 1;

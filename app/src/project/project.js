@@ -4,6 +4,51 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
     var expireDate = new Date();
     expireDate.setDate(expireDate.getDate() + 1);
 
+    var time = new Date();
+
+    $scope.t1 = {
+        year: time.getFullYear(),
+        month: time.getMonth() + 1,
+        day: time.getDate()
+    };
+    $scope.t2 = {
+        year: time.getFullYear(),
+        month: time.getMonth() + 1,
+        day: time.getDate()
+    };
+    $scope.t3 = {
+        year: time.getFullYear(),
+        month: time.getMonth() + 1,
+        day: time.getDate()
+    };
+    $scope.t4 = {
+        year: time.getFullYear(),
+        month: time.getMonth() + 1,
+        day: time.getDate()
+    };
+    $scope.t5 = {
+        year: time.getFullYear(),
+        month: time.getMonth() + 1,
+        day: time.getDate()
+    };
+    $scope.t6 = {
+        year: time.getFullYear(),
+        month: time.getMonth() + 1,
+        day: time.getDate()
+    };
+    if ($scope.t1.month < 10)
+        $scope.t1.month = "0" + $scope.t1.month;
+    if ($scope.t2.month < 10)
+        $scope.t2.month = "0" + $scope.t2.month;
+    if ($scope.t3.month < 10)
+        $scope.t3.month = "0" + $scope.t3.month;
+    if ($scope.t4.month < 10)
+        $scope.t4.month = "0" + $scope.t4.month;
+    if ($scope.t5.month < 10)
+        $scope.t5.month = "0" + $scope.t5.month;
+    if ($scope.t6.month < 10)
+        $scope.t6.month = "0" + $scope.t6.month;
+
 
     $scope.userinfo = {};               //用户信息
     $scope.prjinfo = {};                //创建总项目信息
@@ -88,6 +133,84 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
                             $scope.prj_list[jj].subproject_list[jjj]['D_value'] = 100;
                     }
                 }
+
+                //树形目录
+                var json3 = [];
+                $scope.treeParentId = $cookies.get('treeParentId');
+                for (var ti = 0; ti < $scope.prj_list.length; ti++) {
+//
+                    if (ti == 0) {
+                        json3.push({
+                            "text": $scope.prj_list[ti].name,
+                            "state": {
+                                expanded: true,
+                            },
+                            "nodes": [],
+                        });
+                    }
+                    else {
+                        json3.push({
+                            "text": $scope.prj_list[ti].name,
+                            "state": {
+                                checked: false,
+                                disabled: false,
+                                expanded: false,
+                                selected: false
+                            },
+                            "nodes": [],
+                        });
+                    }
+                    for (var tj = 0; tj < $scope.prj_list[ti].subproject_list.length; tj++) {
+                        json3[ti].nodes.push({
+                            "text": $scope.prj_list[ti].subproject_list[tj].name,
+                        })
+                    }
+                }
+
+                $('#treeview12').treeview({
+                    "showTags": true,
+                    data: json3,
+                    onNodeSelected: function (event, data) {
+                        if (data.parentId != undefined) {
+                            var count = 0;
+                            for (var cti = 0; cti < $scope.prj_list.length; cti++) {
+                                for (var ctj = 0; ctj < $scope.prj_list[cti].subproject_list.length; ctj++) {
+                                    count = count + 1;
+                                    if (data.nodeId == count) {
+                                        projectService.find_state($scope.prj_list[cti].subproject_list[ctj].subproject_id).then(
+                                            function (res) {
+                                                if (res.data.success == false) {
+                                                    $scope.status_select = false;
+                                                }
+                                                else {
+                                                    $scope.status_select = true;
+                                                    $scope.status_list = res.data;
+                                                }
+                                            }
+                                        )
+                                        //查询选中树节点的项目进度
+                                        $scope.prj_chosen = $scope.prj_list[cti];
+                                        $scope.subprj_chosen = $scope.prj_list[cti].subproject_list[ctj];
+                                        $scope.chosen_name = $scope.prj_list[cti].subproject_list[ctj].name;
+                                        $scope.treeNodeId = data.nodeId;
+                                        $scope.treeParentId = data.parentId;
+                                        $cookies.put('treeParentId', $scope.treeParentId, {'expires': expireDate});
+                                        $scope.prjinfo.prj_id = $scope.prj_list[cti].project_id;
+                                        refresh_gantt($scope.subprj_chosen.subproject_id);
+                                    }
+                                }
+                                count = count + 1;
+                            }
+                        }
+                        else if (data.parentId == undefined) {
+
+                            $('#treeview12').treeview('collapseAll', {silent: true});
+                            $('#treeview12').treeview('expandNode', [data.nodeId, {levels: 2, silent: true}]);
+                        }
+                    }
+                });
+
+                ///////
                 var sub_if_go = $location.search().subprj_id;
                 if (sub_if_go) {
                     for (var i = 0; i < $scope.prj_list.length; i++) {
@@ -116,10 +239,140 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
                         subprj_id: $location.search().subprj_id
                     });
                 }
+                ////////
             }
         )
     };
 
+
+    refresh_gantt = function (subprj_id) {
+        projectService.sub_gantt(subprj_id).then(
+            function (res) {
+                $scope.subprj_chosen.start_time_plan = res.data.start_time_plan.substring(0, 10);;
+                $scope.subprj_chosen.design_start_plan = res.data.design_start_plan.substring(0, 10);;
+                $scope.subprj_chosen.dwg_end_plan = res.data.dwg_end_plan.substring(0, 10);;
+                $scope.subprj_chosen.end_time_plan = res.data.end_time_plan.substring(0, 10);;
+                if (res.data.start_time_plan != '' && res.data.start_time_plan != null && res.data.start_time_plan != undefined) {
+                    var str = res.data.start_time_plan.toString();
+                    str = str.replace("/-/g", "/");
+                    var t1_temp = new Date(str);
+                    var gant_t1 = {};
+                    gant_t1.year = t1_temp.getFullYear();
+                    gant_t1.month = t1_temp.getMonth();
+                    gant_t1.day = t1_temp.getDate();
+                }
+                if (res.data.design_start_plan != '' && res.data.design_start_plan != null && res.data.design_start_plan != undefined) {
+                    var str = res.data.design_start_plan.toString();
+                    str = str.replace("/-/g", "/");
+                    var t2_temp = new Date(str);
+                    var gant_t2 = {};
+                    gant_t2.year = t2_temp.getFullYear();
+                    gant_t2.month = t2_temp.getMonth();
+                    gant_t2.day = t2_temp.getDate();
+                }
+                if (res.data.dwg_end_plan != '' && res.data.dwg_end_plan != null && res.data.dwg_end_plan != undefined) {
+                    var str = res.data.dwg_end_plan.toString();
+                    str = str.replace("/-/g", "/");
+                    var t3_temp = new Date(str);
+                    var gant_t3 = {};
+                    gant_t3.year = t3_temp.getFullYear();
+                    gant_t3.month = t3_temp.getMonth();
+                    gant_t3.day = t3_temp.getDate();
+                }
+                if (res.data.end_time_plan != '' && res.data.end_time_plan != null && res.data.end_time_plan != undefined) {
+                    var str = res.data.end_time_plan.toString();
+                    str = str.replace("/-/g", "/");
+                    var t4_temp = new Date(str);
+                    var gant_t4 = {};
+                    gant_t4.year = t4_temp.getFullYear();
+                    gant_t4.month = t4_temp.getMonth();
+                    gant_t4.day = t4_temp.getDate();
+                }
+                var data = [];
+                //底图接单--底图完成
+                data.push(
+                    {
+                        x: Date.UTC(gant_t1.year, gant_t1.month, gant_t1.day),
+                        x2: Date.UTC(gant_t3.year, gant_t3.month, gant_t3.day),
+                        y: 0,
+                        partialFill: res.data.count_finished_dwg / res.data.count_sum_dwg
+                    }
+                );
+                //底图确认--设计完成
+                data.push(
+                    {
+                        x: Date.UTC(gant_t2.year, gant_t2.month, gant_t2.day),
+                        x2: Date.UTC(gant_t4.year, gant_t4.month, gant_t4.day),
+                        y: 1,
+                        partialFill: res.data.count_finished_design / res.data.count_sum_design
+                    }
+                );
+
+                Highcharts.chart('container', {
+                    chart: {
+                        type: 'xrange'
+                    },
+                    title: {
+                        text: '项目进度表'
+                    },
+                    xAxis: {
+                        type: 'datetime',
+                        dateTimeLabelFormats: {
+                            week: '%Y/%m/%d'
+                        }
+                    },
+                    yAxis: {
+                        title: {
+                            text: ''
+                        },
+                        categories: ['底图', '设计'],
+                        reversed: true
+                    },
+                    tooltip: {
+                        dateTimeLabelFormats: {
+                            day: '%Y/%m/%d'
+                        }
+                    },
+                    series: [{
+                        name: $scope.chosen_name,
+                        //pointPadding: 0,
+                        //groupPadding: 0,
+                        borderColor: 'black',
+                        pointWidth: 20,
+                        data: data,
+                        /*data: [{
+                            x: Date.UTC(2014, 10, 21),
+                            x2: Date.UTC(2014, 11, 2),
+                            y: 0,
+                            partialFill: 0.25
+                        }, {
+                            x: Date.UTC(2014, 11, 2),
+                            x2: Date.UTC(2014, 11, 5),
+                            y: 1,
+                            partialFill: 0.25
+                        }, {
+                            x: Date.UTC(2014, 11, 8),
+                            x2: Date.UTC(2014, 11, 9),
+                            y: 2
+                        }, {
+                            x: Date.UTC(2014, 11, 9),
+                            x2: Date.UTC(2014, 11, 19),
+                            y: 1
+                        }, {
+                            x: Date.UTC(2014, 11, 10),
+                            x2: Date.UTC(2014, 11, 23),
+                            y: 2,
+                            partialFill: 0.25
+                        }],*/
+                        dataLabels: {
+                            enabled: true
+                        }
+                    }]
+                });
+            }
+        )
+
+    }
     //获取所有设计院用户
     userList = function () {
         projectService.user_list($scope.userinfo).then(
@@ -136,6 +389,7 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
                     $scope.usr_list[i]['check'][3] = false;
                     $scope.usr_list[i]['check'][4] = false;
                 }
+
             }
         )
     };
@@ -187,7 +441,22 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
         $scope.prjinfo.company_id = $cookies.get('company_id');
         $scope.prjinfo.creator_id = $cookies.get('openid');
         $scope.prjinfo.start_time_plan = $scope.t1.year + '-' + $scope.t1.month + '-' + $scope.t1.day;
-        $scope.prjinfo.end_time_plan = $scope.t2.year + '-' + $scope.t2.month + '-' + $scope.t2.day;
+        $scope.prjinfo.design_start_plan = $scope.t2.year + '-' + $scope.t2.month + '-' + $scope.t2.day;
+
+        var time_2 = new Date($scope.t2.year, $scope.t2.month, 0);
+        if (($scope.t2.day + 12) > time_2.getDate()) {
+            $scope.prjinfo.end_time_plan = $scope.t2.year + '-' + ($scope.t2.month + 1) + '-' + (($scope.t2.day + 12) - time_2.getDate());
+        }
+        else {
+            $scope.prjinfo.end_time_plan = $scope.t2.year + '-' + $scope.t2.month + '-' + ($scope.t2.day + 12);
+        }
+
+        if (($scope.t1.day + 7) > time_2.getDate()) {
+            $scope.prjinfo.dwg_end_plan = $scope.t1.year + '-' + ($scope.t1.month + 1) + '-' + (($scope.t1.day + 7) - time_2.getDate());
+        }
+        {
+            $scope.prjinfo.dwg_end_plan = $scope.t1.year + '-' + $scope.t1.month + '-' + ($scope.t1.day + 7);
+        }
 
         projectService.new_project($scope.prjinfo).then(
             function (res) {
@@ -213,6 +482,7 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
                         alert("正在进行的项目无法删除！");
                     }
                     else {
+                        alert("项目删除成功！");
                         $('#modal-delete').modal('hide');
                         projectList();
                     }
@@ -222,12 +492,29 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
         }
     }
     //新建子项目
+
     $scope.newsubprj = function () {
         $scope.subprjinfo.prj_id = $scope.prjinfo.prj_id;
         $scope.subprjinfo.company_id = $cookies.get('company_id');
         $scope.subprjinfo.creator_id = $cookies.get('openid');
         $scope.subprjinfo.start_time_plan = $scope.t5.year + '-' + $scope.t5.month + '-' + $scope.t5.day;
-        $scope.subprjinfo.end_time_plan = $scope.t6.year + '-' + $scope.t6.month + '-' + $scope.t6.day;
+        $scope.subprjinfo.design_start_plan = $scope.t6.year + '-' + $scope.t6.month + '-' + $scope.t6.day;
+
+        var time_1 = new Date($scope.t6.year, $scope.t6.month, 0);
+        if (($scope.t6.day + 12) > time_1.getDate()) {
+            $scope.subprjinfo.end_time_plan = $scope.t6.year + '-' + ($scope.t6.month + 1) + '-' + (($scope.t6.day + 12) - time_1.getDate());
+        }
+        else {
+            $scope.subprjinfo.end_time_plan = $scope.t6.year + '-' + $scope.t6.month + '-' + ($scope.t6.day + 12);
+        }
+
+        if (($scope.t5.day + 7) > time_1.getDate()) {
+            $scope.subprjinfo.dwg_end_plan = $scope.t5.year + '-' + ($scope.t5.month + 1) + '-' + (($scope.t5.day + 7) - time_1.getDate());
+        }
+        {
+            $scope.subprjinfo.dwg_end_plan = $scope.t5.year + '-' + $scope.t5.month + '-' + ($scope.t5.day + 7);
+        }
+
         projectService.new_subproject($scope.subprjinfo).then(
             function (res) {
                 if (res.data.success) {
@@ -345,7 +632,7 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
         }
 
     }
-    $scope.peopleDetail = function (index, nickname,headimgurl) {
+    $scope.peopleDetail = function (index, nickname, headimgurl) {
         $scope.people_detail_index = index;
         $scope.people_detail_name = nickname;
         $scope.people_detail_headimgurl = headimgurl;
@@ -376,7 +663,9 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
                         alert("项目进行中，无法删除！");
                     }
                     else {
+                        alert("项目删除成功！");
                         $('#modal-delete').modal('hide');
+
                         projectList();
                     }
                 }
@@ -385,49 +674,6 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
 
     }
     //highchars 图表
-    var time = new Date();
-    $scope.t1 = {
-        year: time.getFullYear(),
-        month: time.getMonth() + 1,
-        day: time.getDate()
-    };
-    $scope.t2 = {
-        year: time.getFullYear(),
-        month: time.getMonth() + 1,
-        day: time.getDate()
-    };
-    $scope.t3 = {
-        year: time.getFullYear(),
-        month: time.getMonth() + 1,
-        day: time.getDate()
-    };
-    $scope.t4 = {
-        year: time.getFullYear(),
-        month: time.getMonth() + 1,
-        day: time.getDate()
-    };
-    $scope.t5 = {
-        year: time.getFullYear(),
-        month: time.getMonth() + 1,
-        day: time.getDate()
-    };
-    $scope.t6 = {
-        year: time.getFullYear(),
-        month: time.getMonth() + 1,
-        day: time.getDate()
-    };
-    if ($scope.t1.month < 10)
-        $scope.t1.month = "0" + $scope.t1.month;
-    if ($scope.t2.month < 10)
-        $scope.t2.month = "0" + $scope.t2.month;
-    if ($scope.t3.month < 10)
-        $scope.t3.month = "0" + $scope.t3.month;
-    if ($scope.t4.month < 10)
-        $scope.t4.month = "0" + $scope.t4.month;
-    if ($scope.t5.month < 10)
-        $scope.t5.month = "0" + $scope.t5.month;
-    if ($scope.t6.month < 10)
-        $scope.t6.month = "0" + $scope.t6.month;
 
     //时间选择器1
     $("#timepicker1").datetimepicker({
@@ -479,144 +725,69 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
         $("#timepicker3").blur();
     });
 
-    $('#containertb').highcharts({
-        chart: {
-            type: 'spline'
-        },
-        title: {
-            text: '风速变化趋势图'
-        },
-        subtitle: {
-            text: '2009年10月6日和7日两地风速情况'
-        },
-        xAxis: {
-            type: 'datetime',
-            labels: {
-                overflow: 'justify'
-            }
-        },
-        yAxis: {
-            title: {
-                text: '风 速 (m/s)'
-            },
-            min: 0,
-            minorGridLineWidth: 0,
-            gridLineWidth: 0,
-            alternateGridColor: null,
-            plotBands: [{ // Light air
-                from: 0.3,
-                to: 1.5,
-                color: 'rgba(68, 170, 213, 0.1)',
-                label: {
-                    text: '轻空气',
-                    style: {
-                        color: '#606060'
-                    }
-                }
-            }, { // Light breeze
-                from: 1.5,
-                to: 3.3,
-                color: 'rgba(0, 0, 0, 0)',
-                label: {
-                    text: '微风',
-                    style: {
-                        color: '#606060'
-                    }
-                }
-            }, { // Gentle breeze
-                from: 3.3,
-                to: 5.5,
-                color: 'rgba(68, 170, 213, 0.1)',
-                label: {
-                    text: '柔和风',
-                    style: {
-                        color: '#606060'
-                    }
-                }
-            }, { // Moderate breeze
-                from: 5.5,
-                to: 8,
-                color: 'rgba(0, 0, 0, 0)',
-                label: {
-                    text: '温和风',
-                    style: {
-                        color: '#606060'
-                    }
-                }
-            }, { // Fresh breeze
-                from: 8,
-                to: 11,
-                color: 'rgba(68, 170, 213, 0.1)',
-                label: {
-                    text: '清新风',
-                    style: {
-                        color: '#606060'
-                    }
-                }
-            }, { // Strong breeze
-                from: 11,
-                to: 14,
-                color: 'rgba(0, 0, 0, 0)',
-                label: {
-                    text: '强风',
-                    style: {
-                        color: '#606060'
-                    }
-                }
-            }, { // High wind
-                from: 14,
-                to: 15,
-                color: 'rgba(68, 170, 213, 0.1)',
-                label: {
-                    text: '狂风',
-                    style: {
-                        color: '#606060'
-                    }
-                }
-            }]
-        },
-        tooltip: {
-            valueSuffix: ' m/s'
-        },
-        plotOptions: {
-            spline: {
-                lineWidth: 4,
-                states: {
-                    hover: {
-                        lineWidth: 5
-                    }
-                },
-                marker: {
-                    enabled: false
-                },
-                pointInterval: 3600000, // one hour
-                pointStart: Date.UTC(2009, 9, 6, 0, 0, 0)
-            }
-        },
-        series: [{
-            name: 'Hestavollane',
-            data: [4.3, 5.1, 4.3, 5.2, 5.4, 4.7, 3.5, 4.1, 5.6, 7.4, 6.9, 7.1,
-                7.9, 7.9, 7.5, 6.7, 7.7, 7.7, 7.4, 7.0, 7.1, 5.8, 5.9, 7.4,
-                8.2, 8.5, 9.4, 8.1, 10.9, 10.4, 10.9, 12.4, 12.1, 9.5, 7.5,
-                7.1, 7.5, 8.1, 6.8, 3.4, 2.1, 1.9, 2.8, 2.9, 1.3, 4.4, 4.2,
-                3.0, 3.0]
-        }, {
-            name: 'Voll',
-            data: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1, 0.0, 0.3, 0.0,
-                0.0, 0.4, 0.0, 0.1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                0.0, 0.6, 1.2, 1.7, 0.7, 2.9, 4.1, 2.6, 3.7, 3.9, 1.7, 2.3,
-                3.0, 3.3, 4.8, 5.0, 4.8, 5.0, 3.2, 2.0, 0.9, 0.4, 0.3, 0.5, 0.4]
-        }],
-        navigation: {
-            menuItemStyle: {
-                fontSize: '10px'
-            }
+    //时间选择器3
+    $("#timepicker4").datetimepicker({
+        language: 'zh-CN',
+        format: "yyyy-mm-dd",
+        startView: 3,
+        minView: 2,
+        autoclose: true,
+        todayBtn: false,
+        pickerPosition: "bottom-left"
+    }).on('changeDay', function (ev) {
+        $scope.t4.year = ev.date.getFullYear();
+        $scope.t4.month = ev.date.getMonth() + 1;
+        $scope.t4.day = ev.date.getDate();
+        if ($scope.project_id) {
+            //$scope.changecharts($scope.project_id, $scope.t.year + '-' + $scope.t1.month, $scope.t2.year + '-' + $scope.t2.month);
         }
+    }).on("hide", function () {
+        $("#timepicker4").blur();
     });
+    //时间选择器4
+    $("#timepicker5").datetimepicker({
+        language: 'zh-CN',
+        format: "yyyy-mm-dd",
+        startView: 3,
+        minView: 2,
+        autoclose: true,
+        todayBtn: false,
+        pickerPosition: "bottom-left"
+    }).on('changeDay', function (ev) {
+        $scope.t5.year = ev.date.getFullYear();
+        $scope.t5.month = ev.date.getMonth() + 1;
+        $scope.t5.day = ev.date.getDate();
+        if ($scope.project_id) {
+            //$scope.changecharts($scope.project_id, $scope.t.year + '-' + $scope.t1.month, $scope.t2.year + '-' + $scope.t2.month);
+        }
+    }).on("hide", function () {
+        $("#timepicker5").blur();
+    });
+    //时间选择器5
+    $("#timepicker6").datetimepicker({
+        language: 'zh-CN',
+        format: "yyyy-mm-dd",
+        startView: 3,
+        minView: 2,
+        autoclose: true,
+        todayBtn: false,
+        pickerPosition: "bottom-left"
+    }).on('changeDay', function (ev) {
+        $scope.t6.year = ev.date.getFullYear();
+        $scope.t6.month = ev.date.getMonth() + 1;
+        $scope.t6.day = ev.date.getDate();
+        if ($scope.project_id) {
+            //$scope.changecharts($scope.project_id, $scope.t.year + '-' + $scope.t1.month, $scope.t2.year + '-' + $scope.t2.month);
+        }
+    }).on("hide", function () {
+        $("#timepicker6").blur();
+    });
+
     getData = function () {
         $scope.userinfo.itemsPerPage = $scope.userinfo.itemsPerPage + 10;
         projectList();
     }
+
 
     $scope.scrollT_old = 0;
     //定义鼠标滚动事件
@@ -637,11 +808,10 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
     });
 
     $scope.alterTime = function (prj_id, subprj_id, type, time_compare) {
-        if($scope.userinfo.status != 2)
-        {
+        if ($scope.userinfo.status != 2) {
             alert('无修改权限！');
         }
-        else{
+        else {
             $scope.alter_time_info = {
                 prj_id: prj_id,
                 subprj_id: subprj_id,
@@ -653,9 +823,9 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
     }
     $scope.saveAlterTime = function () {
         $scope.alter_time_info.time_var = $scope.t3.year + '-' + $scope.t3.month + '-' + $scope.t3.day;
-        if ($scope.alter_time_info.type == 1) {
+        if ($scope.alter_time_info.type == 1 ||$scope.alter_time_info.type == 3) {
             if ((Date.parse(new Date($scope.alter_time_info.time_var)) / 1000) > (Date.parse(new Date($scope.alter_time_info.time_compare)) / 1000))
-              alert('开始时间不能晚于结束时间！');
+                alert('开始时间不能晚于截止时间！');
             else {
                 projectService.alter_time($scope.alter_time_info).then(
                     function (res) {
@@ -664,14 +834,15 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
                         } else {
                             alert("修改成功！");
                             projectList();
+                            refresh_gantt($scope.alter_time_info.subprj_id);
                         }
                     }
                 )
             }
         }
-        if ($scope.alter_time_info.type == 2) {
+        if ($scope.alter_time_info.type == 2 || $scope.alter_time_info.type == 4) {
             if ((Date.parse(new Date($scope.alter_time_info.time_var)) / 1000) < (Date.parse(new Date($scope.alter_time_info.time_compare)) / 1000))
-                alert('结束时间不能早于开始时间！');
+                alert('截止时间不能早于开始时间！');
             else {
                 projectService.alter_time($scope.alter_time_info).then(
                     function (res) {
@@ -680,10 +851,13 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
                         } else {
                             alert("修改成功！");
                             projectList();
+                            refresh_gantt($scope.alter_time_info.subprj_id);
                         }
                     }
                 )
             }
         }
-    }
+    };
+
+
 })

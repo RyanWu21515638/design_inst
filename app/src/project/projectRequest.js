@@ -32,6 +32,8 @@ project.service('projectService', function ($resource, $http, $rootScope) {
             role_id: data1.role_id,
             start_time_plan: data1.start_time_plan,
             create_sub: data1.create_sub,
+            dwg_end_plan:data1.dwg_end_plan,
+            design_start_plan:data1.design_start_plan
         };
         return $http.post($rootScope.ip + '/design_institute/public/admin/Project/add_project', data, this.postCfg);
     }
@@ -55,6 +57,9 @@ project.service('projectService', function ($resource, $http, $rootScope) {
             role_id: data1.role_id,
             start_time_plan: data1.start_time_plan,
             subprjname: data1.subprjname,
+            design_start_plan:data1.design_start_plan,
+            dwg_end_plan:data1.dwg_end_plan,
+
         };
         return $http.post($rootScope.ip + '/design_institute/public/admin/SubProject/add_subproject', data, this.postCfg);
     }
@@ -80,6 +85,11 @@ project.service('projectService', function ($resource, $http, $rootScope) {
             subprj_id: data1.subprj_id,
         };
         return $http.post($rootScope.ip + '/design_institute/public/admin/Role/add_role', data, this.postCfg);
+    }
+    //查询子项目甘特图
+
+    this.sub_gantt = function (subprj_id) {
+        return $http.get($rootScope.ip + '/design_institute/public/admin/Project/gantts?subprj_id='+subprj_id);
     }
     //查询子项目已分配的人员
     this.project_role_list = function (subproject_id) {

@@ -1,5 +1,5 @@
 ﻿var routerApp = angular.module('routerApp', ['ui.router','index', 'login', 'project', 'forum', 'user', 'newforum', 'subproject',
-    'subproject_info_detail','upload','conf','proside']);
+    'subproject_info_detail','upload','conf','proside','gantt']);
 
 
 /**

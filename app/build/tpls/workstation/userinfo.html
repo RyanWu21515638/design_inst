@@ -50,7 +50,10 @@
                             <td>{{x.country}}</td>
                             <td>{{x.province}}</td>
                             <td>{{x.city}}</td>
-                            <td ng-if="x.company_id != '1'"><button ng-click="addIpminstUser(x.openid,x.company_id)">添加到设计院</button></td>
+                            <td ng-if="x.company_id != '1'">
+                                <button ng-click="addIpminstUser(x.openid,x.company_id)"
+                                        data-toggle="modal" data-target="#modal-form-adduser">
+                                    添加到设计院</button></td>
                             <td ng-if="x.company_id == '1'"><span class="label label-success">设计院用户</span>
                                 <a href="" ng-click="delIpminstUser(x.openid)"><span class="label label-danger">从设计院删除</span></a></td>
                         </tr>
@@ -60,6 +63,28 @@
                         </th>
                         </tbody>
                     </table>
+                </div>
+                <div id="modal-form-adduser" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"
+                     aria-hidden="false">
+                    <div class="modal-dialog" style="width:30%;margin-top: 8%;">
+                        <div class="modal-content" style="border-radius: 5px;">
+                            <div class="modal-header">
+                                <h2 class="blue bigger" style="text-align: center;">添加人员权限</h2>
+                            </div>
+
+                            <div class="modal-body overflow-visible">
+                                <div class="row" style="padding-top: 2%" ng-repeat="x in grp_list">
+                                    <label class="col-sm-8 col-sm-offset-1">{{x.name}}:</label>
+                                    <input class="col-sm-2" type="checkbox"
+                                           ng-model="roles[$index]"/>
+                                </div>
+                            </div>
+                            <div class="modal-footer" style="text-align: center;">
+                                <button class="btn btn-success col-sm-offset-3" ng-click="addIpminstUser_submit()"
+                                        data-dismiss="modal">添加</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div><!--pagecontent-->
@@ -76,6 +101,8 @@
             </tbody>
         </table>
     </div>
+
+
 
 </div>
 
