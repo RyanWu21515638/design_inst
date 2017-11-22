@@ -6,7 +6,7 @@
         top: 80%;
     }
 </style>
-<div id="top_user" class="main-container" style="padding-left: 2%;border: 1px solid lightgrey;" ng-controller="userCtrl">
+<div id="top_user" class="main-container" style="padding-left: 2%;" ng-controller="userCtrl">
     <div class="main-container-inner">
         <div class="page-content">
             <div class="space-24"></div>
@@ -32,6 +32,8 @@
                         <tr>
                             <th>序号</th>
                             <th>头像</th>
+                            <th>姓名</th>
+                            <th>手机</th>
                             <th>昵称</th>
                             <th>国家</th>
                             <th>省</th>
@@ -46,6 +48,8 @@
                                 <img class="nav-user-photo" ng-src="{{x.headimgurl}}"
                                      alt="{{x.nickname}}" style="width: 24px;height: 24px;border-radius: 50%;"/>
                             </td>
+                            <td>{{x.real_name}}</td>
+                            <td>{{x.mobile_phone}}</td>
                             <td>{{x.nickname}}</td>
                             <td>{{x.country}}</td>
                             <td>{{x.province}}</td>

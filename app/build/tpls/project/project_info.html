@@ -4,20 +4,20 @@
             <div class="page-header visible-lg visible-md visible-sm">
                 <h3>
                     <b>项目看板
-                        <button ng-if="userinfo.status == '2'" type="button"
+                        <button ng-if="userinfo.status == '2' && set_prj!='true'" type="button"
                                 class="btn btn-primary"
                                 data-toggle="modal" data-target="#modal-form1"
                                 ng-click="newprjJuge();configurationlist();">
                             新建模板厂
                         </button>
-                    <button ng-if="userinfo.status == '2' && chosen_name" type="button"
+                    <button ng-if="userinfo.status == '2' && prj_chosen.name && set_prj!='true'" type="button"
                             class="btn btn-danger"
                             data-toggle="modal" data-target="#modal-delete"
                             ng-click="delProject(prj_chosen.project_id,x.name,1)">
                         删除<label class="label label-warning">{{prj_chosen.name}}</label>
                     </button>
 
-                    <button ng-if="userinfo.status == '2' && chosen_name" type="button"
+                    <button ng-if="userinfo.status == '2' && prj_chosen.name && set_prj!='true'" type="button"
                             class="btn btn-default"
                             data-toggle="modal" data-target="#modal-form2"
                             ng-click="prj_dt(prj_chosen.project_id,1);">
@@ -46,7 +46,7 @@
                         </button>
                     </div>
                 </div>-->
-                <div class="visible-xs col-xs-12" style="margin-top: 10px;margin-bottom: 10px;">
+                <!--<div class="visible-xs col-xs-12" style="margin-top: 10px;margin-bottom: 10px;">
                     <div class="row" style="text-align: center;margin-bottom: 20px;">
                         <label class="label label-primary" >总项目列表</label>
                     </div>
@@ -59,12 +59,11 @@
                             <label ng-if="x.state == 2">
                                 <span class="label label-success">已归档</span></label></a>
                     </div>
-                </div>
+                </div>-->
+                <div id="treeview12" class="col-md-2 col-xs-12" style="margin-top: -15px;"></div>
+                <div class="col-md-7 col-lg-8 col-xs-12  " >
 
-                <div id="treeview12" class="col-md-2 col-xs-12" ></div>
-                <div class="col-md-8 col-xs-12" >
-                    <div id="container"></div>
-                    <form ng-if="chosen_name" class="form-horizontal" style="border: 3px dashed #999999;padding-bottom: 20px;"
+                    <form ng-if="chosen_name" class="form-horizontal visible-lg visible-md" style="border: 3px dashed #999999;padding-bottom: 2px;"
                           ng-click="subchose(subprj_chosen.subproject_id,subprj_chosen.state)">
                         <div class="form-group" style="text-align: center;padding-top: 20px;">
                             <label class="label label-primary" >项目·{{subprj_chosen.name}}·详情</label>
@@ -87,7 +86,14 @@
                                 {{subprj_chosen.start_time_plan}}
                             </button>
                             <label class="col-sm-3" style="text-align: right;"> 出终版底图成果时间： </label>
-                            <button class="col-sm-2" ng-click="alterTime(0,subprj_chosen.subproject_id,2,subprj_chosen.start_time_plan)"
+                            <button  ng-if="(subprj_chosen.D_value_2<= 3)" class="col-sm-2 btn-danger"
+                                     ng-click="alterTime(0,subprj_chosen.subproject_id,2,subprj_chosen.start_time_plan)"
+                                     style="border: 2px dashed #999999;"
+                                     data-toggle="popover" title="底图截止时间快到了！请注意">
+                                {{subprj_chosen.dwg_end_plan}}
+                            </button>
+                            <button ng-if="(subprj_chosen.D_value_2> 3)" class="col-sm-2"
+                                    ng-click="alterTime(0,subprj_chosen.subproject_id,2,subprj_chosen.start_time_plan)"
                                  style="border: 2px dashed #999999;">
                                 {{subprj_chosen.dwg_end_plan}}
                             </button>
@@ -98,29 +104,47 @@
                                  style="border: 2px dashed #999999;">
                                 {{subprj_chosen.design_start_plan}}
                             </button>
+
                             <label class="col-sm-3" style="text-align: right;"> 项目结束节点时间： </label>
-                            <button class="col-sm-2" ng-click="alterTime(0,subprj_chosen.subproject_id,4,subprj_chosen.design_start_plan)"
-                                 style="border: 2px dashed #999999;">
+                            <button ng-if="(subprj_chosen.D_value_1<= 3)" class="col-sm-2 btn-danger"
+                                    ng-click="alterTime(0,subprj_chosen.subproject_id,4,subprj_chosen.design_start_plan)"
+                                    style="border: 2px dashed #999999;"
+                                    data-toggle="popover" title="项目即将截止！请注意">
+                                {{subprj_chosen.end_time_plan}}
+                            </button>
+                            <button ng-if="(subprj_chosen.D_value_1> 3)" class="col-sm-2" ng-click="alterTime(0,subprj_chosen.subproject_id,4,subprj_chosen.design_start_plan)"
+                                    style="border: 2px dashed #999999;">
                                 {{subprj_chosen.end_time_plan}}
                             </button>
                         </div>
-                        <div class="form-group" style="text-align: center;">
-                            <button class="btn btn-default" style="cursor:pointer;" ng-if="fromIPM == 'true'"
+                        <div class="form-group" style="text-align: center;margin-top: 20px;padding-top: 20px;">
+                            <button class="btn btn-info" style="cursor:pointer;" ng-if="(fromIPM == 'true') && (set_prj!='true')"
                                     ng-click="set_prj_suprj_name(subprj_chosen.subproject_id)">任务面板</button>
-                            <button class="btn btn-default" style="cursor:pointer;" ng-if="fromIPM != 'true'"
+                            <button class="btn btn-info" style="cursor:pointer;" ng-if="(fromIPM == 'true') && (set_prj=='true')"
+                                    ui-sref="index.project.subproject_info_detail({prj_id:prjinfo.prj_id,subprj_id:rolesinfo.subprj_id,})"
+                                    ng-click="set_prj_suprj_name(subprj_chosen.subproject_id);goUrl()">任务面板</button>
+                            <button class="btn btn-info" style="cursor:pointer;" ng-if="(fromIPM != 'true') && (set_prj!='true')"
                                     ui-sref="index.project.subproject_info_detail({prj_id:prjinfo.prj_id,subprj_id:rolesinfo.subprj_id})"
                                     ng-click="set_prj_suprj_name(subprj_chosen.subproject_id)">任务面板</button>
-                            <button class="btn btn-primary" ng-click="downloadList(subprj_chosen.subproject_id)"
+
+
+                            <button ng-if="set_prj!='true'" class="btn btn-success" ng-click="downloadList(subprj_chosen.subproject_id)"
                                     data-toggle="modal"
                                     data-target="#modal-form4">成果下载</button>
-                            <button class="btn btn-success" data-toggle="modal" ng-click="grouplist()"
-                                    data-target="#modal-form3" ng-if="userinfo.status == '2'">人员权限分配</button>
+                            <button class="btn btn-primary" data-toggle="modal" ng-click="grouplist()"
+                                    data-target="#modal-form3" ng-if="userinfo.status == '2' && set_prj!='true'">人员权限分配</button>
+                            <button class="btn btn-warning" ng-if="set_prj!='true'"
+                                    ng-click="redirection(prj_chosen.project_id,subprj_chosen.subproject_id)">
+                                问题列表
+                            </button>
                             <button class="btn btn-danger" data-toggle="modal"
                                     data-target="#modal-delete"
                                     ng-click="delSubproject(subprj_chosen.subproject_id,subprj_chosen.name,1)" href=""
-                                    ng-if="userinfo.status == '2'">删除</button>
+                                    ng-if="userinfo.status == '2' && set_prj!='true'">删除项目</button>
+                            <button ng-controller="uploadCtrl" class="btn btn-warning" ng-if="set_prj=='true'" ng-click="setPrj(prj_chosen.project_id,subprj_chosen.subproject_id)">设定项目</button>
                         </div>
                     </form>
+                    <div id="container"></div>
                     <!--<form class="form-horizontal"
                          style="border: 1px solid #999999;padding-bottom: 20px;"
                          ng-click="prj_dt(x.project_id,1)">
@@ -324,12 +348,12 @@
                     <div class="modal-dialog" style="width:30%;margin-top: 8%;">
                         <div class="modal-content" style="border-radius: 5px;">
                             <div class="modal-header">
-                                <h2 class="blue bigger" style="text-align: center;">新建总项目</h2>
+                                <h2 class="blue bigger" style="text-align: center;">新建模板厂</h2>
                             </div>
 
                             <div class="modal-body overflow-visible">
                                 <div class="row" style="padding-top: 2%">
-                                    <label class="col-sm-4 col-sm-offset-1">总项目名称:</label>
+                                    <label class="col-sm-4 col-sm-offset-1">模板厂名称:</label>
                                     <input class="col-sm-5" placeholder="请输入项目名称"
                                            ng-model="prjinfo.prjname" required/>
                                 </div>
@@ -504,13 +528,49 @@
                                                 <img class="pull-right" src="{{x.headimgurl}}"
                                                      style="height: 20px;width: 20px;border-radius: 50%;">
                                             </td>
-                                            <td><input type="checkbox" ng-model="x.check[0]"></td>
-                                            <td><input type="checkbox" ng-model="x.check[1]"></td>
-                                            <td><input type="checkbox" ng-model="x.check[2]"></td>
-                                            <td><input type="checkbox" ng-model="x.check[3]"></td>
-                                            <td><input type="checkbox" ng-model="x.check[4]"></td>
-                                            <td><input type="checkbox" ng-model="x.check[5]"></td>
-                                            <td><input type="checkbox" ng-model="x.check[6]"></td>
+                                            <td class="center" >
+                                                <i ng-if="x.check[0] != false" class="icon-ok bigger-140 green"
+                                                   style="color: green"></i>
+                                                <i ng-if="x.check[0] == false" class="icon-remove bigger-140 red"
+                                                   style="color: red"></i>
+                                            </td>
+                                            <td class="center" >
+                                                <i ng-if="x.check[1] != false" class="icon-ok bigger-140 green"
+                                                   style="color: green"></i>
+                                                <i ng-if="x.check[1] == false" class="icon-remove bigger-140 red"
+                                                   style="color: red"></i>
+                                            </td>
+                                            <td class="center" >
+                                                <i ng-if="x.check[2] != false" class="icon-ok bigger-140 green"
+                                                   style="color: green"></i>
+                                                <i ng-if="x.check[2] == false" class="icon-remove bigger-140 red"
+                                                   style="color: red"></i>
+                                            </td>
+                                            <td class="center" >
+                                                <i ng-if="x.check[3] != false" class="icon-ok bigger-140 green"
+                                                   style="color: green"></i>
+                                                <i ng-if="x.check[3] == false" class="icon-remove bigger-140 red"
+                                                   style="color: red"></i>
+                                            </td>
+                                            <td class="center" >
+                                                <i ng-if="x.check[4] != false" class="icon-ok bigger-140 green"
+                                                   style="color: green"></i>
+                                                <i ng-if="x.check[4] == false" class="icon-remove bigger-140 red"
+                                                   style="color: red"></i>
+                                            </td>
+                                            <td class="center" >
+                                                <i ng-if="x.check[5] != false" class="icon-ok bigger-140 green"
+                                                   style="color: green"></i>
+                                                <i ng-if="x.check[5] == false" class="icon-remove bigger-140 red"
+                                                   style="color: red"></i>
+                                            </td>
+                                            <td class="center" >
+                                                <i ng-if="x.check[6] != false" class="icon-ok bigger-140 green"
+                                                   style="color: green"></i>
+                                                <i ng-if="x.check[6] == false" class="icon-remove bigger-140 red"
+                                                   style="color: red"></i>
+                                            </td>
+
                                             <td>
                                                 <button type="submit" ng-click="hide($index)">添加</button>
                                             </td>
@@ -614,9 +674,9 @@
                     </div>
                 </div>
 
-                <div id="prj_menu" class="animated bounceInDown col-xs-12 col-md-2"
+                <div ng-if="chosen_name" id="prj_menu" class="animated bounceInDown col-xs-12 col-md-3 col-lg-2"
                      style="background-color: #eeeeee;height: 700px;border: 5px solid white;">
-                    <div>
+                    <div style="width: 100%">
                         <div style="padding-left: 20px;">
                             <h3>项目记录节点</h3>
                         </div>
@@ -627,8 +687,8 @@
                         </div>
 
                         <div style="padding-left: 20px;" ng-repeat="x in status_list" ng-if="status_select">
-                            <div><label style="background-color: white;">{{x.time}}</label></div>
-                            <div style="border-left: 1px solid #a6a6a6;height: 10px;margin-left: 20px;margin-bottom: 2px;"></div>
+                            <div><label>{{x.time}}</label></div>
+                            <div style="border-left: 1px solid #a6a6a6;height: 10px;margin-left: 20px;"></div>
                             <div style="margin-left: 18px;">
                                 <label class="label label-warning" ng-if="x.state == 1"> 已立项，底图待深化</label>
                                 <label class="label label-primary" ng-if="x.state == 2">底图已深化，底图深化待审核</label>
@@ -636,15 +696,13 @@
                                 <label class="label label-danger" ng-if="x.state == 4">标准层已下单,待变化层下单</label>
                                 <label class="label label-default" ng-if="x.state == 5">变化层已下单，待归档</label>
                                 <label class="label label-success" ng-if="x.state == 6">项目已归档</label>
-
-
                                 <label class="pull-right" style="margin-right: 20px;">
                                     <img src="{{x.headimgurl}}"
                                          style="height: 20px;width: 20px;border-radius: 50%;">
-                                    <label>{{x.creator_nickname}}</label>
+
                                     {{x.nickname}}</label>
                             </div>
-                            <div style="border-left: 1px solid #a6a6a6;height: 10px;margin-left: 20px;"></div>
+                            <div style="border-left: 1px solid #a6a6a6;height: 20px;margin-left: 20px;"></div>
 
                         </div>
 

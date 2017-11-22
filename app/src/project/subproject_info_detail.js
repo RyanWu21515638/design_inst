@@ -3,13 +3,14 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
                                                                           $stateParams, $state, $cookies, $location,
                                                                           $rootScope, projectService) {
 
-
+    var time = new Date();
     var winHeight = document.body.clientHeight;
     console.log(winHeight);
     document.getElementById("prjDT_opt").style.height= winHeight*0.6 +"px";
     var expireDate = new Date();
     expireDate.setDate(expireDate.getDate() + 1);
     $rootScope.fromIPM = $cookies.get('fromIPM');
+    $rootScope.set_prj = $cookies.get('set_prj');
     $scope.prj_id = $stateParams.prj_id;
     $scope.paramFromIPM = JSON.parse($cookies.get('paramFromIPM'));
     if ($scope.paramFromIPM.subprj_id) {
@@ -299,8 +300,28 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
                     for (var j = 0; j < $scope.task_list[i].subtask_list.length; j++) {
                         var endtime = $scope.task_list[i].subtask_list[j].end_time_plan;
                         if(endtime !='' &&endtime !=null &&endtime !=undefined)
-                        $scope.task_list[i].subtask_list[j].end_time_plan = $scope.task_list[i].subtask_list[j].end_time_plan.substring(0, 10);
+                        {
+                            //重设紧急度
+                            var str = $scope.task_list[i].subtask_list[j].end_time_plan.toString();
+                            str = str.replace("/-/g", "/");
+                            var temp = new Date(str);
+                            $scope.task_list[i].subtask_list[j].countdown = 0;
+                            if(temp.getFullYear() == time.getFullYear() && temp.getMonth()==time.getMonth() &&temp.getDate() == time.getDate())
+                            {
 
+                                if(temp.getHours()-time.getHours()<=4)
+                                {
+                                    $scope.task_list[i].subtask_list[j].countdown =1;
+                                    $scope.task_list[i].subtask_list[j].countdown_time =temp.getHours()-time.getHours();
+                                }
+                                else if(temp.getHours()-time.getHours()<=8){
+                                    $scope.task_list[i].subtask_list[j].countdown =2;
+                                    $scope.task_list[i].subtask_list[j].countdown_time =temp.getHours()-time.getHours();
+                                }
+                            }
+                            $scope.task_list[i].subtask_list[j].end_time_plan = $scope.task_list[i].subtask_list[j].end_time_plan.substring(0, 10);
+
+                        }
                     }
                 }
             }
@@ -346,7 +367,6 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
                                     var endtime = $scope.task_list[i].subtask_list[j].end_time_plan;
                                     if(endtime !='' &&endtime !=null &&endtime !=undefined)
                                         $scope.task_list[i].subtask_list[j].end_time_plan = $scope.task_list[i].subtask_list[j].end_time_plan.substring(0, 10);
-
                                 }
                             }
                         }
@@ -412,7 +432,7 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
     //新建子任务
     $scope.newSubTask = function () {
         $scope.subtask_info.creator_id = $cookies.get('openid');
-        $scope.subtask_info.end_time_plan = $scope.t1.year + '-' + $scope.t1.month + '-' + $scope.t1.day;
+        $scope.subtask_info.end_time_plan = $scope.t1.year + '-' + $scope.t1.month + '-' + $scope.t1.day +'-' +$scope.t1.hour;
         projectService.add_task($scope.subtask_info).then(
             function (res) {
                 //$window.location.reload();
@@ -428,7 +448,27 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
                             for (var j = 0; j < $scope.task_list[i].subtask_list.length; j++) {
                                 var endtime = $scope.task_list[i].subtask_list[j].end_time_plan;
                                 if(endtime !='' &&endtime !=null &&endtime !=undefined)
+                                {
+                                    //重设紧急度
+                                    var str = $scope.task_list[i].subtask_list[j].end_time_plan.toString();
+                                    str = str.replace("/-/g", "/");
+                                    var temp = new Date(str);
+                                    $scope.task_list[i].subtask_list[j].countdown =0;
+                                    if(temp.getFullYear() == time.getFullYear() && temp.getMonth()==time.getMonth() &&temp.getDate() == time.getDate())
+                                    {
+                                        if(temp.getHours()-time.getHours()<=4)
+                                        {
+                                            $scope.task_list[i].subtask_list[j].countdown =1;
+                                            $scope.task_list[i].subtask_list[j].countdown_time =temp.getHours()-time.getHours();
+                                        }
+                                        else if(temp.getHours()-time.getHours()<=8){
+                                            $scope.task_list[i].subtask_list[j].countdown =2;
+                                            $scope.task_list[i].subtask_list[j].countdown_time =temp.getHours()-time.getHours();
+                                        }
+                                    }
                                     $scope.task_list[i].subtask_list[j].end_time_plan = $scope.task_list[i].subtask_list[j].end_time_plan.substring(0, 10);
+
+                                }
 
                             }
                         }
@@ -446,7 +486,7 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
             $scope.subtask_info.creator_id = $cookies.get('openid');
             console.log($scope.subtask_info.creator_id);
             $scope.subtask_info.taskgroup_id = $scope.task_list[$scope.taskIndex].id;
-            $scope.subtask_info.end_time_plan = $scope.t1.year + '-' + $scope.t1.month + '-' + $scope.t1.day;
+            $scope.subtask_info.end_time_plan = $scope.t1.year + '-' + $scope.t1.month + '-' + $scope.t1.day+'-'+$scope.t1.hour;
             projectService.add_task($scope.subtask_info).then(
                 function (res) {
                     if (!res.data.success) {
@@ -466,7 +506,27 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
                                     for (var j = 0; j < $scope.task_list[i].subtask_list.length; j++) {
                                         var endtime = $scope.task_list[i].subtask_list[j].end_time_plan;
                                         if(endtime !='' &&endtime !=null &&endtime !=undefined)
+                                        {
+                                            //重设紧急度
+                                            var str = $scope.task_list[i].subtask_list[j].end_time_plan.toString();
+                                            str = str.replace("/-/g", "/");
+                                            var temp = new Date(str);
+                                            $scope.task_list[i].subtask_list[j].countdown =0;
+                                            if(temp.getFullYear() == time.getFullYear() && temp.getMonth()==time.getMonth() &&temp.getDate() == time.getDate())
+                                            {
+                                                if(temp.getHours()-time.getHours()<=4)
+                                                {
+                                                    $scope.task_list[i].subtask_list[j].countdown =1;
+                                                    $scope.task_list[i].subtask_list[j].countdown_time =temp.getHours()-time.getHours();
+                                                }
+                                                else if(temp.getHours()-time.getHours()<=8){
+                                                    $scope.task_list[i].subtask_list[j].countdown =2;
+                                                    $scope.task_list[i].subtask_list[j].countdown_time =temp.getHours()-time.getHours();
+                                                }
+                                            }
                                             $scope.task_list[i].subtask_list[j].end_time_plan = $scope.task_list[i].subtask_list[j].end_time_plan.substring(0, 10);
+
+                                        }
 
                                     }
                                 }
@@ -540,6 +600,7 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
             $scope.t1.year = t1_temp.getFullYear();
             $scope.t1.month = t1_temp.getMonth() + 1;
             $scope.t1.day = t1_temp.getDate();
+            $scope.t1.hour = t1_temp.getHours();
         }
 
         //获取任务轨迹
@@ -550,27 +611,29 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
         )
     }
 
-    var time = new Date();
     $scope.t1 = {
         year: time.getFullYear(),
         month: time.getMonth() + 1,
-        day: time.getDate()
+        day: time.getDate(),
+        hour: time.getHours()
     };
     if ($scope.t1.month < 10)
         $scope.t1.month = "0" + $scope.t1.month;
     //时间选择器1
     $("#timepicker1").datetimepicker({
         language: 'zh-CN',
-        format: "yyyy-mm-dd",
+        format: "yyyy-mm-dd:hh",
         startView: 3,
-        minView: 2,
+        minView:1,
         autoclose: true,
         todayBtn: false,
         pickerPosition: "bottom-left"
-    }).on('changeDay', function (ev) {
+    }).on('changeHour', function (ev) {
         $scope.t1.year = ev.date.getFullYear();
         $scope.t1.month = ev.date.getMonth() + 1;
-        $scope.t1.day = ev.date.getDate();
+        $scope.t1.day = ev.date.getUTCDate();
+        $scope.t1.hour = ev.date.getUTCHours();
+        console.log($scope.t1);
         if ($scope.project_id) {
             //$scope.changecharts($scope.project_id, $scope.t1.year + '-' + $scope.t1.month +'-' +$scope.t1.day, $scope.t2.year + '-' + $scope.t2.month + '-' + $scope.t2.day);
         }

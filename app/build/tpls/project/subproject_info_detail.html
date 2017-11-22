@@ -125,7 +125,12 @@
                                 <li><a href="#">分离的链接</a></li>
                             </ul>
                         </div>
-                        <button ng-if="fromIPM != 'true'" ui-sref="index.project.project_info"
+                        <button ng-if="(fromIPM != 'true')" ui-sref="index.project.project_info"
+                                class="btn btn-primary pull-right"
+                                style="color: white;border-radius: 5px;">返回
+                        </button>
+
+                        <button ng-if="(fromIPM == 'true') && (set_prj=='true') " ui-sref="index.project.project_info"
                                 class="btn btn-primary pull-right"
                                 style="color: white;border-radius: 5px;">返回
                         </button>
@@ -134,7 +139,7 @@
                 <div class="col-xs-12 row visible-lg visible-md" style="margin-bottom: 40px; overflow-x:scroll;">
                     <div style="width: 1000%;">
                         <div class="col-xs-2"
-                             style="background-color: #eeeeee;border-radius: 5px;margin: 10px 0 20px 5px;width:300px;height: 702px;overflow-x: auto; overflow-y: auto;"
+                             style="background-color: #eeeeee;border-radius: 5px;margin: 10px 0 20px 5px;width:320px;height: 702px;overflow-x: auto; overflow-y: auto;"
                              ng-repeat="x in task_list"
                              ng-init="p_taskIndex=$index">
                             <div class="popover-options" style="padding: 10px;text-align: center;font-weight: bolder;"
@@ -163,7 +168,7 @@
                                     {{x.name}}</label>
 
 
-                                <label ng-if="x.urgent == 1" class="label label-default"
+                                <label ng-if="x.countdown == 0" class="label label-default"
                                        data-toggle="popover" title="细心点，慢慢来喝杯茶，还有时间！">
                                     <myfigure class="effect-marley" style="background:#999999;">
                                         <myfigcaption style="background:#999999;">
@@ -173,7 +178,7 @@
                                         </myfigcaption>
                                     </myfigure>
                                 </label>
-                                <label ng-if="x.urgent == 2" class="label label-warning"
+                                <label ng-if="x.countdown == 2" class="label label-warning"
                                        data-toggle="popover" title="领导在催了！">
                                     <myfigure class="effect-marley">
                                         <myfigcaption>
@@ -181,7 +186,7 @@
                                         </myfigcaption>
                                     </myfigure>
                                 </label>
-                                <label ng-if="x.urgent == 3" class="label label-danger"
+                                <label ng-if="x.countdown == 1" class="label label-danger"
                                        data-toggle="popover" title="项目告急！请快马加鞭">
                                     <myfigure class="effect-marley">
                                         <myfigcaption>
@@ -189,7 +194,12 @@
                                         </myfigcaption>
                                     </myfigure>
                                 </label>
-                                <img ng-if="x.state != 1" src="app/build/image/done.png" style="width: 45px;position: absolute;">
+                                    <label ng-if="x.countdown == 1" style="margin-left: 5px;"
+                                           class="label label-danger">≤{{x.countdown_time}}小时</label>
+                                    <label ng-if="x.countdown == 2"  style="margin-left: 5px;"
+                                           class="label label-warning">≤{{x.countdown_time}}小时</label>
+                                <img ng-if="x.state != 1" src="app/build/image/done.png"
+                                     style="width: 45px;position: absolute;">
                                 <div class="pull-right">
                                     <img ng-if="x.changer_headimgurl != ''" src="{{x.changer_headimgurl}}"
                                          style="height: 20px;width: 20px;border-radius:50%;margin-right: 10px;">
@@ -360,9 +370,9 @@
                                     <label class="col-xs-3" href="">
                                         设置截止时间
                                     </label>
-                                    <input size="16" value={{t1.year}}-{{t1.month}}-{{t1.day}}
+                                    <input size="16" value="{{t1.year}}-{{t1.month}}-{{t1.day}}:{{t1.hour}}"
                                            readonly class="col-md-4"
-                                           id="timepicker1">
+                                           id="timepicker1">点
                                 </div>
                                 <form class="form-horizontal">
                                     <div class="form-group" style="margin: 10px 0px 10px 50px;">
@@ -609,7 +619,8 @@
                     <div class="col-xs-12 list-group"
                          style="margin-top: 10px;padding-left:10px;height: 252px;position:relative;overflow-x: auto; overflow-y: auto;">
                         <a class="list-group-item" ng-repeat="x in opt_prj_list | filter:query"
-                           style="font-size: 14px;position:relative;overflow-x: auto; overflow-y: auto;" ng-if="$index<3">
+                           style="font-size: 14px;position:relative;overflow-x: auto; overflow-y: auto;"
+                           ng-if="$index<3">
                             <div class="row">
                                 <div class="col-xs-2" style="text-align: center;">
                                     <img src="{{x.headimgurl}}" style="height: 30px;width: 30px;border-radius: 50%;">
@@ -623,7 +634,9 @@
                             </div>
                         </a>
                         <a class="list-group-item" href="">
-                            <div data-toggle="modal" data-target="#modal-prjDT" ng-click="getProjectTrailInfos()">···查看更多动态</div>
+                            <div data-toggle="modal" data-target="#modal-prjDT" ng-click="getProjectTrailInfos()">
+                                ···查看更多动态
+                            </div>
                         </a>
                     </div>
                 </div>

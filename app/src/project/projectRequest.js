@@ -192,6 +192,6 @@ project.service('projectService', function ($resource, $http, $rootScope) {
     //查询子项目状态
     this.find_state = function (subprj_id) {
         return $http.get($rootScope.ip + '/design_institute/public/admin/Subproject/find_state?subproject_id='+subprj_id);
-
     }
+
 });
