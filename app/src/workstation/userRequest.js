@@ -22,7 +22,7 @@ user.service('userService', function ($resource, $http, $rootScope) {
     }
     this.add_ipminst_user = function (data) {
         return $http.get($rootScope.ip + '/design_institute/public/admin/User/add_ipminst_user?openid=' + data.openid +
-            '&company_id=' + data.company_id + '&role_id=' +data.roles_INT);
+            '&company_id=' + data.company_id + '&role_id=' +data.roles_INT +'&role_master_id=' +data.roles_master_INT);
     }
     this.del_ipminst_user = function (openid) {
         return $http.get($rootScope.ip + '/design_institute/public/admin/User/del_ipminst_user?openid=' + openid);

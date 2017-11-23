@@ -1,5 +1,5 @@
 var user = angular.module('user', ['ngResource', 'ngCookies']);
-user.controller('userCtrl', function ($scope, $http, $timeout, $interval, $state, $cookies, $rootScope, userService,projectService) {
+user.controller('userCtrl', function ($scope, $http, $timeout, $interval, $state, $cookies, $rootScope, userService, projectService) {
     $scope.userinfo = {};
     $scope.userinfo.openid = $cookies.get('openid');
     $scope.userinfo.company_id = $cookies.get('company_id');
@@ -17,8 +17,9 @@ user.controller('userCtrl', function ($scope, $http, $timeout, $interval, $state
         }*/
     };
     $scope.userinfo.currentPage = 1;
-    $scope.userinfo.itemsPerPage = 400;
+    $scope.userinfo.itemsPerPage = 2000;
     $scope.roles = [];
+    $scope.roles_master = [];
 
     getData = function () {
         //$scope.userinfo.currentPage = $scope.userinfo.currentPage +1;
@@ -98,78 +99,84 @@ user.controller('userCtrl', function ($scope, $http, $timeout, $interval, $state
     $scope.prj_dt = function (index) {
         $scope.index = index;
     }
-    $scope.addIpminstUser = function (openid, companyid) {
+    $scope.addIpminstUser = function (openid, companyid,index) {
         $scope.roles.length = 0;
         $scope.add_user_info = {
-            openid:openid,
-            company_id:companyid
+            openid: openid,
+            company_id: companyid,
+            index:index
         };
         grouplist();
     };
-    $scope.addIpminstUser_submit=function(){
+    $scope.addIpminstUser_submit = function () {
 
 
-        if (!$scope.roles[0] && !$scope.roles[1]
-            && !$scope.roles[2] && !$scope.roles[3]
-            && !$scope.roles[4] && !$scope.roles[5]
-            && !$scope.roles[6]
-        ){
+        if (!$scope.roles[0] && !$scope.roles[1] && !$scope.roles[2] && !$scope.roles[3]
+            && !$scope.roles[4] && !$scope.roles[5] && !$scope.roles[6]) {
             alert("必须指定一个角色权限！");
         }
         else {
             $scope.roles_INT = 0;
-            if($scope.roles[0])
+            if ($scope.roles[0])
                 $scope.roles_INT = $scope.roles_INT + 1;
-            if($scope.roles[1])
+            if ($scope.roles[1])
                 $scope.roles_INT = $scope.roles_INT + 2;
-            if($scope.roles[2])
+            if ($scope.roles[2])
                 $scope.roles_INT = $scope.roles_INT + 4;
-            if($scope.roles[3])
+            if ($scope.roles[3])
                 $scope.roles_INT = $scope.roles_INT + 8;
-            if($scope.roles[4])
+            if ($scope.roles[4])
                 $scope.roles_INT = $scope.roles_INT + 16;
-            if($scope.roles[5])
+            if ($scope.roles[5])
                 $scope.roles_INT = $scope.roles_INT + 32;
-            if($scope.roles[6])
+            if ($scope.roles[6])
                 $scope.roles_INT = $scope.roles_INT + 64;
-        }
 
+            $('#modal-form-mozhang').modal('show');
+        }
+    }
+    $scope.add = function (bl) {
+        $scope.roles_master_INT = 0;
+        if(bl)
+        {
+            if ($scope.roles_master[0])
+                $scope.roles_master_INT = $scope.roles_master_INT + 1;
+            if ($scope.roles_master[1])
+                $scope.roles_master_INT = $scope.roles_master_INT + 2;
+            if ($scope.roles_master[2])
+                $scope.roles_master_INT = $scope.roles_master_INT + 4;
+            if ($scope.roles_master[3])
+                $scope.roles_master_INT = $scope.roles_master_INT + 8;
+            if ($scope.roles_master[4])
+                $scope.roles_master_INT = $scope.roles_master_INT + 16;
+            if ($scope.roles_master[5])
+                $scope.roles_master_INT = $scope.roles_master_INT + 32;
+            if ($scope.roles_master[6])
+                $scope.roles_master_INT = $scope.roles_master_INT + 64;
+        }
         $scope.add_user_info.roles_INT = $scope.roles_INT;
+        $scope.add_user_info.roles_master_INT = $scope.roles_master_INT;
         userService.add_ipminst_user($scope.add_user_info).then(
             function (res) {
                 if (res.data.success) {
                     alert('添加成功！');
-                    userService.ipm_user_list($scope.userinfo).then(
-                        function (res) {
-                            $scope.ipm_list = res.data;
-                        }
-                    )
+                    $('#modal-form-mozhang').modal('hide');
+                    $('#modal-form-adduser').modal('hide');
+                    $scope.ipm_list[$scope.add_user_info.index].company_id = 1;
                 }
                 else {
                     alert('添加失败!');
                 }
-
             }
         )
     }
 
-    $scope.delIpminstUser = function (openid) {
-        $scope.userinfo.currentPage = 1;
-        $scope.ipm_list = [];
-        j = -1;
+    $scope.delIpminstUser = function (openid,index) {
         userService.del_ipminst_user(openid).then(
             function (res) {
                 if (res.data.success) {
                     alert('删除成功！');
-                    userService.ipm_user_list($scope.userinfo).then(
-                        function (res) {
-
-                            for (var i = 0; i < res.data.length; i++) {
-                                j++;
-                                $scope.ipm_list[j] = res.data[i];
-                            }
-                        }
-                    )
+                    $scope.ipm_list[index].company_id = 0;
                 }
                 else {
                     alert('删除失败!');

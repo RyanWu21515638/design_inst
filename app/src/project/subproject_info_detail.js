@@ -73,6 +73,16 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
                         break;
                     }
                 }
+                console.log($scope.role_group);
+                for(var j = 0;j<$scope.prj_role_list.length ;j++)
+                {
+                    console.log(j);
+                    $scope.prj_role_list[j].role_master_bl = false;
+                    if(($scope.prj_role_list[j].roles_master & Math.pow(2,($scope.role_group-1))) == Math.pow(2,($scope.role_group-1)))
+                    {
+                        $scope.prj_role_list[j].role_master_bl = true;
+                    }
+                }
             }
         )
     }
@@ -366,6 +376,9 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
                                 for (var j = 0; j < $scope.task_list[i].subtask_list.length; j++) {
                                     var endtime = $scope.task_list[i].subtask_list[j].end_time_plan;
                                     if(endtime !='' &&endtime !=null &&endtime !=undefined)
+                                    {
+
+                                    }
                                         $scope.task_list[i].subtask_list[j].end_time_plan = $scope.task_list[i].subtask_list[j].end_time_plan.substring(0, 10);
                                 }
                             }
@@ -401,7 +414,9 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
                                 for (var j = 0; j < $scope.task_list[i].subtask_list.length; j++) {
                                     var endtime = $scope.task_list[i].subtask_list[j].end_time_plan;
                                     if(endtime !='' &&endtime !=null &&endtime !=undefined)
+                                    {
                                         $scope.task_list[i].subtask_list[j].end_time_plan = $scope.task_list[i].subtask_list[j].end_time_plan.substring(0, 10);
+                                    }
 
                                 }
                             }
@@ -432,7 +447,7 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
     //新建子任务
     $scope.newSubTask = function () {
         $scope.subtask_info.creator_id = $cookies.get('openid');
-        $scope.subtask_info.end_time_plan = $scope.t1.year + '-' + $scope.t1.month + '-' + $scope.t1.day +'-' +$scope.t1.hour;
+        $scope.subtask_info.end_time_plan = $scope.t1.year + '-' + $scope.t1.month + '-' + $scope.t1.day +'-' +$scope.t1.hour +':'+$scope.t1.minute+':'+$scope.t1.second;
         projectService.add_task($scope.subtask_info).then(
             function (res) {
                 //$window.location.reload();
@@ -484,9 +499,8 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
             alert("项目已完成，无法修改！");
         else {
             $scope.subtask_info.creator_id = $cookies.get('openid');
-            console.log($scope.subtask_info.creator_id);
             $scope.subtask_info.taskgroup_id = $scope.task_list[$scope.taskIndex].id;
-            $scope.subtask_info.end_time_plan = $scope.t1.year + '-' + $scope.t1.month + '-' + $scope.t1.day+'-'+$scope.t1.hour;
+            $scope.subtask_info.end_time_plan = $scope.t1.year + '-' + $scope.t1.month + '-' + $scope.t1.day+'-'+$scope.t1.hour +':'+$scope.t1.minute+':'+$scope.t1.second;
             projectService.add_task($scope.subtask_info).then(
                 function (res) {
                     if (!res.data.success) {
@@ -560,7 +574,9 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
                                 for (var j = 0; j < $scope.task_list[i].subtask_list.length; j++) {
                                     var endtime = $scope.task_list[i].subtask_list[j].end_time_plan;
                                     if(endtime !='' &&endtime !=null &&endtime !=undefined)
+                                    {
                                         $scope.task_list[i].subtask_list[j].end_time_plan = $scope.task_list[i].subtask_list[j].end_time_plan.substring(0, 10);
+                                    }
 
                                 }
                             }
@@ -571,8 +587,10 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
             }
         )
     }
+
     //选中子任务
     $scope.subTaskChose = function (taskIndex, subTaskIndex) {
+        $scope.t1 = {};
         $scope.tasktype = 'son';
         $scope.taskIndex = taskIndex;
         $scope.role_group = $scope.task_list[taskIndex].role_id;
@@ -597,16 +615,21 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
             var str = remindTime.toString();
             str = str.replace("/-/g", "/");
             var t1_temp = new Date(str);
+
             $scope.t1.year = t1_temp.getFullYear();
             $scope.t1.month = t1_temp.getMonth() + 1;
             $scope.t1.day = t1_temp.getDate();
             $scope.t1.hour = t1_temp.getHours();
-        }
+            $scope.t1.minute = t1_temp.getMinutes();
+            $scope.t1.second = t1_temp.getSeconds();
 
+            $('#timepicker1').val($scope.t1.year+'-'+$scope.t1.month+'-'+$scope.t1.day+' '+$scope.t1.hour+':'+$scope.t1.minute+':'+$scope.t1.second);
+        }
         //获取任务轨迹
         projectService.get_project_tasktrailinfos($scope.subtask_info).then(
             function (res) {
                 $scope.subtask_info.task_trail_info = res.data;
+                $scope.t1 = $scope.t1;
             }
         )
     }
@@ -615,28 +638,26 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
         year: time.getFullYear(),
         month: time.getMonth() + 1,
         day: time.getDate(),
-        hour: time.getHours()
+        hour: time.getHours(),
+        minute: time.getMinutes(),
+        second:time.getSeconds(),
     };
     if ($scope.t1.month < 10)
         $scope.t1.month = "0" + $scope.t1.month;
     //时间选择器1
     $("#timepicker1").datetimepicker({
         language: 'zh-CN',
-        format: "yyyy-mm-dd:hh",
+        format: "yyyy-mm-dd hh:ii:ss",
         startView: 3,
-        minView:1,
+        minView:0,
         autoclose: true,
-        todayBtn: false,
-        pickerPosition: "bottom-left"
-    }).on('changeHour', function (ev) {
+        todayBtn: true,
+        pickerPosition: "bottom-left"}).on('changeMinute', function (ev) {
         $scope.t1.year = ev.date.getFullYear();
         $scope.t1.month = ev.date.getMonth() + 1;
         $scope.t1.day = ev.date.getUTCDate();
         $scope.t1.hour = ev.date.getUTCHours();
-        console.log($scope.t1);
-        if ($scope.project_id) {
-            //$scope.changecharts($scope.project_id, $scope.t1.year + '-' + $scope.t1.month +'-' +$scope.t1.day, $scope.t2.year + '-' + $scope.t2.month + '-' + $scope.t2.day);
-        }
+        $scope.t1.minute = ev.date.getMinutes();
     }).on("hide", function () {
         $("#timepicker1").blur();
     });

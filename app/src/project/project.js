@@ -298,7 +298,7 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
                             for (var jj = 0; jj < $scope.prj_list[j].subproject_list.length; jj++) {
                                 if ($scope.prj_list[j].subproject_list[jj].subproject_id == $location.search().subprj_id) {
                                     $scope.subprj_name = $scope.prj_list[j].subproject_list[jj].name;
-                                    $cookies.put('subprj_name', $scope.prj_name, {'expires': expireDate});
+                                    $cookies.put('subprj_name', $scope.subprj_name, {'expires': expireDate});
                                     $cookies.put('subprj_state', $scope.prj_list[j].subproject_list[jj].subproject_id, {'expires': expireDate});
                                 }
                             }
@@ -382,7 +382,11 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
                         x: Date.UTC(gant_t1.year, gant_t1.month, gant_t1.day ),
                         x2: Date.UTC(gant_t3.year, gant_t3.month, gant_t3.day ),
                         y: 0.25,
-                        partialFill:1
+                        partialFill:1,
+                        color:"#0099ff",
+                        dataLabels: {
+                            enabled: false
+                        }
                     }
                 );
                 data.push(
@@ -390,7 +394,11 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
                         x: Date.UTC(gant_t2.year, gant_t2.month, gant_t2.day ),
                         x2: Date.UTC(gant_t4.year, gant_t4.month, gant_t4.day ),
                         y: 1.25,
-                        partialFill:1
+                        partialFill:1,
+                        color:"#0099ff",
+                        dataLabels: {
+                            enabled: false
+                        }
                     }
                 );
 
@@ -420,7 +428,8 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
                                             x: Date.UTC(gant_t1.year, gant_t1.month, gant_t1.day + i),
                                             x2: Date.UTC(gant_t.year, gant_t.month, gant_t1.day + i + 1),
                                             y: 0,
-                                            partialFill: percent
+                                            partialFill: percent,
+                                            color:"#00ff00"
                                         }
                                     );
                                 }
@@ -431,7 +440,8 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
                                             x: Date.UTC(gant_t1.year, gant_t1.month, gant_t1.day + i),
                                             x2: Date.UTC(gant_t.year, gant_t.month, gant_t1.day + i + 1),
                                             y: 0,
-                                            partialFill: 1
+                                            partialFill: 1,
+                                            color:"#00ff00"
                                         }
                                     );
                                 }
@@ -466,7 +476,8 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
                                         x: Date.UTC(gant_t2.year, gant_t2.month, gant_t2.day + i),
                                         x2: Date.UTC(gant_t.year, gant_t.month, gant_t2.day + i + 1),
                                         y: 1,
-                                        partialFill: percent
+                                        partialFill: percent,
+                                        color:"#ff0000"
                                     }
                                 );
                             }
@@ -477,7 +488,8 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
                                         x: Date.UTC(gant_t2.year, gant_t2.month, gant_t2.day + i),
                                         x2: Date.UTC(gant_t.year, gant_t.month, gant_t2.day + i + 1),
                                         y: 1,
-                                        partialFill: 1
+                                        partialFill: 1,
+                                        color:"#ff0000"
                                     }
                                 );
                             }
@@ -758,7 +770,7 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
                 for (var jj = 0; jj < $scope.prj_list[j].subproject_list.length; jj++) {
                     if ($scope.prj_list[j].subproject_list[jj].subproject_id == subprj_id) {
                         $scope.subprj_name = $scope.prj_list[j].subproject_list[jj].name;
-                        $cookies.put('subprj_name', $scope.prj_name, {'expires': expireDate});
+                        $cookies.put('subprj_name', $scope.subprj_name, {'expires': expireDate});
                     }
                 }
             }

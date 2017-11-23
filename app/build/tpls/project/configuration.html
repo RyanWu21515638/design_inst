@@ -42,8 +42,8 @@
                             <td>
                                 <img class="nav-user-photo" src="{{x.headimgurl}}" style="width: 24px;height: 24px;border-radius: 50%;"/>
                                 {{x.nickname}}</td>
-                            <td ng-if="userinfo.status == '2'"><a style="color: red" ng-click="delConf(x.id)" href="">
-                                <span class="icon-trash bigger-130"></span>
+                            <td ng-if="userinfo.status == '2'">
+                                <button class="btn-sm btn-danger" ng-click="delConf(x.id)">删除</button>
                             </a></td>
                         </tr>
                         </tbody>

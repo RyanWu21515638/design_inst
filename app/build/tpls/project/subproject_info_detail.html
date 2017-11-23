@@ -24,15 +24,15 @@
 
     myfigure.effect-marley myh1::after {
         position: absolute;
-        margin-top: -8%;
-        left: -78%;
-        width: 12%;
-        height: 240%;
+        margin-top: -4px;
+        left: -8px;
+        width: 7px;
+        height: 150%;
         border-radius: 5px;
         background: #999999;
         content: '';
-        -webkit-transform: translate3d(-20px, 0, 0);
-        transform: translate3d(-5px, 0, 0);
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
     }
 
     myfigure.effect-marley myh1::after {
@@ -53,15 +53,15 @@
 
     myfigure.effect-marley myh2::after {
         position: absolute;
-        margin-top: -8%;
-        left: -78%;
-        width: 12%;
-        height: 240%;
+        margin-top: -4px;
+        left: -8px;
+        width: 7px;
+        height: 150%;
         border-radius: 5px;
         background: #f0ad4e;
         content: '';
-        -webkit-transform: translate3d(-20px, 0, 0);
-        transform: translate3d(-5px, 0, 0);
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
     }
 
     myfigure.effect-marley myh2::after {
@@ -82,15 +82,15 @@
 
     myfigure.effect-marley myh3::after {
         position: absolute;
-        margin-top: -8%;
-        left: -78%;
-        width: 12%;
-        height: 240%;
+        margin-top: -4px;
+        left: -8px;
+        width: 7px;
+        height: 150%;
         border-radius: 5px;
         background: #d2322d;
         content: '';
-        -webkit-transform: translate3d(-2px, 0, 0);
-        transform: translate3d(-5px, 0, 0);
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
     }
 
     myfigure.effect-marley myh3::after {
@@ -149,50 +149,44 @@
                                     <span class="icon-trash bigger-130 pull-right"></span>
                                 </a>
                             </div>
-                            <myfigure class="effect-marley" style="background:#999999;">
-                                <myfigcaption style="background:#999999;">
-                                    <myh1 style="background: #999999">
-                                        {{x.end_time_plan}}
-                                    </myh1>
-                                </myfigcaption>
-                            </myfigure>
-
 
                             <div data-toggle="modal" data-target="#modal-form1"
                                  ng-repeat="x in task_list[$index].subtask_list"
                                  style="position: relative;background-color: white;margin: 15px;padding: 5px;border-radius: 5px;width: 93%;"
                                  ng-click="subTaskChose(p_taskIndex,$index);projectRoleList()"
                                  data-toggle="popover" title="负责人：{{x.changer_nickname}} 截止日期：{{x.end_time_plan}}">
-
-                                <label style="margin-left: 5px;">
-                                    {{x.name}}</label>
-
-
+                                <myfigure ng-if="x.countdown == 0" class="effect-marley" >
+                                    <myfigcaption style="margin-right: 35%;">
+                                        <myh1 style="width: 100%;position: absolute;">
+                                            {{x.name}}
+                                        </myh1>
+                                    </myfigcaption>
+                                </myfigure>
+                                <myfigure ng-if="x.countdown == 1" class="effect-marley" >
+                                    <myfigcaption style="margin-right: 35%;">
+                                        <myh3 style="width: 100%;position: absolute;">
+                                            {{x.name}}
+                                        </myh3>
+                                    </myfigcaption>
+                                </myfigure>
+                                <myfigure ng-if="x.countdown == 2" class="effect-marley">
+                                    <myfigcaption style="margin-right: 35%;">
+                                        <myh2 style="width: 100%;position: absolute;">
+                                            {{x.name}}
+                                        </myh2>
+                                    </myfigcaption>
+                                </myfigure>
                                 <label ng-if="x.countdown == 0" class="label label-default"
                                        data-toggle="popover" title="细心点，慢慢来喝杯茶，还有时间！">
-                                    <myfigure class="effect-marley" style="background:#999999;">
-                                        <myfigcaption style="background:#999999;">
-                                            <myh1 style="background: #999999">
                                                 {{x.end_time_plan}}
-                                            </myh1>
-                                        </myfigcaption>
-                                    </myfigure>
                                 </label>
                                 <label ng-if="x.countdown == 2" class="label label-warning"
                                        data-toggle="popover" title="领导在催了！">
-                                    <myfigure class="effect-marley">
-                                        <myfigcaption>
-                                            <myh2>{{x.end_time_plan}}</myh2>
-                                        </myfigcaption>
-                                    </myfigure>
+                                    {{x.end_time_plan}}
                                 </label>
                                 <label ng-if="x.countdown == 1" class="label label-danger"
                                        data-toggle="popover" title="项目告急！请快马加鞭">
-                                    <myfigure class="effect-marley">
-                                        <myfigcaption>
-                                            <myh3>{{x.end_time_plan}}</myh3>
-                                        </myfigcaption>
-                                    </myfigure>
+                                    {{x.end_time_plan}}
                                 </label>
                                     <label ng-if="x.countdown == 1" style="margin-left: 5px;"
                                            class="label label-danger">≤{{x.countdown_time}}小时</label>
@@ -370,9 +364,9 @@
                                     <label class="col-xs-3" href="">
                                         设置截止时间
                                     </label>
-                                    <input size="16" value="{{t1.year}}-{{t1.month}}-{{t1.day}}:{{t1.hour}}"
-                                           readonly class="col-md-4"
-                                           id="timepicker1">点
+                                    <input size="16" value="{{t1.year}}-{{t1.month}}-{{t1.day}} {{t1.hour}}:{{t1.minute}}:{{t1.second}}" readonly class="col-md-4 col-sm-6"
+                                           id="timepicker1">
+
                                 </div>
                                 <form class="form-horizontal">
                                     <div class="form-group" style="margin: 10px 0px 10px 50px;">
@@ -427,7 +421,7 @@
                 </div>
                 <div id="modal-form2" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                      aria-hidden="true">
-                    <div class="modal-dialog" style="width:10%;margin-top: 6%;">
+                    <div class="modal-dialog" style="width:15%;margin-top: 6%;">
                         <div class="modal-content" style="border-radius: 5px;">
                             <div class="modal-header">
                                 <label class="blue bigger"
@@ -438,11 +432,12 @@
                                     <table class="table table-striped table-bordered table-hover">
                                         <tbody>
                                         <tr ng-repeat="x in prj_role_list" ng-click="chargerChose(x.nickname,x.openid)"
-                                            data-dismiss="modal" ng-if="(x.role_id | filter:role_group) == role_group">
+                                            data-dismiss="modal" ng-if="(x.role_id | filter:role_group) == role_group && x.role_master_bl" >
                                             <td style="text-align: center;">
+                                                <img style="height: 28px;width: 28px;" src="app/build/image/leader.png">
                                                 {{x.nickname}}
                                                 <img class="pull-right" src="{{x.headimgurl}}"
-                                                     style="height: 20px;width: 20px;border-radius: 50%;">
+                                                     style="height: 28px;width: 28px;border-radius: 50%;">
                                             </td>
                                         </tr>
                                     </table>
@@ -453,7 +448,7 @@
                 </div>
                 <div id="modal-form2_1" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                      aria-hidden="true">
-                    <div class="modal-dialog" style="width:10%;margin-top: 6%;">
+                    <div class="modal-dialog" style="width:15%;margin-top: 6%;">
                         <div class="modal-content" style="border-radius: 5px;">
                             <div class="modal-header">
                                 <label class="blue bigger"
@@ -468,16 +463,19 @@
                                             ng-click="partitionChose(x.nickname,x.openid)"
                                             ng-if="((x.role_id | filter:role_partition) == '6') && role_group !=6 ">
                                             <td style="text-align: center;">
+                                                <img ng-if="x.role_master_bl" style="height: 30px;width: 30px;" src="app/build/image/leader.png">
                                                 {{x.nickname}}
                                                 <img class="pull-right" src="{{x.headimgurl}}"
-                                                     style="height: 20px;width: 20px;border-radius: 50%;">
+                                                     style="height: 28px;width: 28px;border-radius: 50%;">
                                             </td>
                                         </tr>
                                         <tr ng-if="role_group ==6 " ng-repeat="x in partition_ischeck"
                                             ng-click="partitionChose(x.changer_Name,x.openid)">
-                                            <td style="text-align: center;">{{x.changer_Name}}
+                                            <td style="text-align: center;">
+                                                <img ng-if="x.role_master_bl" style="height: 30px;width: 30px;" src="app/build/image/leader.png">
+                                                {{x.changer_Name}}
                                                 <img class="pull-right" src="{{x.headimgurl}}"
-                                                     style="height: 20px;width: 20px;border-radius: 50%;"></td>
+                                                     style="height: 28px;width: 28px;border-radius: 50%;"></td>
                                         </tr>
                                     </table>
                                 </div>
@@ -561,7 +559,7 @@
                                 <button class="btn btn-default"
                                         style="background-color: #3da8f5;color: white;border-radius: 5px;">添加
                                 </button>
-                                <button class="btn btn-danger" style="color: white;border-radius: 5px;"
+                                <button class="btn btn-primary" style="color: white;border-radius: 5px;"
                                         data-dismiss="modal">返回
                                 </button>
                             </div>
