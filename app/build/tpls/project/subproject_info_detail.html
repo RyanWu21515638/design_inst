@@ -127,12 +127,14 @@
                         </div>
                         <button ng-if="(fromIPM != 'true')" ui-sref="index.project.project_info"
                                 class="btn btn-primary pull-right"
-                                style="color: white;border-radius: 5px;">返回
+                                style="color: white;border-radius: 5px;">
+                            <img src="app/build/image/return.png">返回
                         </button>
 
                         <button ng-if="(fromIPM == 'true') && (set_prj=='true') " ui-sref="index.project.project_info"
                                 class="btn btn-primary pull-right"
-                                style="color: white;border-radius: 5px;">返回
+                                style="color: white;border-radius: 5px;">
+                            <img src="app/build/image/return.png">返回
                         </button>
                     </h3>
                 </div>
@@ -156,47 +158,53 @@
                                  ng-click="subTaskChose(p_taskIndex,$index);projectRoleList()"
                                  data-toggle="popover" title="负责人：{{x.changer_nickname}} 截止日期：{{x.end_time_plan}}">
                                 <myfigure ng-if="x.countdown == 0" class="effect-marley" >
-                                    <myfigcaption style="margin-right: 35%;">
-                                        <myh1 style="width: 100%;position: absolute;">
-                                            {{x.name}}
+                                    <myfigcaption style="margin-right: 28%;">
+                                        <myh1 style="position: absolute;overflow: hidden; white-space: nowrap; text-overflow: ellipsis;width:75px;"
+                                              title="{{x.name}}">
+                                            <label>{{x.name}}</label>
                                         </myh1>
                                     </myfigcaption>
                                 </myfigure>
                                 <myfigure ng-if="x.countdown == 1" class="effect-marley" >
-                                    <myfigcaption style="margin-right: 35%;">
-                                        <myh3 style="width: 100%;position: absolute;">
-                                            {{x.name}}
+                                    <myfigcaption style="margin-right: 28%;">
+                                        <myh3 style="position: absolute;overflow: hidden; white-space: nowrap; text-overflow: ellipsis;width:75px;"
+                                              title="{{x.name}}">
+                                            <label>{{x.name}}</label>
                                         </myh3>
                                     </myfigcaption>
                                 </myfigure>
                                 <myfigure ng-if="x.countdown == 2" class="effect-marley">
-                                    <myfigcaption style="margin-right: 35%;">
-                                        <myh2 style="width: 100%;position: absolute;">
-                                            {{x.name}}
+                                    <myfigcaption style="margin-right: 28%;">
+                                        <myh2 style="position: absolute;overflow: hidden; white-space: nowrap; text-overflow: ellipsis;width:75px;"
+                                              title="{{x.name}}">
+                                            <label>{{x.name}}</label>
                                         </myh2>
                                     </myfigcaption>
                                 </myfigure>
                                 <label ng-if="x.countdown == 0" class="label label-default"
-                                       data-toggle="popover" title="细心点，慢慢来喝杯茶，还有时间！">
+                                       data-toggle="popover" title="{{x.end_time_plan}}细心点，慢慢来喝杯茶，还有时间！"
+                                       style="position: absolute;overflow: hidden; white-space: nowrap; text-overflow: ellipsis;width:100px;">
                                                 {{x.end_time_plan}}
                                 </label>
                                 <label ng-if="x.countdown == 2" class="label label-warning"
-                                       data-toggle="popover" title="领导在催了！">
+                                       data-toggle="popover" title="{{x.end_time_plan}}领导在催了！"
+                                       style="position: absolute;overflow: hidden; white-space: nowrap; text-overflow: ellipsis;width:100px;">
                                     {{x.end_time_plan}}
                                 </label>
                                 <label ng-if="x.countdown == 1" class="label label-danger"
-                                       data-toggle="popover" title="项目告急！请快马加鞭">
+                                       data-toggle="popover" title="{{x.end_time_plan}}项目告急！请快马加鞭"
+                                       style="position: absolute;overflow: hidden; white-space: nowrap; text-overflow: ellipsis;width:100px;">
                                     {{x.end_time_plan}}
                                 </label>
-                                    <label ng-if="x.countdown == 1" style="margin-left: 5px;"
+                                    <label ng-if="x.countdown == 1" style="margin-left: 105px;position: absolute;"
                                            class="label label-danger">≤{{x.countdown_time}}小时</label>
-                                    <label ng-if="x.countdown == 2"  style="margin-left: 5px;"
+                                    <label ng-if="x.countdown == 2"  style="margin-left: 105px;position: absolute;"
                                            class="label label-warning">≤{{x.countdown_time}}小时</label>
                                 <img ng-if="x.state != 1" src="app/build/image/done.png"
-                                     style="width: 45px;position: absolute;">
+                                     style="width: 45px;position: absolute;margin-left: 140px;">
                                 <div class="pull-right">
                                     <img ng-if="x.changer_headimgurl != ''" src="{{x.changer_headimgurl}}"
-                                         style="height: 20px;width: 20px;border-radius:50%;margin-right: 10px;">
+                                         style="height: 25px;width: 25px;border-radius:50%;margin-right: 10px;">
                                 </div>
                             </div>
                             <div ng-if="(newtaskAuthor == 'true' || userinfo.status=='2') && subprj_state !=6"
@@ -413,7 +421,8 @@
                                     保存
                                 </button>
                                 <button class="btn btn-primary" style="color: white;border-radius: 5px;"
-                                        data-dismiss="modal">返回
+                                        data-dismiss="modal">
+                                    <img src="app/build/image/return.png">返回
                                 </button>
                             </div>
                         </div>
@@ -560,7 +569,8 @@
                                         style="background-color: #3da8f5;color: white;border-radius: 5px;">添加
                                 </button>
                                 <button class="btn btn-primary" style="color: white;border-radius: 5px;"
-                                        data-dismiss="modal">返回
+                                        data-dismiss="modal">
+                                    <img src="app/build/image/return.png">返回
                                 </button>
                             </div>
                         </div>
@@ -574,7 +584,13 @@
          ng-if="menu">
         <div>
             <div>
-                <h3><span class="glyphicon glyphicon-tasks"></span>项目菜单</h3>
+                <div style="padding: 10px;">
+                    <img src="app/build/image/tags.png">
+                    <label class="label label-primary" style="margin: 20px;font-size: 16px;">
+                        任务菜单
+                    </label>
+
+                </div>
             </div>
             <div>
                 <h4 style="border-top: 5px solid white;padding-top: 10px;padding-left: 10px;"><b>任务统计</b></h4>
@@ -680,7 +696,8 @@
                 </div>
                 <div class="modal-footer" style="text-align: center;">
                     <button class="btn btn-primary pull-right" style="color: white;"
-                            data-dismiss="modal">返回
+                            data-dismiss="modal">
+                        <img src="app/build/image/return.png">返回
                     </button>
                 </div>
             </div>

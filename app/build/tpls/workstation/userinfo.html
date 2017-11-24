@@ -55,7 +55,7 @@
                             <td>{{x.province}}</td>
                             <td>{{x.city}}</td>
                             <td ng-if="x.company_id != '1'">
-                                <button class="btn btn-info" ng-click="addIpminstUser(x.openid,x.company_id,$index)"
+                                <button type="button" class="btn btn-info" ng-click="addIpminstUser(x.openid,x.company_id,$index)"
                                         data-toggle="modal" data-target="#modal-form-adduser">
                                     添加到设计院</button></td>
                             <td ng-if="x.company_id == '1'"><span class="label label-success">设计院用户</span>
@@ -85,7 +85,8 @@
                             </div>
                             <div class="modal-footer" style="text-align: center;">
                                 <button class="btn btn-success col-sm-offset-3" ng-click="addIpminstUser_submit()">下一步</button>
-                                <button class="btn btn-primary" data-dismiss="modal">返回</button>
+                                <button class="btn btn-primary" data-dismiss="modal">
+                                    <img src="app/build/image/return.png">返回</button>
 
                             </div>
                         </div>

@@ -1,116 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/app/build/tpls/index/topbar.html" line="107" />
+    <bookmark url="file://$PROJECT_DIR$/app/build/tpls/index/topbar.html" line="111" />
     <bookmark url="file://$PROJECT_DIR$/app/src/app.js" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bf473aa0-875e-4e6a-8870-fa2afb1a2cf8" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/css/highcharts.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/highcharts-3d.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/highcharts-3d.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/highcharts-more.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/highcharts-more.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/highcharts.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/highcharts.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/highcharts-3d.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/highcharts-3d.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/highcharts-more.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/highcharts-more.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/highcharts.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/highcharts.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/modules/accessibility.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/modules/accessibility.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/modules/annotations.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/modules/annotations.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/modules/boost.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/modules/boost.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/modules/broken-axis.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/modules/broken-axis.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/modules/data.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/modules/data.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/modules/drilldown.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/modules/drilldown.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/modules/exporting.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/modules/exporting.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/modules/funnel.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/modules/funnel.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/modules/heatmap.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/modules/heatmap.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/modules/no-data-to-display.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/modules/no-data-to-display.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/modules/offline-exporting.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/modules/offline-exporting.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/modules/overlapping-datalabels.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/modules/overlapping-datalabels.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/modules/series-label.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/modules/series-label.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/modules/solid-gauge.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/modules/solid-gauge.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/modules/treemap.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/modules/treemap.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/themes/dark-blue.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/themes/dark-green.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/themes/dark-unica.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/themes/gray.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/themes/grid-light.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/themes/grid.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/themes/sand-signika.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/js/themes/skies.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/lib/canvg.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/lib/canvg.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/lib/rgbcolor.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/lib/rgbcolor.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/modules/accessibility.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/modules/accessibility.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/modules/annotations.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/modules/annotations.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/modules/boost.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/modules/boost.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/modules/broken-axis.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/modules/broken-axis.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/modules/data.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/modules/data.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/modules/drilldown.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/modules/drilldown.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/modules/exporting.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/modules/exporting.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/modules/funnel.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/modules/funnel.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/modules/heatmap.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/modules/heatmap.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/modules/no-data-to-display.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/modules/no-data-to-display.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/modules/offline-exporting.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/modules/offline-exporting.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/modules/overlapping-datalabels.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/modules/overlapping-datalabels.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/modules/series-label.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/modules/series-label.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/modules/solid-gauge.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/modules/solid-gauge.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/modules/treemap.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/modules/treemap.src.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/themes/dark-blue.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/themes/dark-green.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/themes/dark-unica.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/themes/gray.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/themes/grid-light.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/themes/grid.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/themes/sand-signika.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/build/libs/highcharts11/themes/skies.js" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/css/bootstrap-datetimepicker.min.css" afterPath="$PROJECT_DIR$/app/build/css/bootstrap-datetimepicker.min.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/libs/bootstrap-datetimepicker.min.js" afterPath="$PROJECT_DIR$/app/build/libs/bootstrap-datetimepicker.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/tpls/index/topbar.html" afterPath="$PROJECT_DIR$/app/build/tpls/index/topbar.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/tpls/project/configuration.html" afterPath="$PROJECT_DIR$/app/build/tpls/project/configuration.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/tpls/project/project.html" afterPath="$PROJECT_DIR$/app/build/tpls/project/project.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/tpls/project/project_info.html" afterPath="$PROJECT_DIR$/app/build/tpls/project/project_info.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/tpls/project/subproject_info_detail.html" afterPath="$PROJECT_DIR$/app/build/tpls/project/subproject_info_detail.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/tpls/workstation/userinfo.html" afterPath="$PROJECT_DIR$/app/build/tpls/workstation/userinfo.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/tpls/workstation/workstation.html" afterPath="$PROJECT_DIR$/app/build/tpls/workstation/workstation.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/index/index.js" afterPath="$PROJECT_DIR$/app/src/index/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/project/gantt.js" afterPath="$PROJECT_DIR$/app/src/project/gantt.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/project/project.js" afterPath="$PROJECT_DIR$/app/src/project/project.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/project/proside.js" afterPath="$PROJECT_DIR$/app/src/project/proside.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/project/subproject_info_detail.js" afterPath="$PROJECT_DIR$/app/src/project/subproject_info_detail.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/project/upload.js" afterPath="$PROJECT_DIR$/app/src/project/upload.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/workstation/user.js" afterPath="$PROJECT_DIR$/app/src/workstation/user.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/workstation/userRequest.js" afterPath="$PROJECT_DIR$/app/src/workstation/userRequest.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -124,72 +34,32 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="subproject_info_detail.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/project/subproject_info_detail.js">
+      <file leaf-file-name="userinfo.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/build/tpls/workstation/userinfo.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="371">
-              <caret line="335" column="17" lean-forward="true" selection-start-line="335" selection-start-column="17" selection-end-line="335" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="configuration.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/build/tpls/project/configuration.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="546">
-              <caret line="47" column="29" lean-forward="false" selection-start-line="47" selection-start-column="29" selection-end-line="47" selection-end-column="29" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="subproject_info_detail.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/build/tpls/project/subproject_info_detail.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="609">
-              <caret line="172" column="72" lean-forward="false" selection-start-line="172" selection-start-column="72" selection-end-line="172" selection-end-column="72" />
+            <state relative-caret-position="602">
+              <caret line="91" column="25" lean-forward="true" selection-start-line="91" selection-start-column="25" selection-end-line="91" selection-end-column="25" />
               <folding>
-                <element signature="n#style#0;n#button#0;n#h3#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#button#1;n#h3#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#myfigcaption#0;n#myfigure#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#myh1#0;n#myfigcaption#0;n#myfigure#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#myfigcaption#0;n#myfigure#1;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#myh3#0;n#myfigcaption#0;n#myfigure#1;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#myh2#0;n#myfigcaption#0;n#myfigure#2;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#label#3;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#label#4;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="false" />
-                <element signature="n#style#0;n#div#3;n#div#1;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#1;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#1;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#0;n#tr#1;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#td#0;n#tr#1;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#1;n#td#0;n#tr#1;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#div#5;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="project.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/project/project.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="555" column="47" lean-forward="false" selection-start-line="555" selection-start-column="47" selection-end-line="555" selection-end-column="47" />
-              <folding>
-                <element signature="e#44411#46082#0" expanded="false" />
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#1;n#div#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#td#0;n#tbody#0;n#table#0;n#div#2;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#3;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#3;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#h2#0;n#div#0;n#div#0;n#div#0;n#div#3;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#3;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#div#3;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#4;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#4;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#h2#0;n#div#0;n#div#0;n#div#0;n#div#4;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#4;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#4;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#4;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#3;n#div#1;n#div#0;n#div#0;n#div#4;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#4;n#div#1;n#div#0;n#div#0;n#div#4;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#5;n#div#1;n#div#0;n#div#0;n#div#4;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#6;n#div#1;n#div#0;n#div#0;n#div#4;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#div#4;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -198,10 +68,12 @@
       <file leaf-file-name="project_info.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/build/tpls/project/project_info.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="434">
-              <caret line="38" column="38" lean-forward="true" selection-start-line="38" selection-start-column="38" selection-end-line="38" selection-end-column="38" />
+            <state relative-caret-position="329">
+              <caret line="404" column="51" lean-forward="false" selection-start-line="404" selection-start-column="51" selection-end-line="404" selection-end-column="51" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#label#0;n#button#1;n#b#0;n#h3#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#label#0;n#button#2;n#b#0;n#h3#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#form#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#form#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
@@ -284,6 +156,7 @@
                 <element signature="n#style#0;n#div#8;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#8;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#8;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#8;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#div#0;n#div#8;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#2;n#div#0;n#div#8;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#div#2;n#div#0;n#div#8;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
@@ -291,78 +164,21 @@
                 <element signature="n#style#0;n#label#6;n#div#2;n#div#2;n#div#0;n#div#8;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#img#0;n#label#6;n#div#2;n#div#2;n#div#0;n#div#8;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#3;n#div#2;n#div#0;n#div#8;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <marker date="1511427919579" expanded="true" signature="31249:31255" ph="..." />
-                <marker date="1511427919579" expanded="true" signature="39340:39590" ph="..." />
+                <marker date="1511509207148" expanded="true" signature="33124:33130" ph="..." />
+                <marker date="1511509207148" expanded="true" signature="41234:41504" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="upload.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/project/upload.js">
+      <file leaf-file-name="project.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/project/project.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="567">
-              <caret line="27" column="25" lean-forward="false" selection-start-line="27" selection-start-column="12" selection-end-line="27" selection-end-column="25" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="userinfo.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/build/tpls/workstation/userinfo.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="462">
-              <caret line="57" column="64" lean-forward="false" selection-start-line="57" selection-start-column="64" selection-end-line="57" selection-end-column="64" />
+            <state relative-caret-position="770">
+              <caret line="425" column="50" lean-forward="false" selection-start-line="425" selection-start-column="50" selection-end-line="425" selection-end-column="50" />
               <folding>
-                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#0;n#tbody#0;n#table#0;n#div#2;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#3;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#3;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#h2#0;n#div#0;n#div#0;n#div#0;n#div#3;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#3;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#div#3;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#4;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#4;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#h2#0;n#div#0;n#div#0;n#div#0;n#div#4;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#4;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#4;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#4;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#3;n#div#1;n#div#0;n#div#0;n#div#4;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#4;n#div#1;n#div#0;n#div#0;n#div#4;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#5;n#div#1;n#div#0;n#div#0;n#div#4;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#6;n#div#1;n#div#0;n#div#0;n#div#4;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#div#4;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="e#44702#46373#0" expanded="false" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="user.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/workstation/user.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="449">
-              <caret line="173" column="50" lean-forward="false" selection-start-line="173" selection-start-column="45" selection-end-line="173" selection-end-column="50" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="userRequest.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/workstation/userRequest.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="609">
-              <caret line="29" column="3" lean-forward="false" selection-start-line="29" selection-start-column="3" selection-end-line="29" selection-end-column="3" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="projectRequest.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/project/projectRequest.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="287">
-              <caret line="94" column="26" lean-forward="false" selection-start-line="94" selection-start-column="9" selection-end-line="94" selection-end-column="26" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -371,21 +187,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>form1</find>
-      <find>changeh</find>
-      <find>还剩</find>
-      <find>language</find>
-      <find>prev</find>
-      <find>styles</find>
-      <find>十二</find>
-      <find>var time</find>
-      <find>modal-form2</find>
-      <find>stroke</find>
-      <find>black</find>
-      <find>partialFill</find>
-      <find>gant_t</find>
-      <find>moda</find>
-      <find>subprj_name</find>
       <find>changem</find>
       <find>t1.hour</find>
       <find>$scope.t1</find>
@@ -396,11 +197,26 @@
       <find>projectRoleList</find>
       <find>role_group</find>
       <find>roles</find>
-      <find>删除</find>
-      <find>创建</find>
       <find>64</find>
-      <find>返回</find>
+      <find>json</find>
+      <find>register_post</find>
       <find>substring</find>
+      <find>ex</find>
+      <find>timer1</find>
+      <find>console.</find>
+      <find>ganttCtrl</find>
+      <find>完成</find>
+      <find>移除</find>
+      <find>进度</find>
+      <find>项目</find>
+      <find>详情</find>
+      <find>提示</find>
+      <find>删除项目</find>
+      <find>删除</find>
+      <find>新建</find>
+      <find>创建</find>
+      <find>项目记录节点</find>
+      <find>返回</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -430,40 +246,41 @@
         <option value="$PROJECT_DIR$/app/build/tpls/index/main.html" />
         <option value="$PROJECT_DIR$/app/src/forum/forum.js" />
         <option value="$PROJECT_DIR$/app/src/forum/newforum.js" />
-        <option value="$PROJECT_DIR$/app/src/index/index.js" />
         <option value="$PROJECT_DIR$/app/1.txt" />
         <option value="$PROJECT_DIR$/app/build/libs/bootstrap-3.0.0/css/bootstrap.css" />
         <option value="$PROJECT_DIR$/app/src/project/conf.js" />
-        <option value="$PROJECT_DIR$/app/build/tpls/index/topbar.html" />
-        <option value="$PROJECT_DIR$/app/build/tpls/workstation/workstation.html" />
         <option value="$USER_HOME$/Desktop/css15/css/component.css" />
         <option value="$USER_HOME$/Desktop/css15/marley.html" />
         <option value="$PROJECT_DIR$/app/build/tpls/project/subproject_info.html" />
         <option value="$PROJECT_DIR$/app/src/project/subproject.js" />
-        <option value="$PROJECT_DIR$/app/build/tpls/project/project.html" />
         <option value="$PROJECT_DIR$/app/src/project/tress.js" />
         <option value="$PROJECT_DIR$/app/src/app.js" />
         <option value="$PROJECT_DIR$/app/build/libs/highcharts/highcharts.js" />
         <option value="$PROJECT_DIR$/app/build/tpls/project/subproject.html" />
-        <option value="$PROJECT_DIR$/app/src/project/gantt.js" />
         <option value="$PROJECT_DIR$/app/build/libs/bootstrap-treeview.js" />
         <option value="$PROJECT_DIR$/app/build/libs/bootstrap-3.0.0/css/bootstrap.min.css" />
         <option value="$PROJECT_DIR$/app/src/project/projectRequest.js" />
-        <option value="$PROJECT_DIR$/app/src/project/upload.js" />
         <option value="$PROJECT_DIR$/app/build/css/bootstrap-datetimepicker.min.css" />
         <option value="$PROJECT_DIR$/app/build/css/styles.css" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/app/build/libs/bootstrap-datetimepicker.min.js" />
         <option value="$PROJECT_DIR$/app/build/libs/highcharts/css/js/highcharts.js" />
         <option value="$PROJECT_DIR$/app/build/libs/highcharts/css/js/modules/gantt.src.js" />
-        <option value="$PROJECT_DIR$/app/src/project/project.js" />
         <option value="$PROJECT_DIR$/app/src/workstation/userRequest.js" />
-        <option value="$PROJECT_DIR$/app/src/workstation/user.js" />
-        <option value="$PROJECT_DIR$/app/build/tpls/workstation/userinfo.html" />
-        <option value="$PROJECT_DIR$/app/build/tpls/project/configuration.html" />
-        <option value="$PROJECT_DIR$/app/build/tpls/project/project_info.html" />
-        <option value="$PROJECT_DIR$/app/build/tpls/project/subproject_info_detail.html" />
         <option value="$PROJECT_DIR$/app/src/project/subproject_info_detail.js" />
+        <option value="$PROJECT_DIR$/app/src/project/gantt.js" />
+        <option value="$PROJECT_DIR$/app/src/project/upload.js" />
+        <option value="$PROJECT_DIR$/app/src/workstation/user.js" />
+        <option value="$PROJECT_DIR$/app/build/tpls/project/configuration.html" />
+        <option value="$PROJECT_DIR$/app/build/tpls/workstation/userinfo.html" />
+        <option value="$PROJECT_DIR$/app/build/tpls/workstation/workstation.html" />
+        <option value="$PROJECT_DIR$/app/build/tpls/project/subproject_info_detail.html" />
+        <option value="$PROJECT_DIR$/app/build/tpls/project/project_info.html" />
+        <option value="$PROJECT_DIR$/app/build/tpls/index/topbar.html" />
+        <option value="$PROJECT_DIR$/app/src/project/proside.js" />
+        <option value="$PROJECT_DIR$/app/build/tpls/project/project.html" />
+        <option value="$PROJECT_DIR$/app/src/index/index.js" />
+        <option value="$PROJECT_DIR$/app/src/project/project.js" />
       </list>
     </option>
   </component>
@@ -481,7 +298,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
+    <option name="x" value="-32" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
     <option name="height" value="1056" />
@@ -502,7 +319,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -551,27 +368,6 @@
               <item name="libs" type="462c0819:PsiDirectoryNode" />
               <item name="highcharts" type="462c0819:PsiDirectoryNode" />
               <item name="css" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="design_inst" type="b2602c69:ProjectViewProjectNode" />
-              <item name="design_inst" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="build" type="462c0819:PsiDirectoryNode" />
-              <item name="libs" type="462c0819:PsiDirectoryNode" />
-              <item name="highcharts" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="design_inst" type="b2602c69:ProjectViewProjectNode" />
-              <item name="design_inst" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="build" type="462c0819:PsiDirectoryNode" />
-              <item name="libs" type="462c0819:PsiDirectoryNode" />
-              <item name="highcharts" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="design_inst" type="b2602c69:ProjectViewProjectNode" />
@@ -665,7 +461,7 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -725,12 +521,13 @@
       <workItem from="1510302228154" duration="4622000" />
       <workItem from="1510534759350" duration="52895000" />
       <workItem from="1510707724859" duration="23018000" />
-      <workItem from="1510882864935" duration="124813000" />
+      <workItem from="1510882864935" duration="125032000" />
+      <workItem from="1511486201279" duration="21180000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="689746000" />
+    <option name="totallyTimeSpent" value="711145000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -792,13 +589,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/project/proside.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/forum/forum.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="462">
@@ -824,13 +614,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="488">
           <caret line="2206" column="12" lean-forward="true" selection-start-line="2206" selection-start-column="12" selection-end-line="2206" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build/tpls/workstation/workstation.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="22" column="6" lean-forward="true" selection-start-line="22" selection-start-column="6" selection-end-line="22" selection-end-column="6" />
         </state>
       </provider>
     </entry>
@@ -877,17 +660,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/build/tpls/index/topbar.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="45" column="37" lean-forward="true" selection-start-line="45" selection-start-column="37" selection-end-line="45" selection-end-column="37" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="false" />
-            <marker date="1510307461773" expanded="false" signature="2738:2770" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/build/tpls/index/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
@@ -902,61 +674,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/build/tpls/project/project.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="13" column="35" lean-forward="false" selection-start-line="13" selection-start-column="35" selection-end-line="13" selection-end-column="35" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#a#0;n#li#0;n#ul#0;n#div#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#a#0;n#li#1;n#ul#0;n#div#0;n#div#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/build/libs/angular.treeview.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-672">
           <caret line="25" column="17" lean-forward="false" selection-start-line="25" selection-start-column="17" selection-end-line="25" selection-end-column="17" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/build/libs/highcharts/bootstrap-treeview.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="40" column="49" lean-forward="true" selection-start-line="40" selection-start-column="49" selection-end-line="40" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/project/tress.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build/libs/highcharts11/highcharts.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="1860" column="19" lean-forward="false" selection-start-line="1860" selection-start-column="12" selection-end-line="1860" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build/libs/highcharts/bootstrap-treeview.js" />
+    <entry file="file://$PROJECT_DIR$/app/src/project/tress.js" />
+    <entry file="file://$PROJECT_DIR$/app/build/libs/highcharts11/highcharts.js" />
     <entry file="file://$PROJECT_DIR$/app/build/libs/highcharts/highcharts.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-511">
           <caret line="1692" column="10" lean-forward="true" selection-start-line="1692" selection-start-column="10" selection-end-line="1692" selection-end-column="10" />
-          <folding>
-            <marker date="1510902959597" expanded="true" signature="0:19" ph="/*...*/" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -964,7 +695,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="287">
           <caret line="73" column="83" lean-forward="false" selection-start-line="73" selection-start-column="83" selection-end-line="73" selection-end-column="83" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -972,15 +702,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="557">
           <caret line="440" column="38" lean-forward="true" selection-start-line="440" selection-start-column="38" selection-end-line="440" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/project/gantt.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="441">
-          <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -988,14 +709,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="546">
           <caret line="57" column="51" lean-forward="true" selection-start-line="57" selection-start-column="51" selection-end-line="57" selection-end-column="51" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#div#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#2;n#div#1;n#div#1;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#3;n#div#1;n#div#1;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#div#0;n#!!top" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1003,14 +716,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="620">
           <caret line="61" column="17" lean-forward="true" selection-start-line="61" selection-start-column="17" selection-end-line="61" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/index/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="844">
-          <caret line="61" column="10" lean-forward="true" selection-start-line="61" selection-start-column="10" selection-end-line="61" selection-end-column="10" />
           <folding />
         </state>
       </provider>
@@ -1031,14 +736,6 @@
             <marker date="1511149519376" expanded="true" signature="18166:18180" ph="..." />
             <marker date="1511149519376" expanded="true" signature="18245:18264" ph="..." />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/project/conf.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="494">
-          <caret line="26" column="48" lean-forward="true" selection-start-line="26" selection-start-column="48" selection-end-line="26" selection-end-column="48" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1078,10 +775,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="281">
           <caret line="412" column="32" lean-forward="false" selection-start-line="412" selection-start-column="26" selection-end-line="412" selection-end-column="32" />
-          <folding>
-            <marker date="1508460996000" expanded="true" signature="3035:3052" ph="..." />
-            <marker date="1508460996000" expanded="true" signature="3134:3153" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1089,7 +782,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="84">
           <caret line="4" column="45" lean-forward="false" selection-start-line="4" selection-start-column="45" selection-end-line="4" selection-end-column="45" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1097,7 +789,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="398">
           <caret line="45" column="212" lean-forward="false" selection-start-line="45" selection-start-column="212" selection-end-line="45" selection-end-column="212" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1105,9 +796,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
           <caret line="15" column="52" lean-forward="false" selection-start-line="15" selection-start-column="52" selection-end-line="15" selection-end-column="52" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1134,42 +822,178 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="386">
           <caret line="1233" column="44" lean-forward="false" selection-start-line="1233" selection-start-column="42" selection-end-line="1233" selection-end-column="44" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/project/projectRequest.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
+        <state relative-caret-position="1974">
           <caret line="94" column="26" lean-forward="false" selection-start-line="94" selection-start-column="9" selection-end-line="94" selection-end-column="26" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/project/project.js">
+    <entry file="file://$PROJECT_DIR$/app/src/project/gantt.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="555" column="47" lean-forward="false" selection-start-line="555" selection-start-column="47" selection-end-line="555" selection-end-column="47" />
-          <folding>
-            <element signature="e#44411#46082#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="63">
+          <caret line="3" column="27" lean-forward="false" selection-start-line="3" selection-start-column="18" selection-end-line="3" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/project/conf.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="546">
+          <caret line="26" column="48" lean-forward="false" selection-start-line="26" selection-start-column="48" selection-end-line="26" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/project/upload.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="651">
+          <caret line="31" column="46" lean-forward="true" selection-start-line="31" selection-start-column="46" selection-end-line="31" selection-end-column="46" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/workstation/user.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="449">
-          <caret line="173" column="50" lean-forward="false" selection-start-line="173" selection-start-column="45" selection-end-line="173" selection-end-column="50" />
+        <state relative-caret-position="662">
+          <caret line="192" column="17" lean-forward="true" selection-start-line="192" selection-start-column="17" selection-end-line="192" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build/tpls/project/configuration.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="434">
+          <caret line="41" column="32" lean-forward="true" selection-start-line="41" selection-start-column="32" selection-end-line="41" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build/tpls/project/subproject_info_detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="379">
+          <caret line="585" column="17" lean-forward="true" selection-start-line="585" selection-start-column="17" selection-end-line="585" selection-end-column="17" />
+          <folding>
+            <element signature="n#style#0;n#button#0;n#h3#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#1;n#h3#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#myfigcaption#0;n#myfigure#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#myh1#0;n#myfigcaption#0;n#myfigure#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#myfigcaption#0;n#myfigure#1;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#myh3#0;n#myfigcaption#0;n#myfigure#1;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#myfigcaption#0;n#myfigure#2;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#myh2#0;n#myfigcaption#0;n#myfigure#2;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#label#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#label#1;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#label#2;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#label#3;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#label#4;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#3;n#div#1;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#1;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#1;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#0;n#tr#1;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#td#0;n#tr#1;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#1;n#td#0;n#tr#1;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#div#5;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h4#0;n#div#1;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/project/subproject_info_detail.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="6" column="4" lean-forward="false" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/index/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-63">
+          <caret line="36" column="37" lean-forward="true" selection-start-line="36" selection-start-column="37" selection-end-line="36" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build/tpls/index/topbar.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="39" column="0" lean-forward="true" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+          <folding>
+            <element signature="n#style#0;n#img#0;n#b#0;n#a#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#li#0;n#ul#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h2#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#button#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#1;n#button#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#1;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#button#1;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h4#0;n#div#2;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#h4#1;n#div#2;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <marker date="1511509369263" expanded="false" signature="2757:2789" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build/tpls/project/project.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="12" column="64" lean-forward="true" selection-start-line="12" selection-start-column="64" selection-end-line="12" selection-end-column="64" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/project/proside.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build/tpls/workstation/workstation.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="18" column="13" lean-forward="true" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/build/tpls/workstation/userinfo.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="57" column="64" lean-forward="false" selection-start-line="57" selection-start-column="64" selection-end-line="57" selection-end-column="64" />
+        <state relative-caret-position="602">
+          <caret line="91" column="25" lean-forward="true" selection-start-line="91" selection-start-column="25" selection-end-line="91" selection-end-column="25" />
           <folding>
             <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#1;n#div#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#td#0;n#tbody#0;n#table#0;n#div#2;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#3;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#0;n#div#3;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
@@ -1191,28 +1015,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/build/tpls/project/configuration.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="546">
-          <caret line="47" column="29" lean-forward="false" selection-start-line="47" selection-start-column="29" selection-end-line="47" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/project/upload.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="567">
-          <caret line="27" column="25" lean-forward="false" selection-start-line="27" selection-start-column="12" selection-end-line="27" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/build/tpls/project/project_info.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="434">
-          <caret line="38" column="38" lean-forward="true" selection-start-line="38" selection-start-column="38" selection-end-line="38" selection-end-column="38" />
+        <state relative-caret-position="329">
+          <caret line="404" column="51" lean-forward="false" selection-start-line="404" selection-start-column="51" selection-end-line="404" selection-end-column="51" />
           <folding>
             <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#label#0;n#button#1;n#b#0;n#h3#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#label#0;n#button#2;n#b#0;n#h3#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#form#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#form#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
@@ -1295,6 +1105,7 @@
             <element signature="n#style#0;n#div#8;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#8;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#0;n#div#8;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#label#0;n#div#0;n#div#0;n#div#8;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#0;n#div#8;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#2;n#div#0;n#div#8;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#div#2;n#div#0;n#div#8;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
@@ -1302,54 +1113,19 @@
             <element signature="n#style#0;n#label#6;n#div#2;n#div#2;n#div#0;n#div#8;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#img#0;n#label#6;n#div#2;n#div#2;n#div#0;n#div#8;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#3;n#div#2;n#div#0;n#div#8;n#div#1;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <marker date="1511427919579" expanded="true" signature="31249:31255" ph="..." />
-            <marker date="1511427919579" expanded="true" signature="39340:39590" ph="..." />
+            <marker date="1511509207148" expanded="true" signature="33124:33130" ph="..." />
+            <marker date="1511509207148" expanded="true" signature="41234:41504" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/build/tpls/project/subproject_info_detail.html">
+    <entry file="file://$PROJECT_DIR$/app/src/project/project.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="609">
-          <caret line="172" column="72" lean-forward="false" selection-start-line="172" selection-start-column="72" selection-end-line="172" selection-end-column="72" />
+        <state relative-caret-position="770">
+          <caret line="425" column="50" lean-forward="false" selection-start-line="425" selection-start-column="50" selection-end-line="425" selection-end-column="50" />
           <folding>
-            <element signature="n#style#0;n#button#0;n#h3#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#1;n#h3#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#myfigcaption#0;n#myfigure#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#myh1#0;n#myfigcaption#0;n#myfigure#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#myfigcaption#0;n#myfigure#1;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#myh3#0;n#myfigcaption#0;n#myfigure#1;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#myh2#0;n#myfigcaption#0;n#myfigure#2;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#label#3;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#label#4;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#div#3;n#div#1;n#div#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#1;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#1;n#td#0;n#tr#0;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#0;n#tr#1;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#td#0;n#tr#1;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#1;n#td#0;n#tr#1;n#tbody#0;n#table#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#div#5;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="false" />
+            <element signature="e#44702#46373#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/project/subproject_info_detail.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="371">
-          <caret line="335" column="17" lean-forward="true" selection-start-line="335" selection-start-column="17" selection-end-line="335" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>

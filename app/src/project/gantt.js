@@ -1,8 +1,7 @@
 
 
 var gantt = angular.module('gantt', ['ngResource', 'ngCookies']);
-gantt.controller('ganttCtrl', function ($scope, $http, $filter,$timeout, $interval, $window, $state, $cookies, $location,
-                                      $rootScope, projectService) {
+gantt.controller('ganttCtrl', function ($scope, $http, $filter,$timeout, $interval, $window, $state, $cookies) {
     var expireDate = new Date();
     expireDate.setDate(expireDate.getDate() + 1);
 
@@ -15,12 +14,6 @@ gantt.controller('ganttCtrl', function ($scope, $http, $filter,$timeout, $interv
     $scope.userinfo.company_name = $cookies.get('company_name');
     $scope.userinfo.nickname = $cookies.get('nickname');
     $scope.userinfo.status = $cookies.get('status');
-
-    console.log($scope.prj_chosen);
-
-
-
-
 })
 
 

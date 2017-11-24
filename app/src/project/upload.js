@@ -11,7 +11,6 @@ upload.controller('uploadCtrl', function ($scope, $http, $timeout, $interval, $w
 
     function OnArxCallback(res) {
         var response = JSON.parse(res);
-        alert('1111');
         alert(response.message);
         if (response.success) {
             $window.location.reload();

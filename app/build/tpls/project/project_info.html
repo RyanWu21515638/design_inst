@@ -8,20 +8,23 @@
                                 class="btn btn-primary"
                                 data-toggle="modal" data-target="#modal-form1"
                                 ng-click="newprjJuge();configurationlist();">
-                            新建模板厂
+                            <img src="app/build/image/new.png">新建模板厂
                         </button>
                     <button ng-if="userinfo.status == '2' && prj_chosen.name && set_prj!='true'" type="button"
                             class="btn btn-danger"
                             data-toggle="modal" data-target="#modal-delete"
                             ng-click="delProject(prj_chosen.project_id,x.name,1)">
-                        删除<label class="label label-warning">{{prj_chosen.name}}</label>
+                        <img src="app/build/image/delete.png">
+                        删除<label class="label label-warning" style="border-radius: 50%;">{{prj_chosen.name}}</label>
                     </button>
 
                     <button ng-if="userinfo.status == '2' && prj_chosen.name && set_prj!='true'" type="button"
                             class="btn btn-default"
                             data-toggle="modal" data-target="#modal-form2"
                             ng-click="prj_dt(prj_chosen.project_id,1);">
-                        在<label class="label label-warning">{{prj_chosen.name}}</label>下新建子项目
+                        在<label class="label label-warning" style="border-radius: 50%;">{{prj_chosen.name}}</label>
+                        下新建子项目
+                        <img src="app/build/image/new_2.png">
                     </button></b>
                 </h3>
             </div>
@@ -66,7 +69,8 @@
                     <form ng-if="chosen_name" class="form-horizontal visible-lg visible-md" style="border: 3px dashed #999999;padding-bottom: 2px;"
                           ng-click="subchose(subprj_chosen.subproject_id,subprj_chosen.state)">
                         <div class="form-group" style="text-align: center;padding-top: 20px;">
-                            <label class="label label-primary" >项目·{{subprj_chosen.name}}·详情</label>
+                            <label class="label label-primary" >
+                                <img src="app/build/image/project.png">项目·{{subprj_chosen.name}}·详情</label>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3" style="text-align: right;"> 项目状态： </label>
@@ -80,12 +84,15 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3" style="text-align: right;"> 收到底图时间： </label>
+                            <label class="col-sm-3" style="text-align: right;">
+                                <img src="app/build/image/time.png">
+                                收到底图时间： </label>
                             <button class="col-sm-2" ng-click="alterTime(0,subprj_chosen.subproject_id,1,subprj_chosen.dwg_end_plan)"
                             style="border: 2px dashed #999999;">
                                 {{subprj_chosen.start_time_plan}}
                             </button>
-                            <label class="col-sm-3" style="text-align: right;"> 出终版底图成果时间： </label>
+                            <label class="col-sm-3" style="text-align: right;">
+                                <img src="app/build/image/time.png">出终版底图成果时间： </label>
                             <button  ng-if="(subprj_chosen.D_value_2<= 3)" class="col-sm-2 btn-danger"
                                      ng-click="alterTime(0,subprj_chosen.subproject_id,2,subprj_chosen.start_time_plan)"
                                      style="border: 2px dashed #999999;"
@@ -99,13 +106,15 @@
                             </button>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3" style="text-align: right;"> 签字确认底图时间： </label>
+                            <label class="col-sm-3" style="text-align: right;">
+                                <img src="app/build/image/time.png">签字确认底图时间： </label>
                             <button class="col-sm-2" ng-click="alterTime(0,subprj_chosen.subproject_id,3,subprj_chosen.end_time_plan)"
                                  style="border: 2px dashed #999999;">
                                 {{subprj_chosen.design_start_plan}}
                             </button>
 
-                            <label class="col-sm-3" style="text-align: right;"> 项目结束节点时间： </label>
+                            <label class="col-sm-3" style="text-align: right;">
+                                <img src="app/build/image/time.png">项目结束节点时间： </label>
                             <button ng-if="(subprj_chosen.D_value_1<= 3)" class="col-sm-2 btn-danger"
                                     ng-click="alterTime(0,subprj_chosen.subproject_id,4,subprj_chosen.design_start_plan)"
                                     style="border: 2px dashed #999999;"
@@ -119,28 +128,35 @@
                         </div>
                         <div class="form-group" style="text-align: center;margin-top: 20px;padding-top: 20px;">
                             <button class="btn btn-info" style="cursor:pointer;" ng-if="(fromIPM == 'true') && (set_prj!='true')"
-                                    ng-click="set_prj_suprj_name(subprj_chosen.subproject_id)">任务面板</button>
+                                    ng-click="set_prj_suprj_name(subprj_chosen.subproject_id)">
+                                <img src="app/build/image/task.png">任务面板</button>
                             <button class="btn btn-info" style="cursor:pointer;" ng-if="(fromIPM == 'true') && (set_prj=='true')"
                                     ui-sref="index.project.subproject_info_detail({prj_id:prjinfo.prj_id,subprj_id:rolesinfo.subprj_id,})"
-                                    ng-click="set_prj_suprj_name(subprj_chosen.subproject_id);goUrl()">任务面板</button>
+                                    ng-click="set_prj_suprj_name(subprj_chosen.subproject_id);goUrl()">
+                                <img src="app/build/image/task.png">任务面板</button>
                             <button class="btn btn-info" style="cursor:pointer;" ng-if="(fromIPM != 'true') && (set_prj!='true')"
                                     ui-sref="index.project.subproject_info_detail({prj_id:prjinfo.prj_id,subprj_id:rolesinfo.subprj_id})"
-                                    ng-click="set_prj_suprj_name(subprj_chosen.subproject_id)">任务面板</button>
+                                    ng-click="set_prj_suprj_name(subprj_chosen.subproject_id)">
+                                <img src="app/build/image/task.png">任务面板</button>
 
 
-                            <button ng-if="set_prj!='true'" class="btn btn-success" ng-click="downloadList(subprj_chosen.subproject_id)"
+                            <button ng-if="set_prj!='true'" class="btn btn-primary" ng-click="downloadList(subprj_chosen.subproject_id)"
                                     data-toggle="modal"
-                                    data-target="#modal-form4">成果下载</button>
-                            <button class="btn btn-primary" data-toggle="modal" ng-click="grouplist()"
-                                    data-target="#modal-form3" ng-if="userinfo.status == '2' && set_prj!='true'">人员权限分配</button>
+                                    data-target="#modal-form4">
+                                <img src="app/build/image/result.png">成果下载</button>
+                            <button class="btn btn-success" data-toggle="modal" ng-click="grouplist()"
+                                    data-target="#modal-form3" ng-if="userinfo.status == '2' && set_prj!='true'">
+                                <img src="app/build/image/author.png">人员权限分配</button>
                             <button class="btn btn-warning" ng-if="set_prj!='true'"
                                     ng-click="redirection(prj_chosen.project_id,subprj_chosen.subproject_id)">
+                                <img src="app/build/image/problem.png">
                                 问题列表
                             </button>
                             <button class="btn btn-danger" data-toggle="modal"
                                     data-target="#modal-delete"
                                     ng-click="delSubproject(subprj_chosen.subproject_id,subprj_chosen.name,1)" href=""
-                                    ng-if="userinfo.status == '2' && set_prj!='true'">删除项目</button>
+                                    ng-if="userinfo.status == '2' && set_prj!='true'">
+                                <img src="app/build/image/delete.png">删除项目</button>
                             <button ng-controller="uploadCtrl" class="btn btn-warning" ng-if="set_prj=='true'" ng-click="setPrj(prj_chosen.project_id,subprj_chosen.subproject_id)">设定项目</button>
                         </div>
                     </form>
@@ -338,7 +354,8 @@
                             </div>
                             <div class="modal-footer" style="text-align: center;">
                                 <button class="btn btn-primary col-sm-offset-4" ng-click="saveAlterTime()" data-dismiss="modal">保存</button>
-                                <button class="btn btn-primary" data-dismiss="modal">返回</button>
+                                <button class="btn btn-primary" data-dismiss="modal">
+                                    <img src="app/build/image/return.png">返回</button>
                             </div>
                         </div>
                     </div>
@@ -386,8 +403,11 @@
                                 </div>
                             </div>
                             <div class="modal-footer" style="text-align: center;">
-                                <button class="btn btn-success col-sm-offset-4" ng-click="newprj()" data-dismiss="modal">创建</button>
-                                <button class="btn btn-primary" data-dismiss="modal">返回</button>
+                                <button class="btn btn-success col-sm-offset-4" ng-click="newprj()" data-dismiss="modal">
+                                    <img src="app/build/image/new.png">
+                                    创建</button>
+                                <button class="btn btn-primary" data-dismiss="modal">
+                                    <img src="app/build/image/return.png">返回</button>
                             </div>
                         </div>
                     </div>
@@ -422,7 +442,8 @@
                             </div>
                             <div class="modal-footer" style="text-align: center;">
                                 <button class="btn btn-success col-sm-offset-3" ng-click="newsubprj()"
-                                        data-dismiss="modal">创建子项目</button>
+                                        data-dismiss="modal">
+                                    <img src="app/build/image/new.png">创建子项目</button>
                             </div>
                         </div>
                     </div>
@@ -433,7 +454,11 @@
                     <div class="modal-dialog" style="width:30%;margin-top: 8%;">
                         <div class="modal-content" style="border-radius: 5px;">
                             <div class="modal-header">
-                                <h2 class="blue bigger" style="text-align: center;">提示！</h2>
+                                <h2 class="blue bigger" style="text-align: center;">
+                                    <label>
+                                        提示
+                                        <img src="app/build/image/warning.png">
+                                    </label></h2>
                             </div>
 
                             <div class="modal-body overflow-visible" style="text-align: center;">
@@ -445,13 +470,16 @@
                             <div class="modal-footer" style="text-align: center;">
                                 <button class="btn btn-danger col-sm-offset-3"
                                         ng-if="delete_type == '1'"
-                                        ng-click="delProject(delete_prj_id,delete_prj_name,2)" data-dismiss="modal">删除
+                                        ng-click="delProject(delete_prj_id,delete_prj_name,2)" data-dismiss="modal">
+                                    <img src="app/build/image/delete.png">删除
                                 </button>
                                 <button class="btn btn-success col-sm-offset-3"
                                         ng-if="delete_type == '2'"
-                                        ng-click="delSubproject(delete_subprj_id,delete_subprj_name,2)" data-dismiss="modal">删除
+                                        ng-click="delSubproject(delete_subprj_id,delete_subprj_name,2)" data-dismiss="modal">
+                                    <img src="app/build/image/delete.png">删除
                                 </button>
-                                <button class="btn btn-primary" data-dismiss="modal">返回</button>
+                                <button class="btn btn-primary" data-dismiss="modal">
+                                    <img src="app/build/image/return.png">返回</button>
                             </div>
                         </div>
                     </div>
@@ -496,7 +524,7 @@
                                                    style="color: red"></i>
                                             </td>
                                             <th>
-                                                <button ng-click="remove(x.openid)">移除</button>
+                                                <button class="btn-danger" ng-click="remove(x.openid)">移除</button>
                                             </th>
                                         </tr>
                                         </tbody>
@@ -572,7 +600,7 @@
                                             </td>
 
                                             <td>
-                                                <button type="submit" ng-click="hide($index)">添加</button>
+                                                <button class="btn-primary" type="submit" ng-click="hide($index)">添加</button>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -677,8 +705,12 @@
                 <div ng-if="chosen_name" id="prj_menu" class="animated bounceInDown col-xs-12 col-md-3 col-lg-2"
                      style="background-color: #eeeeee;height: 700px;border: 5px solid white;">
                     <div style="width: 100%">
-                        <div style="padding-left: 20px;">
-                            <h3>项目记录节点</h3>
+                        <div style="padding: 20px;">
+                            <img src="app/build/image/tags.png">
+                            <label class="label label-primary" style="margin: 20px;font-size: 16px;">
+                                项目记录节点
+                               </label>
+
                         </div>
 
                         <div style="padding-left: 20px;" ng-if="!status_select">
@@ -687,7 +719,7 @@
                         </div>
 
                         <div style="padding-left: 20px;" ng-repeat="x in status_list" ng-if="status_select">
-                            <div><label>{{x.time}}</label></div>
+                            <div><label><img src="app/build/image/time_white.png">{{x.time}}</label></div>
                             <div style="border-left: 1px solid #a6a6a6;height: 10px;margin-left: 20px;"></div>
                             <div style="margin-left: 18px;">
                                 <label class="label label-warning" ng-if="x.state == 1"> 已立项，底图待深化</label>

@@ -1,5 +1,6 @@
 var user = angular.module('user', ['ngResource', 'ngCookies']);
-user.controller('userCtrl', function ($scope, $http, $timeout, $interval, $state, $cookies, $rootScope, userService, projectService) {
+user.controller('userCtrl', function ($scope, $http, $timeout, $interval, $state, $cookies, $rootScope,
+                                      userService, projectService, locals) {
     $scope.userinfo = {};
     $scope.userinfo.openid = $cookies.get('openid');
     $scope.userinfo.company_id = $cookies.get('company_id');
@@ -47,28 +48,8 @@ user.controller('userCtrl', function ($scope, $http, $timeout, $interval, $state
         getData();
     });
 
-    /*userList = function () {
-        userService.user_list($scope.userinfo).then(
-            function (res) {
-                $scope.usr_list = res.data;
-            }
-        )
-    };*/
-    /*companyProjectList =function () {
-        userService.company_project_list($scope.userinfo).then(
-            function (res) {
-                $scope.company_prj_list = res.data;
-            }
-        )
-    }*/
-    /*companyList =function () {
-        userService.company_List().then(
-            function (res) {
-                $scope.comp_list = res.data;
-            }
-        )
-    }*/
-    var j = -1;
+    var time = new Date();
+    var j=-1;
     ipmList = function () {
         userService.ipm_user_list($scope.userinfo).then(
             function (res) {
@@ -82,12 +63,27 @@ user.controller('userCtrl', function ($scope, $http, $timeout, $interval, $state
                     j++;
                     $scope.ipm_list[j] = res.data[i];
                 }
+                locals.set("ipm_list", JSON.stringify($scope.ipm_list));
+                locals.set("cashe_time",time.getDate());
+                $scope.ipm_list = JSON.parse(locals.get("ipm_list"));
             }
         )
     }
-    //userList();
-    //companyProjectList();
-    ipmList();
+    if($scope.userinfo.company_id != 1)
+    {
+        $state.go("index");
+    }
+    else {
+        if (locals.get("ipm_list") == '' || locals.get("ipm_list") == null || locals.get("ipm_list") == undefined
+            || (locals.get("cashe_time") != time.getDate())) {
+            ipmList();
+        }
+        else {
+            $scope.ipm_list = JSON.parse(locals.get("ipm_list"));
+        }
+    }
+
+
     grouplist = function () {
         projectService.group_list().then(
             function (res) {
@@ -96,15 +92,28 @@ user.controller('userCtrl', function ($scope, $http, $timeout, $interval, $state
         )
     }
 
+    var findIndexOfOpenid = function (openid) {
+        var index = 0;
+        for(var i = 0 ; i<$scope.ipm_list.length;i++)
+        {
+            if($scope.ipm_list[i].openid == openid)
+            {
+                index = i;
+                break;
+            }
+        }
+        return index;
+    }
+    findIndexOfOpenid('ovMfqvu4l_T7Grk6tQzZTM9EehcI');
     $scope.prj_dt = function (index) {
         $scope.index = index;
     }
-    $scope.addIpminstUser = function (openid, companyid,index) {
+    $scope.addIpminstUser = function (openid, companyid, index) {
         $scope.roles.length = 0;
         $scope.add_user_info = {
             openid: openid,
             company_id: companyid,
-            index:index
+            index: index
         };
         grouplist();
     };
@@ -137,8 +146,7 @@ user.controller('userCtrl', function ($scope, $http, $timeout, $interval, $state
     }
     $scope.add = function (bl) {
         $scope.roles_master_INT = 0;
-        if(bl)
-        {
+        if (bl) {
             if ($scope.roles_master[0])
                 $scope.roles_master_INT = $scope.roles_master_INT + 1;
             if ($scope.roles_master[1])
@@ -162,7 +170,9 @@ user.controller('userCtrl', function ($scope, $http, $timeout, $interval, $state
                     alert('添加成功！');
                     $('#modal-form-mozhang').modal('hide');
                     $('#modal-form-adduser').modal('hide');
-                    $scope.ipm_list[$scope.add_user_info.index].company_id = 1;
+                    var idx = findIndexOfOpenid($scope.add_user_info.openid);
+                    $scope.ipm_list[idx].company_id = 1;
+                    locals.set("ipm_list", JSON.stringify($scope.ipm_list));
                 }
                 else {
                     alert('添加失败!');
@@ -171,12 +181,15 @@ user.controller('userCtrl', function ($scope, $http, $timeout, $interval, $state
         )
     }
 
-    $scope.delIpminstUser = function (openid,index) {
+    $scope.delIpminstUser = function (openid, index) {
         userService.del_ipminst_user(openid).then(
             function (res) {
                 if (res.data.success) {
                     alert('删除成功！');
-                    $scope.ipm_list[index].company_id = 0;
+
+                    var idx = findIndexOfOpenid(openid);
+                    $scope.ipm_list[idx].company_id = 0;
+                    locals.set("ipm_list", JSON.stringify($scope.ipm_list));
                 }
                 else {
                     alert('删除失败!');
@@ -193,3 +206,20 @@ user.controller('userCtrl', function ($scope, $http, $timeout, $interval, $state
                 $('html').scrollTop(0);*/
     }
 })
+user.factory('locals', ['$window', function ($window) {
+    return {        //存储单个属性
+        set: function (key, value) {
+            $window.localStorage[key] = value;
+        },        //读取单个属性
+        get: function (key, defaultValue) {
+            return $window.localStorage[key] || defaultValue;
+        },        //存储对象，以JSON格式存储
+        setObject: function (key, value) {
+            $window.localStorage[key] = JSON.stringify(value);//将对象以字符串保存
+        },        //读取对象
+        getObject: function (key) {
+            return JSON.parse($window.localStorage[key] || '{}');//获取字符串并解析成对象
+        }
+
+    }
+}]);

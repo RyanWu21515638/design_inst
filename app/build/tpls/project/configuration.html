@@ -43,7 +43,8 @@
                                 <img class="nav-user-photo" src="{{x.headimgurl}}" style="width: 24px;height: 24px;border-radius: 50%;"/>
                                 {{x.nickname}}</td>
                             <td ng-if="userinfo.status == '2'">
-                                <button class="btn-sm btn-danger" ng-click="delConf(x.id)">删除</button>
+                                <button class="btn-sm btn-danger" ng-click="delConf(x.id)">
+                                    <img src="app/build/image/delete.png">删除</button>
                             </a></td>
                         </tr>
                         </tbody>

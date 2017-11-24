@@ -151,9 +151,7 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
                 var spand = 0;
                 for (var ti = 0; ti < $scope.prj_list.length; ti++) {
                     spand++;
-                    console.log(spand);
                     if ($scope.treeParentId == spand - 1) {
-                        console.log(ti);
                         json3.push({
                             "text": $scope.prj_list[ti].name,
                             "state": {
@@ -277,7 +275,6 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
                 });
                 //$('#treeview12').treeview('enableNode', [ 14, { silent: false } ]);
                 $scope.treeNodeId = parseInt($cookies.get('treeNodeId'));
-                console.log(typeof ($cookies.get('treeNodeId')));
                 $('#treeview12').treeview('selectNode', [$scope.treeNodeId, {silent: false}]);
 
                 ///////
@@ -380,10 +377,10 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
                 data.push(
                     {
                         x: Date.UTC(gant_t1.year, gant_t1.month, gant_t1.day ),
-                        x2: Date.UTC(gant_t3.year, gant_t3.month, gant_t3.day ),
+                        x2: Date.UTC(gant_t3.year, gant_t3.month, gant_t3.day+1 ),
                         y: 0.25,
                         partialFill:1,
-                        color:"#0099ff",
+                        color:"#00ffff",
                         dataLabels: {
                             enabled: false
                         }
@@ -392,16 +389,15 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
                 data.push(
                     {
                         x: Date.UTC(gant_t2.year, gant_t2.month, gant_t2.day ),
-                        x2: Date.UTC(gant_t4.year, gant_t4.month, gant_t4.day ),
+                        x2: Date.UTC(gant_t4.year, gant_t4.month, gant_t4.day+1 ),
                         y: 1.25,
                         partialFill:1,
-                        color:"#0099ff",
+                        color:"#00ffff",
                         dataLabels: {
                             enabled: false
                         }
                     }
                 );
-
                 var gant_t = {};
                 gant_t.year = time.getFullYear();
                 gant_t.month = time.getMonth();
@@ -411,8 +407,9 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
                     if ((gant_t.month - gant_t1.month) == 0) {
                         //月内
                         if (gant_t.day > gant_t3.day) {
-                            gant_t = gant_t3;
-                            gant_t.hour =18;
+                            //gant_t = gant_t3;
+                            //gant_t.day = gant_t3.day;
+                            //gant_t.hour =18;
                         }
                             for (var i = 0; i <= (gant_t.day - gant_t1.day); i++) {
                                 if (i == (gant_t.day - gant_t1.day)) {
@@ -429,24 +426,22 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
                                             x2: Date.UTC(gant_t.year, gant_t.month, gant_t1.day + i + 1),
                                             y: 0,
                                             partialFill: percent,
-                                            color:"#00ff00"
+                                            color:"#ffcb80"
                                         }
                                     );
                                 }
                                 else {
-
                                     data.push(
                                         {
                                             x: Date.UTC(gant_t1.year, gant_t1.month, gant_t1.day + i),
                                             x2: Date.UTC(gant_t.year, gant_t.month, gant_t1.day + i + 1),
                                             y: 0,
                                             partialFill: 1,
-                                            color:"#00ff00"
+                                            color:"#ffcb80"
                                         }
                                     );
                                 }
                             }
-
                     }
                     else {
                         //跨月
@@ -459,8 +454,9 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
                     if ((gant_t.month - gant_t2.month) == 0) {
                         //月内
                         if (gant_t.day > gant_t4.day) {
-                            gant_t = gant_t4;
-                            gant_t.hour =18;
+                            //gant_t = gant_t4;
+                            //gant_t.day = gant_t4.day;
+                            //gant_t.hour =18;
                         }
                         for (var i = 0; i <= (gant_t.day - gant_t2.day); i++) {
                             if (i == (gant_t.day - gant_t2.day)) {
@@ -477,7 +473,7 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
                                         x2: Date.UTC(gant_t.year, gant_t.month, gant_t2.day + i + 1),
                                         y: 1,
                                         partialFill: percent,
-                                        color:"#ff0000"
+                                        color:"#ff9900"
                                     }
                                 );
                             }
@@ -489,7 +485,7 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
                                         x2: Date.UTC(gant_t.year, gant_t.month, gant_t2.day + i + 1),
                                         y: 1,
                                         partialFill: 1,
-                                        color:"#ff0000"
+                                        color:"#ff9900"
                                     }
                                 );
                             }
@@ -508,7 +504,7 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
                         type: 'xrange'
                     },
                     title: {
-                        text: '项目进度表'
+                        text: '项目进度图'
                     },
                     xAxis: {
                         type: 'datetime',
@@ -695,14 +691,24 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
     }
     //新建子项目
 
+    function getCurrentMonthLast(){
+        var date=new Date();
+        var currentMonth=date.getMonth();
+        var nextMonth=++currentMonth;
+        var nextMonthFirstDay=new Date(date.getFullYear(),nextMonth,1);
+        var oneDay=1000*60*60*24;
+        return new Date(nextMonthFirstDay-oneDay).getDate();
+    }
+
+
     $scope.newsubprj = function () {
         $scope.subprjinfo.prj_id = $scope.prjinfo.prj_id;
         $scope.subprjinfo.company_id = $cookies.get('company_id');
         $scope.subprjinfo.creator_id = $cookies.get('openid');
         $scope.subprjinfo.start_time_plan = $scope.t5.year + '-' + $scope.t5.month + '-' + $scope.t5.day;
         $scope.subprjinfo.design_start_plan = $scope.t6.year + '-' + $scope.t6.month + '-' + $scope.t6.day;
-
         var time_1 = new Date($scope.t6.year, $scope.t6.month, 0);
+        var time_2 = new Date($scope.t5.year, $scope.t5.month, 0);
         if (($scope.t6.day + 12) > time_1.getDate()) {
             $scope.subprjinfo.end_time_plan = $scope.t6.year + '-' + ($scope.t6.month + 1) + '-' + (($scope.t6.day + 12) - time_1.getDate());
         }
@@ -710,9 +716,10 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
             $scope.subprjinfo.end_time_plan = $scope.t6.year + '-' + $scope.t6.month + '-' + ($scope.t6.day + 12);
         }
 
-        if (($scope.t5.day + 7) > time_1.getDate()) {
-            $scope.subprjinfo.dwg_end_plan = $scope.t5.year + '-' + ($scope.t5.month + 1) + '-' + (($scope.t5.day + 7) - time_1.getDate());
+        if (($scope.t5.day + 7) > time_2.getDate()) {
+            $scope.subprjinfo.dwg_end_plan = $scope.t5.year + '-' + ($scope.t5.month + 1) + '-' + (($scope.t5.day + 7) - time_2.getDate());
         }
+        else
         {
             $scope.subprjinfo.dwg_end_plan = $scope.t5.year + '-' + $scope.t5.month + '-' + ($scope.t5.day + 7);
         }
@@ -937,7 +944,6 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
         $scope.t3.year = ev.date.getFullYear();
         $scope.t3.month = ev.date.getMonth() + 1;
         $scope.t3.day = ev.date.getDate();
-        console.log($scope.t3);
     }).on("hide", function () {
         $("#timepicker3").blur();
     });
@@ -1013,7 +1019,6 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
             var h = $(this).height();//div可视区域的高度
             var sh = $(this)[0].scrollHeight;//滚动的高度，$(this)指代jQuery对象，而$(this)[0]指代的是dom节点
             var st = $(this)[0].scrollTop;//滚动条的高度，即滚动条的当前位置到div顶部的距离
-            console.log(h + '-' + sh + '-' + st);
             if ((sh - h) == st) {
                 getData();
             }
@@ -1106,9 +1111,5 @@ project.controller('projectCtrl', function ($scope, $http, $filter, $timeout, $i
         }
         return (jdn + hour / 24.0 + minute / 1440.0 + second / 86400.0);
     }
-    var julian = parseInt(CalculateJulianDay(2017, 11, 22, 11, 30, 10) % 7);
-    console.log(julian);
 
-
-    //console.log(zeller);
 })

@@ -5,7 +5,6 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
 
     var time = new Date();
     var winHeight = document.body.clientHeight;
-    console.log(winHeight);
     document.getElementById("prjDT_opt").style.height= winHeight*0.6 +"px";
     var expireDate = new Date();
     expireDate.setDate(expireDate.getDate() + 1);
@@ -73,10 +72,8 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
                         break;
                     }
                 }
-                console.log($scope.role_group);
                 for(var j = 0;j<$scope.prj_role_list.length ;j++)
                 {
-                    console.log(j);
                     $scope.prj_role_list[j].role_master_bl = false;
                     if(($scope.prj_role_list[j].roles_master & Math.pow(2,($scope.role_group-1))) == Math.pow(2,($scope.role_group-1)))
                     {
@@ -329,7 +326,7 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
                                     $scope.task_list[i].subtask_list[j].countdown_time =temp.getHours()-time.getHours();
                                 }
                             }
-                            $scope.task_list[i].subtask_list[j].end_time_plan = $scope.task_list[i].subtask_list[j].end_time_plan.substring(0, 10);
+                            //$scope.task_list[i].subtask_list[j].end_time_plan = $scope.task_list[i].subtask_list[j].end_time_plan.substring(0, 10);
 
                         }
                     }
@@ -379,7 +376,7 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
                                     {
 
                                     }
-                                        $scope.task_list[i].subtask_list[j].end_time_plan = $scope.task_list[i].subtask_list[j].end_time_plan.substring(0, 10);
+                                        //$scope.task_list[i].subtask_list[j].end_time_plan = $scope.task_list[i].subtask_list[j].end_time_plan.substring(0, 10);
                                 }
                             }
                         }
@@ -415,7 +412,7 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
                                     var endtime = $scope.task_list[i].subtask_list[j].end_time_plan;
                                     if(endtime !='' &&endtime !=null &&endtime !=undefined)
                                     {
-                                        $scope.task_list[i].subtask_list[j].end_time_plan = $scope.task_list[i].subtask_list[j].end_time_plan.substring(0, 10);
+                                        //$scope.task_list[i].subtask_list[j].end_time_plan = $scope.task_list[i].subtask_list[j].end_time_plan.substring(0, 10);
                                     }
 
                                 }
@@ -481,7 +478,7 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
                                             $scope.task_list[i].subtask_list[j].countdown_time =temp.getHours()-time.getHours();
                                         }
                                     }
-                                    $scope.task_list[i].subtask_list[j].end_time_plan = $scope.task_list[i].subtask_list[j].end_time_plan.substring(0, 10);
+                                    //$scope.task_list[i].subtask_list[j].end_time_plan = $scope.task_list[i].subtask_list[j].end_time_plan.substring(0, 10);
 
                                 }
 
@@ -538,7 +535,7 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
                                                     $scope.task_list[i].subtask_list[j].countdown_time =temp.getHours()-time.getHours();
                                                 }
                                             }
-                                            $scope.task_list[i].subtask_list[j].end_time_plan = $scope.task_list[i].subtask_list[j].end_time_plan.substring(0, 10);
+                                            //$scope.task_list[i].subtask_list[j].end_time_plan = $scope.task_list[i].subtask_list[j].end_time_plan.substring(0, 10);
 
                                         }
 
@@ -575,7 +572,7 @@ subproject_info_detail.controller('subproject_info_detailCtrl', function ($scope
                                     var endtime = $scope.task_list[i].subtask_list[j].end_time_plan;
                                     if(endtime !='' &&endtime !=null &&endtime !=undefined)
                                     {
-                                        $scope.task_list[i].subtask_list[j].end_time_plan = $scope.task_list[i].subtask_list[j].end_time_plan.substring(0, 10);
+                                        //$scope.task_list[i].subtask_list[j].end_time_plan = $scope.task_list[i].subtask_list[j].end_time_plan.substring(0, 10);
                                     }
 
                                 }
